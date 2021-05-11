@@ -107,7 +107,7 @@ echo "<td><select name = 'tblinventory'>
     echo "</td>";
   echo "</select></td>";
     // echo "<td><input type='number' min='1'  name='qty[]' onchange='multiply(this)' required></td>";
-  echo "<td><input type='decimal'  name='unitp[]' step='.01' onchange='multiply(this)' required></td>";
+  echo "<td><input type='number' name='unitp[]' min='1' class='input-quantity' required></td>";
   echo "<td><input type='text' id='amt' ttc='1' size='40' disabled='disabled'></td>";
   echo "<td><button type='button' id='btnRow' onclick='addProduct()'>+</button></td>";
   echo "</tr>";
