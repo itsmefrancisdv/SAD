@@ -387,6 +387,7 @@ if (isset($_GET['submit'])) {
         $(document).on('change', 'select[name=tblinventory]', () => calculate());
 
         $(document).on('keyup', '.input-quantity', () => calculate());
+        $(document).on('change', '.input-quantity', () => calculate());
 
         function calculate() {
             const price = SRPs.filter(':not([style*="display: none"])').html();
