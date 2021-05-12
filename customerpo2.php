@@ -332,7 +332,7 @@ if (isset($_GET['submit'])) {
                                     <div id="Table-PODetail1" class="dataTables_length" aria-controls="dataTable"
                                          style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;">
                                         <label id="Table-PONumLabel"
-                                               style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier:&nbsp;
+                                               style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer:&nbsp;
                                             <select class="border rounded border-dark float-right" type="text"
                                                     id="Table-PONumInput"
                                                     style="border-radius: 20px;margin-left: 0px;width: 185px;"
