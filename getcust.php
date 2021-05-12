@@ -106,16 +106,16 @@ echo "<td><select name = 'tblinventory'>
 
     echo "</td>";
   echo "</select></td>";
-  echo "<td><input type='number' min='1'  name='qty[]'  class='input-quantity' required></td>";
+  echo "<td><input type='number' min='1'  name='qty[]'  class='input-quantity' style='text-align:right' required></td>";
   // echo "<td><input type='number' name='unitp[]' min='1' class='input-quantity' required></td>";
   echo "<td><input type='text' class='amt' ttc='1' size='40' disabled='disabled'></td>";
-  echo "<td><button type='button' id='btnRow' onclick='addProduct()'>+</button></td>";
+  echo "<td><button type='button' id='btnRow' >+</button></td>";
   echo "</tr>";
   echo "<tfoot>";
   echo "<tr>";
   echo "<td></td>";
   echo "<td></td>";
-  echo "<td class='text-right' style='font-weight: bold;font-size: 20px;' >TOTAL COST:</td>";
+  echo "<td class='text-right' style='font-weight: bold;font-size: 20px;' >TOTAL:</td>";
   echo "<td id='total-cost'></td>";
   echo "</tr>";
   echo "</tfoot>";
