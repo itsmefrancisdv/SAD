@@ -377,64 +377,62 @@ if (isset($_GET['submit'])) {
     <script src="assets/js/jquery-3.6.0.js"></script>
 
     <script>
-        let SRPs;
+        let SRPs = [];
 
-        $(document).on('change', 'select[name=tblinventory]', function () {
-            SRPs.hide();
-            $('#srp-' + $(this).val()).show();
+        $(document).on('change', 'select[name=tblinventory]', function() {
+            $(this).closest('tr').find('.srp').html(SRPs[$(this).val()]);
         });
 
-        $(document).on('change', 'select[name=tblinventory]', () => calculate());
+        $(document).on('change', 'select[name=tblinventory]', function() { calculate($(this)) });
 
-        $(document).on('keyup', '.input-quantity', () => calculate());
-        $(document).on('change', '.input-quantity', () => calculate());
+        $(document).on('keyup', '.input-quantity', function() { calculate($(this)) });
+        $(document).on('change', '.input-quantity', function() { calculate($(this)) });
 
-        function calculate() {
-            const price = SRPs.filter(':not([style*="display: none"])').html();
-            const amt = $('.input-quantity').val() * price;
+        function calculate(elem) {
+            const row = elem.closest('tr');
+            const price = row.find('.srp').html();
+            const amt = row.find('.input-quantity').val() * price;
 
-            $('#amt').val(amt >= 0? amt : 0);
+            row.find('.amt').val(amt >= 0? amt : 0);
         }
 
         function showUser(str) {
             if (str === "") {
-                document.getElementById("suppinfo").innerHTML = "";
+                $("#suppinfo").html("");
             } else {
                 let xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function () {
                     if (this.readyState === 4 && this.status === 200) {
-                        document.getElementById("suppinfo").innerHTML = this.responseText;
-                        SRPs = $('#SRP-col').children();
-                        SRPs.hide();
+                        $("#suppinfo").html(this.responseText);
+
+                        // store prices in an array
+                        $('.srp').children().each(function () {
+                            SRPs.push($(this).html());
+                            $(this).remove();
+                        });
                     }
                 };
                 xmlhttp.open("GET", "getcust.php?q=" + str, true);
                 xmlhttp.send();
-
             }
         }
 
-        function addProduct() {
-            const tableRef = $('#itemt');
-            const btnRef = $('#btnRow');
-            const trRef = $('#itemr');
-            const clone = trRef.cloneNode(true);
-            clone.deleteCell(4);
-            let minus = clone.insertCell(4);
-            minus.innerHTML = "<button type='button' onclick='deleteProduct(this)'>-</button>";
-            let check = clone.querySelectorAll("input");
+        $(document).on('click', '#btnRow', () => {
+            const table = $('#itemt');
+            const lastRow = table.find('tbody tr:nth-last-child(1)');
+            const newRow = lastRow.clone();
 
-            for (let i = 0; i < check.length; i++) {
-                check[i].value = "";
-            }
+            // setup new row
+            newRow.find('select').prop('selectedIndex', 0);
+            newRow.find('input').val('');
+            newRow.find('button').html('-').addClass('delete-row-button').attr('id', '');
 
-            tableRef.appendChild(clone);
-        }
+            lastRow.after(newRow);
+        });
 
-        function deleteProduct(btn) {
-            const row = btn.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
+        $(document).on('click', '.delete-row-button', function () {
+            $(this).closest('tr').remove();
+        });
     </script>
 </body>
 

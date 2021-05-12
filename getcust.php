@@ -99,17 +99,17 @@ echo "<td><select name = 'tblinventory'>
          $ctr++;
     }
     echo "</td>";
-    echo "<td id='SRP-col'>";
+    echo "<td class='srp'>";
             for ($ctr = 0; $ctr < count($srp); $ctr++) {
-                echo "<div id='srp-$ctr'>$srp[$ctr]</div>";
+                echo "<div>$srp[$ctr]</div>";
             }
 
     echo "</td>";
   echo "</select></td>";
   echo "<td><input type='number' min='1'  name='qty[]'  class='input-quantity' style='text-align:right' required></td>";
   // echo "<td><input type='number' name='unitp[]' min='1' class='input-quantity' required></td>";
-  echo "<td><input type='text' id='amt' ttc='1' size='40' disabled='disabled' style='text-align:right'></td>";
-  echo "<td><button type='button' id='btnRow' onclick='addProduct()'>+</button></td>";
+  echo "<td><input type='text' class='amt' ttc='1' size='40' disabled='disabled'></td>";
+  echo "<td><button type='button' id='btnRow' >+</button></td>";
   echo "</tr>";
   echo "<tfoot>";
   echo "<tr>";
