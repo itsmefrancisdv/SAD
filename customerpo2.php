@@ -394,6 +394,13 @@ if (isset($_GET['submit'])) {
             const amt = row.find('.input-quantity').val() * price;
 
             row.find('.amt').val(amt >= 0? amt : 0);
+
+            let sum = 0;
+            $('.amt').each(function () {
+                sum += parseInt($(this).val())
+            })
+
+            $('#total-cost').html(sum);
         }
 
         function showUser(str) {

@@ -115,8 +115,8 @@ echo "<td><select name = 'tblinventory'>
   echo "<tr>";
   echo "<td></td>";
   echo "<td></td>";
-  echo "<td class='text-right' style='font-weight: bold;font-size: 20px;' id='totalcost'>TOTAL COST:</td>";
-  echo "<td></td>";
+  echo "<td class='text-right' style='font-weight: bold;font-size: 20px;' >TOTAL COST:</td>";
+  echo "<td id='total-cost'></td>";
   echo "</tr>";
   echo "</tfoot>";
 echo "</table>";
