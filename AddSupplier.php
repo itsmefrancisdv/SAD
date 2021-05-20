@@ -1,23 +1,20 @@
 <?php
 require_once('mysql_connect.php');
 
-if (isset($_GET['submit'])) {
-  $squery = "SELECT * FROM suppliers WHERE supplierID='{$_GET['CustNum']}'";
-  $sresult = mysqli_query($dbc, $squery);
-  $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
+if (isset($_POST['submit'])){
+  $query = "INSERT INTO suppliers (supplierName, supplierEmail, supplierNumber, supplierAddress)
+  VALUES ('{$_POST['suppName']}','{$_POST['suppEmail']}','{$_POST['suppNum']}','{$_POST['suppAddress']}')";
+  mysqli_query($dbc,$query);
+  $suppid = mysqli_insert_id($dbc);
+  for ($i = 0; $i < sizeof($_POST['products']); $i++){
+    $query = "INSERT INTO tblinventory (pName) VALUES ('{$_POST['products'][$i]}')";
+    mysqli_query($dbc,$query);
+    $itemid = mysqli_insert_id($dbc);
 
-  $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
-  ('{$_GET['CustNum']}',NOW(),'{$_GET['CustMOP']}','Pending')";
-  mysqli_query($dbc, $query2);
-  $poid = mysqli_insert_id($dbc);
-
-  for ($i = 0; $i < sizeof($_GET['products']); $i++) {
-    $amount = $_GET['qty'][$i] * $_GET['unitp'][$i];
-    $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
-    ('{$poid}','{$_GET['products'][$i]}','{$_GET['qty'][$i]}','{$_GET['unitp'][$i]}','{$amount}')";
-    mysqli_query($dbc, $query3);
+    $query2 = "INSERT INTO suppliers_items (itemID,supplierID,itemPrice) VALUES ('{$itemid}','{$suppid}','{$_POST['unitp'][$i]}')";
+    mysqli_query($dbc,$query2);
   }
-  header('Location: supplierordertracker.php');
+  header('Location: supplierpo.php');
 }
 
 ?>
@@ -27,7 +24,7 @@ if (isset($_GET['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>LazeRosa - Supplier Purchase Order</title>
+    <title>LazeRosa - Add Supplier</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
@@ -52,7 +49,7 @@ if (isset($_GET['submit'])) {
             <div id="Body">
                 <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
                     <div class="container-fluid" id="Navbar-Container">
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;" method="POST">
+                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;">
                             <div id="Navbar-ButtonGroup" class="input-group" style="width: 100%;min-width: 1000px;"><img id="Site-Logo" src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 100pxpx;height: 90px;">
                                 <div class="collapse navbar-collapse" id="Header-Menu">
                                     <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
@@ -146,44 +143,96 @@ if (isset($_GET['submit'])) {
     </ul>
     </div>
     </nav>
-    <form id='totalsum'>
+    <form method="POST">
     <div class="container-fluid" id="Page-Content">
         <div id="Breadcrumb-Border" style="width: auto;margin-bottom: 10px;"></div>
         <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon" src="assets/img/SuppPO.png" style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
-            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Reorder: Supplier Purchase Order</h3>
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Add Supplier</h3>
         </div>
         <div class="card shadow" id="SuppPO_Table" style="margin-right: 8vw;margin-left: 8vw;">
             <div class="card-header py-3" id="Table-Header" style="background-color: rgb(235,235,235);background: linear-gradient(to right, #2657eb, #de6161);">
-                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Supplier PO Form</p>
+                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Add Supplier Form</p>
             </div>
             <div class="card-body" id="Table-Body" style="padding-bottom: 0px;padding-top: 10px;">
                 <div class="row" id="Table-PODetails">
                     <div class="col-auto col-md-6 col-xl-4 text-nowrap" id="Table-PODetailCol1" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
-                        <div id="Table-PODetail1" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-PONumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier:&nbsp;
-                          <select class="border rounded border-dark float-right" type="text" id="Table-PONumInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustNum" onchange='showUser(this.value)'></label>
-                            <option value=""></option>
-                            <?php
-                            $query = "SELECT * FROM suppliers";
-                            $result = mysqli_query($dbc,$query);
-
-                            while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                              echo "<option value='{$row['supplierID']}'>{$row['supplierName']}</option>";
-                            }
-                            ?>
-                          </select>
-                            <div>
-                            <br>
-                            <a href="AddSupplier.php"><button type="button">Add Supplier</button></a>
+                        <div
+                            id="Table-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier Name:&nbsp;
+                              <input class="border rounded border-dark float-right" type="text" id="Table-NameInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="suppName"></label></div>
+                    <div
+                        id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier Email:&nbsp;
+                          <input class="border rounded border-dark float-right" type="email" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="suppEmail"></label></div>
+            </div>
+            <div class="col-auto col-md-6 col-xl-4 text-nowrap" id="Table-PODetailCol2" style="padding-top: 12px;padding-bottom: 12px;">
+                <div id="Table-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier Number:&nbsp;
+                  <input class="border rounded border-dark float-right" type="tel" id="Table-NumInput" style="border-radius: 20px;width: 185px;" autocomplete="on" name="suppNum"></label></div>
+                <div
+                    id="Table-PODetail5" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-AddrLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Supplier Address:&nbsp;
+                      <input class="border rounded border-dark float-right" type="text" id="Table-AddrInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="suppAddress"></label></div>
+    </div>
+    </div>
+    </div>
+    <div class="card-body" id="Table-Body">
+        <div class="table-responsive table mt-2" id="SuppPO-TableFrame" role="grid" aria-describedby="dataTable_info">
+            <table class="table my-0" id="itemt">
+                <thead id="Table-Header">
+                    <tr class="text-center" id="Table-HeaderRow" style="background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);/*background: linear-gradient(0deg, rgba(27,142,144,1) 0%, rgba(18,38,38,1) 5%, rgba(0,0,0,1) 100%);*//*background: #6a11cb;*//*background: linear-gradient(to right, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5));*//*background: #de6161;*//*background: -webkit-linear-gradient(to right, #2657eb, #de6161);*//*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                        <th class="text-left" style="width: 500px;">Product Name</th>
+                        <th class='text-left'>Unit Price</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="Table-Body">
+                    <tr class="text-center" id="itemr">
+                        <td class="text-left" id="ProductName-Entry"><input class="border rounded" type="text" id="ProductName-Input" placeholder="Input Product Name" style="width: 100%;border-color: transparent;background-color: transparent;" name="products[]" autocomplete="on"></td>
+                        <td class='text-left' id="UnitPrice-Entry"><input class="border rounded" type="number" id="UnitPrice-Input" step="0.01" placeholder="Input Unit Price" name="unitp[]" style="border-color: transparent;background-color: transparent;"></td>
+                        <td class="text-left"><button type='button' id='btnRow' onclick='addProduct()'>+</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" id="Table-Button-Row">
+            <div class="col-lg-3 col-xl-2 offset-lg-6 offset-xl-7" id="ClearFields-Column">
+                <div id="Clear"><a class="btn btn-danger float-right" role="button" id="ClearButton" data-toggle="modal" href="#ClearPopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">CLEAR FIELDS</a>
+                    <div
+                        class="modal fade" role="dialog" tabindex="-1" id="ClearPopup">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" id="Clear-Modal">
+                            <div class="modal-content" id="Clear-Modal-Content">
+                                <div class="modal-header" id="Clear-Modal-Header" style="background-color: #e74a3b;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                    <h4 id="Clear-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">Clear Fields</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Clear-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                <div class="modal-body" id="Clear-ModalBody"><span id="Clear-ModalMessage" style="font-size: 20px;">Are you sure you want to clear all fields?</span></div>
+                                <div class="modal-footer" id="Clear-ModalFooter"><button class="btn btn-light text-danger" id="Clear-CancelButton" data-dismiss="modal" type="button" style="font-family: 'Open Sans', sans-serif;">Cancel</button><button class="btn btn-danger" id="Clear-ConfirmButton" type="reset"
+                                        style="border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;font-family: 'Open Sans', sans-serif;">CONFIRM</button></div>
                             </div>
-                          </div>
-                          <div id="suppinfo">
-
-                          </div>
-
-    </div>
-    </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col" id="ConfirmPO-Column">
+            <div id="Confirm"><a class="btn btn-success float-right" role="button" id="ConfirmButton" data-toggle="modal" href="#ConfirmPopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">CONFIRM</a>
+                <div
+                    class="modal fade" role="dialog" tabindex="-1" id="ConfirmPopup">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document" id="Confirm-Modal">
+                        <div class="modal-content" id="Confirm-ModalContent">
+                            <div class="modal-header" id="Confirm-ModalHeader" style="background-color: rgb(28,200,138);color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                <h4 id="Confirm-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">Add to Pricelist</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Confirm-CloseButton"><span aria-hidden="true">×</span></button></div>
+                            <div class="modal-body" id="Confirm-ModalBody"><span id="Confirm-ModalMessage" style="font-size: 20px;">Add new supplier?</span></div>
+                            <div class="modal-footer" id="Confirm-ModalFooter">
+                              <button class="btn btn-light text-danger" id="Confirm-CancelButton" data-dismiss="modal" type="button" style="font-family: 'Open Sans', sans-serif;">Cancel</button><button class="btn btn-success" id="Confirm-ConfirmButton"
+                                    type="submit" name='submit' style="font-family: 'Open Sans', sans-serif;padding-right: 25px;padding-left: 25px;border-radius: 50px 10px;">CONFIRM</button></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </div>
   </form>
+    </div>
+    </div>
+    </div>
+    <div></div>
+    </div>
+    <div></div>
+    </div>
     <footer class="bg-white sticky-footer" id="Footer" style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(148, 148, 148, 0.5));">
         <div class="container my-auto">
             <div class="text-center my-auto copyright"><span>LazeRosa Systems || by Group 3</span></div>
@@ -196,73 +245,29 @@ if (isset($_GET['submit'])) {
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script>
+    function addProduct() {
+    var tableRef = document.getElementById('itemt');
+    var btnRef = document.getElementById('btnRow');
+    var trRef = document.getElementById('itemr');
+    var clone = trRef.cloneNode(true);
+    clone.deleteCell(2);
+    var minus = clone.insertCell(2);
+    minus.innerHTML = "<button type='button' onclick='deleteProduct(this)'>-</button>";
+    var check = clone.querySelectorAll("input");
+
+    for (i = 0; i < check.length; i++) {
+      check[i].value = "";
+    }
+
+    tableRef.appendChild(clone);
+    }
+
+    function deleteProduct(btn) {
+    var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    }
+    </script>
 </body>
-<script>
-function showUser(str) {
-if (str == "") {
-document.getElementById("suppinfo").innerHTML = "";
-return;
-} else {
-var xmlhttp = new XMLHttpRequest();
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    document.getElementById("suppinfo").innerHTML = this.responseText;
-  }
-};
-xmlhttp.open("GET","getsupp.php?q="+str,true);
-xmlhttp.send();
-}
-}
-function addProduct() {
-var tableRef = document.getElementById('itemt');
-var btnRef = document.getElementById('btnRow');
-var trRef = document.getElementById('itemr');
-var clone = trRef.cloneNode(true);
-clone.deleteCell(4);
-var minus = clone.insertCell(4);
-minus.innerHTML = "<button type='button' onclick='deleteProduct(this)'>-</button>";
-var check = clone.querySelectorAll("input");
-
-for (i = 0; i < check.length; i++) {
-  check[i].value = "";
-}
-
-tableRef.appendChild(clone);
-}
-
-function deleteProduct(btn) {
-var row = btn.parentNode.parentNode;
-row.parentNode.removeChild(row);
-}
-
-function multiply(val) {
-var tableRef = document.getElementById('itemt');
-var amount = document.getElementById('amt');
-var totalc = document.getElementById('totalcost');
-var row = val.parentNode.parentNode;
-var qty = row.cells[1].childNodes[0].value;
-var price = row.cells[2].childNodes[0].value;
-var prices = new Array();
-var amt = 0;
-var check = itemt.getElementsByTagName('input');
-if (isNaN(qty.value) && isNaN(price.value)) {
-  var mult = qty * price;
-  row.deleteCell(3);
-  var change = row.insertCell(3);
-  prices.push(mult);
-  change.innerHTML = "<input type='text' disabled='disabled' value='" + mult + "'>";
-  for (i = 0; i < check.length; i++){
-    if (check[i].disabled == false){
-      continue;
-    }
-    else{
-      amt = amt + parseInt(check[i].value);
-    }
-
-  }
-  totalc.innerHTML = "<td class='text-right' style='font-weight: bold;font-size: 20px;' id='totalcost'>TOTAL COST: " + amt + "</td>";
-}
-}
-</script>
 
 </html>

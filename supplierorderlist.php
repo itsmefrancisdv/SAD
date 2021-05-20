@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
   $poid = mysqli_insert_id($dbc);
 
   for ($i = 0; $i < sizeof($_POST['product']); $i++) {
-    $query = "INSERT INTO tblinventory (pName) VALUES ('{$_POST['product'][$i]}')";
+    $query = "INSERT INTO items (itemName) VALUES ('{$_POST['product'][$i]}')";
     mysqli_query($dbc, $query);
     $itemid = mysqli_insert_id($dbc);
 
@@ -29,11 +29,11 @@ if (isset($_POST['submit'])) {
 }
 
 if (isset($_POST['confirm'])) {
-  for ($i = 0; $i < sizeof($_POST['poid']); $i++) {
-    $query = "UPDATE purchase_orders SET status='Deleted' WHERE purchaseID='{$_POST['poid'][$i]}'";
-    mysqli_query($dbc, $query);
+    for ($i = 0; $i < sizeof($_POST['poid']); $i++) {
+      $query = "UPDATE purchase_orders SET status='Deleted' WHERE purchaseID='{$_POST['poid'][$i]}'";
+      mysqli_query($dbc, $query);
+    }
   }
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,7 +92,7 @@ if (isset($_POST['confirm'])) {
                                     class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;"><a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="Reorder_SuppPO.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="SuppPO-Icon" src="assets/img/SuppPO.png" style="width: 20px;"><span id="SuppPO-Text">Supplier PO</span></a>
                                     <a
                                         class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="Reorder_SuppOL.html" style="height: 50px;margin-top: 5px;width: auto;"><img class="d-block" id="SuppOrderList-Icon" src="assets/img/SuppOrderList.png" style="width: 20px;"><span id="SuppOrderList-Text">Supplier Order List</span></a><a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link"
-                                            href="Reorder_SuppTR.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="SuppTracker-Icon" src="assets/img/SuppTracker.png" style="width: 20px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
+                                            href="supplierordertracker.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="SuppTracker-Icon" src="assets/img/SuppTracker.png" style="width: 20px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
                     </li>
                     <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
                         <div
@@ -209,7 +209,7 @@ if (isset($_POST['confirm'])) {
                         <tbody id="Table-Body">
                           <form method="POST">
                           <?php
-                          $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status != 'Deleted'";
+                          $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Received'";
                           $result = mysqli_query($dbc, $query);
                           $i = 0;
 
@@ -222,12 +222,13 @@ if (isset($_POST['confirm'])) {
                             echo "<td>{$row['supplierName']}</td>";
                             echo "<td>{$row['paymentMethod']}</td>";
                             echo "<td>{$row['status']}</td>";
+                            
                           ?>
                           <td>
                             <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button>
 
-                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
-                              <div class="modal-dialog modal-lg">
+                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog" >
+                              <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                   <div class="modal-body">
                                       <label for="suppName">Supplier Name</label><br>
@@ -270,12 +271,12 @@ if (isset($_POST['confirm'])) {
                                                 JOIN tblinventory i
                                                 ON poi.itemID = i.pID";
                                               $finalresult = mysqli_query($dbc, $finalquery);
-                                              while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
+                                                 while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
                                                 if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                                   $productcount++;
                                           ?>
                                                   <tr>
-                                                    <td><input type="text" name="product[]" value="<?php echo $finalrow['pName']; ?>" disabled></td>
+                                                    <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                                     <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
                                                     <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
                                                     <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
@@ -316,21 +317,6 @@ if (isset($_POST['confirm'])) {
                         </tfoot>
                     </table>
                 </div>
-                <div class="row" id="Table-Details">
-                    <div class="col-md-6 align-self-center" id="Table-PageInd" style="width: 316px;"><span id="Table-PageInd-Range">Showing&nbsp;<span id="Table-PageInd-CurrentFirst">1</span><span>&nbsp;to&nbsp;</span><span id="Table-PageInd-CurrentLast">10</span><span>&nbsp;of&nbsp;</span><span id="Table-PageInd-MaxNum">27</span></span>
-                    </div>
-                    <div class="col-md-6" id="Table-PageNav-Frame">
-                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers" id="Table-PageNavBar">
-                            <ul class="pagination" id="Table-PageNav">
-                                <li class="page-item disabled" id="Table-PageNav-Prev"><a class="page-link" href="#" aria-label="Previous" id="Table-PageNav-Prev-Link"><span aria-hidden="true">«</span></a></li>
-                                <li class="page-item active" id="Table-PageNav-P1"><a class="page-link" href="#" id="Table-PageNav-P1-Link">1</a></li>
-                                <li class="page-item" id="Table-PageNav-P2"><a class="page-link" href="#" id="Table-PageNav-P2-Link">2</a></li>
-                                <li class="page-item" id="Table-PageNav-P3"><a class="page-link" href="#" id="Table-PageNav-P3-Link">3</a></li>
-                                <li class="page-item" id="Table-PageNav-Next"><a class="page-link" href="#" aria-label="Next" id="Table-PageNav-Next-Link"><span aria-hidden="true">»</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
                 <div class="row" id="Table-Button-Row">
                     <div class="col offset-xl-6" id="Delete-Column">
                         <div id="Delete"><a class="btn btn-danger float-right" role="button" id="DeleteButton" onclick="isChecked()" data-toggle="modal" href="#DeletePopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">DELETE</a>
@@ -360,7 +346,7 @@ if (isset($_POST['confirm'])) {
                     </div>
                 </div>
                 <div class="col" id="Add-Column">
-                    <div id="Add"><a class="btn btn-success float-right" role="button" id="AddButton" href="Reorder_SuppPO.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</a>
+                    <div id="Add"><a class="btn btn-success float-right" role="button" id="AddButton" href="supplierpo.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</a>
                         <div
                             class="modal fade" role="dialog" tabindex="-1" id="AddPopup">
                             <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document" id="Add-Modal">

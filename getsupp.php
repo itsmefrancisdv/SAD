@@ -1,5 +1,5 @@
 <?php
-require_once('mysql_connect.php');
+require_once('connect.php');
 
 $q = intval($_GET['q']);
 
@@ -47,13 +47,16 @@ if (isset($_POST['submit'])) {
 <div
     id="Table-PODetail6" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-MOPLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Mode of Payment:&nbsp;
       <select class="border rounded border-dark float-right" id="Table-MOPInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustMOP">
-        <optgroup label="Please Select MOP">
-          <option value="Cash on Delivery">Cash on Delivery</option>
-          <option value="Credit/Debit Card">Credit/Debit Card</option>
-          <option value="Online Bank Payment">Online Bank Payment</option>
-          <option value="G-Cash">G-Cash</option>
-          <option value="Shopee Pay">Shopee Pay</option>
-        </optgroup></select></label></div>
+      <?php
+        $result = mysqli_query($dbc, "SELECT MOP FROM modeofpayment");
+        echo "<optgroup label='Please Select MOP'>";
+        while ($rows = mysqli_fetch_array($result)){
+          $MOP = $rows['MOP'];
+          echo "<option value='$MOP' label='$MOP'>$MOP</option>";
+          }
+        echo "</optgroup></select></label>";
+      ?>
+      </div>
 <?php
 echo " <table id='itemt' class='table my-0'>
 <tr class='text-center' style='background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);'>

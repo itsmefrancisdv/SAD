@@ -4,26 +4,26 @@ require_once('connect.php');
 $q = intval($_GET['q']);
 
 $sql="SELECT * FROM customers WHERE custID = '".$q."'";
-$result = mysqli_query($DBConnect,$sql);
+$result = mysqli_query($dbc,$sql);
 
 $sql2 = "SELECT * FROM customers WHERE custID = '".$q."'";
-$result3 = mysqli_query($DBConnect,$sql2);
+$result3 = mysqli_query($dbc,$sql2);
 
 if (isset($_POST['submit'])) {
   $squery = "SELECT * FROM customers WHERE custID='{$q}'";
-  $sresult = mysqli_query($DBConnect, $squery);
+  $sresult = mysqli_query($dbc, $squery);
   $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
   $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
   ('{$q}',NOW(),'{$_POST['CustMOP']}','Pending')";
-  mysqli_query($DBConnect, $query2);
-  $poid = mysqli_insert_id($DBConnect);
+  mysqli_query($dbc, $query2);
+  $poid = mysqli_insert_id($dbc);
 
   for ($i = 0; $i < sizeof($_POST['products']); $i++) {
     $amount = $_POST['qty'][$i] * $_POST['unitp'][$i];
     $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
     ('{$poid}','{$_POST['products'][$i]}','{$_POST['qty'][$i]}','{$_POST['unitp'][$i]}','{$amount}')";
-    mysqli_query($DBConnect, $query3);
+    mysqli_query($dbc, $query3);
   }
 }
 
@@ -47,13 +47,17 @@ if (isset($_POST['submit'])) {
 <div
     id="Table-PODetail6" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-MOPLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Mode of Payment:&nbsp;
       <select class="border rounded border-dark float-right" id="Table-MOPInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustMOP">
-        <optgroup label="Please Select MOP">
-          <option value="Cash on Delivery">Cash on Delivery</option>
-          <option value="Credit/Debit Card">Credit/Debit Card</option>
-          <option value="Online Bank Payment">Online Bank Payment</option>
-          <option value="G-Cash">G-Cash</option>
-          <option value="Shopee Pay">Shopee Pay</option>
-        </optgroup></select></label></div>
+        
+        <?php
+        $result = mysqli_query($dbc, "SELECT MOP FROM modeofpayment");
+        echo "<optgroup label='Please Select MOP'>";
+        while ($rows = mysqli_fetch_array($result)){
+          $MOP = $rows['MOP'];
+          echo "<option value='$MOP' label='$MOP'>$MOP</option>";
+          }
+        echo "</optgroup></select></label>";
+        ?>
+      </div>
         
         <div id="Table-PODetail7-8" class="dataTables_length" aria-controls="dataTable" style="padding-top: 0px;padding-bottom: 0px;width: 100%;max-width: 360px;">
             <div class="row" id="Table-Detail7-8">
@@ -61,8 +65,30 @@ if (isset($_POST['submit'])) {
                 <div class="col" id="Table-PODetail8"><label class="col-form-label text-center" id="Table-DatePickLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Pickup Date:&nbsp;<input class="border rounded border-dark float-left" id="Table-DatePickInput" type="date" style="width: 165px;margin-right: auto;margin-left: auto;border-radius: 20px;" name="CustDatePick" required></label></div>
             </div>
         </div>
-        <div id="Table-PODetail9" class="dataTables_length" aria-controls="dataTable" style="padding-top: 5px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-PlatformLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Platform:&nbsp;<select class="border rounded border-dark float-right" id="Table-PlatformInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustPlatform" required><option value="Facebook /Instagram ">Facebook /Instagram </option><option value="Shopee">Shopee</option></select></label></div>
-        <div id="Table-PODetail10" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-CourierLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Courier:&nbsp;<select class="border rounded border-dark float-right" id="Table-CourierInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustCourier" required><option value="Grab">Grab</option><option value="Lalamove">Lalamove</option><option value="MrSpeedy">MrSpeedy</option><option value="Provided by Shopee">Provided by Shopee</option></select></label></div>
+        <div id="Table-PODetail9" class="dataTables_length" aria-controls="dataTable" style="padding-top: 5px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-PlatformLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Platform:&nbsp;<select class="border rounded border-dark float-right" id="Table-PlatformInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustPlatform" required>
+          
+        <?php
+        $result = mysqli_query($dbc, "SELECT platformName FROM platform");
+        
+        while ($rows = mysqli_fetch_array($result)){
+          $platform = $rows['platformName'];
+          echo "<option value='$platform' label='$platform'>$platform</option>";
+          }
+        echo "</optgroup></select></label>";
+        ?>
+        </div>
+        <div id="Table-PODetail10" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-CourierLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Courier:&nbsp;<select class="border rounded border-dark float-right" id="Table-CourierInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustCourier" required>
+        
+        <?php
+        $result = mysqli_query($dbc, "SELECT courierName FROM courier");
+        
+        while ($rows = mysqli_fetch_array($result)){
+          $courier = $rows['courierName'];
+          echo "<option value='$courier' label='$courier'>$courier</option>";
+          }
+        echo "</optgroup></select></label>";
+        ?>
+        </div>
         </div>
         </div>
     </div>
@@ -80,7 +106,7 @@ echo " <table id='itemt' class='table my-0'>
   JOIN suppliers_items ON suppliers_items.supplierID = customers.custID
   JOIN tblinventory ON suppliers_items.itemID = tblinventory.pID
   WHERE suppliers.custID = '{$q}'";
-  $result2 = mysqli_query($DBConnect,$query);
+  $result2 = mysqli_query($dbc,$query);
 
 //   echo "<td><select name='products[]'>";
 //   while ($result = mysqli_fetch_array($result2,MYSQLI_ASSOC)){
@@ -91,7 +117,7 @@ echo "<td><select name = 'tblinventory'>
      $srp = [];
      $ctr = 0;
 
-    $result = mysqli_query($DBConnect, "SELECT pName, pSRP FROM tblinventory");
+    $result = mysqli_query($dbc, "SELECT pName, pSRP FROM tblinventory");
     while ($rows = mysqli_fetch_array($result)){
         $productName = $rows['pName'];
          $srp[] = $rows['pSRP'];
