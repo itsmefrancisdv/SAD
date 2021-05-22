@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Login - Brand</title>
+    <title>LazeRosa - Login</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
@@ -15,19 +15,21 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400|Roboto:300,400,700">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
     <link rel="stylesheet" href="assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="assets/css/customtable.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown-1.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown.css">
 </head>
 
-<body class="bg-gradient-primary" style="/*background-color: rgba(255,255,255,0);*/background: linear-gradient(to right, rgba(255, 163, 163, 0.5), rgba(156, 249, 255, 0.5));">
+<body class="bg-gradient-primary" style="/*background-color: rgba(255,255,255,0);*/background: linear-gradient(to right, rgba(159,0,0,0.8), rgba(0,14,140,0.5));background-image: url(&quot;assets/img/SYSTIMP/RosyCandles.jpg&quot;);background-size: cover;background-position: center;">
     <div class="container">
         <div class="row justify-content-center" style="margin-right: auto;margin-left: auto;">
             <div class="col-md-9 col-lg-12 col-xl-10" style="margin-right: auto;margin-left: auto;height: auto;">
                 <div class="card shadow-lg o-hidden border-0 my-5" style="background-color: rgba(0,0,0,0.7);height: auto;width: 450px;margin-right: auto;margin-left: auto;">
                     <div class="card-body p-0" style="height: auto;">
-                        <div class="row" style="height: auto;">
+                        <div class="row" style="height: 100%;">
                             <div class="p-5" style="width: 400px;height: auto;margin-right: auto;margin-left: auto;">
                                 <div class="text-center"><img src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 175px;margin-bottom: 20px;">
                                     <h4 class="text-white mb-4" style="font-family: ABeeZee, sans-serif;font-size: 25px;">Welcome to LazeRosa!</h4>
@@ -45,7 +47,7 @@
                                 <div class="custom-control custom-checkbox small">
                                     <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                 </div>
-                            </div><button class="btn btn-primary btn-block text-white btn-user" type="submit" name = "submit" style="background: linear-gradient(to right, rgba(255, 163, 163, 0.5), rgba(156, 249, 255, 0.5));">LOGIN</button>
+                                </div><button class="btn btn-primary btn-block text-white btn-user" name = "submit" type="submit" style="background: linear-gradient(to right, #2657eb, #de6161);background: linear-gradient(to right, #2657eb, #de6161);">LOGIN</button>
                             <hr>
                             </form>
                             <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
@@ -74,8 +76,11 @@
         $tpword = md5($tpword);
         $sql = mysqli_query($DBConnect, "SELECT upassword FROM users WHERE uemail='$temail'");
         if($row=mysqli_fetch_array($sql)){
-            if($tpword==$row['upassword']){
-                echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>";
+            if($tpword==$row['upassword'] && $temail=="admin@admin"){
+                echo "<script type='text/javascript'> document.location = 'add_courier_platform.php'; </script>";
+                exit();
+            }else if($tpword==$row['upassword']){
+                 echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>"; //.php where they can add courier and platform
                 exit();
             }
             else{

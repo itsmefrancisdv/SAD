@@ -6,18 +6,23 @@ if (isset($_GET['submit'])) {
     $sresult = mysqli_query($dbc, $squery);
     $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
-    $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
-  ('{$_GET['CustNum']}',NOW(),'{$_GET['CustMOP']}','Pending')";
-    mysqli_query($dbc, $query2);
-    $poid = mysqli_insert_id($dbc);
+//     $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
+//   ('{$_GET['CustNum']}',NOW(),'{$_GET['CustMOP']}','Pending')";
+//     mysqli_query($dbc, $query2);
+//     $poid = mysqli_insert_id($dbc);
 
-    for ($i = 0; $i < sizeof($_GET['products']); $i++) {
-        $amount = $_GET['qty'][$i] * $_GET['unitp'][$i];
-        $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
-    ('{$poid}','{$_GET['products'][$i]}','{$_GET['qty'][$i]}','{$_GET['unitp'][$i]}','{$amount}')";
-        mysqli_query($dbc, $query3);
-    }
-    header('Location: supplierorderlist.php');
+//     $query2 = "INSERT INTO customer_orders (custID, custdateOrdered, custMOP, custStatus) VALUES
+//   ('{$_GET['CustNum']}', NOW(), '{$_GET['custMOP']}', 'Pending')";
+//   mysqli_query($DBConnect, $query2);
+//   $poid = mysqli_insert_id($DBConnect);
+
+    // for ($i = 0; $i < sizeof($_GET['products']); $i++) {
+    //     $amount = $_GET['qty'][$i] * $_GET['unitp'][$i];
+    //     $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
+    // ('{$poid}','{$_GET['products'][$i]}','{$_GET['qty'][$i]}','{$_GET['unitp'][$i]}','{$amount}')";
+    //     mysqli_query($dbc, $query3);
+    // }
+    // header('Location: supplierorderlist.php');
 }
 
 ?>
