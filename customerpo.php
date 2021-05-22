@@ -1,29 +1,51 @@
 <?php
-require_once('mysql_connect.php');
+require_once('connect.php');
 
-if (isset($_GET['submit'])) {
-    $squery = "SELECT * FROM customers WHERE custID='{$_GET['CustNum']}'";
-    $sresult = mysqli_query($dbc, $squery);
-    $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
+ if (isset($_POST['submit'])) {
+    $tmpcid = $_POST['custID'];
+    $query = "SELECT * FROM customers WHERE custID = $tmpcid";
+    $result = mysqli_query($DBConnect, $query);
+
+    // while ($rows = mysqli_fetch_array($result)){
+    //     $cid = $rows['custID'];
+    //     }
+    $q = intval($_GET['q']);
+    
+
+    $custPO = $_POST["CustPONum"];
+    $custID = $q;
+    $custName = $_POST["CustName"];
+    $custMOP = $_POST["CustMOP"];
+    $custdateOrder = $_POST["CustDateOrd"];
+    $custdatePickup = $_POST["CustDatePick"];
+    $custPlatform = $_POST["CustPlatform"];
+    $custCourier = $_POST["CustCourier"];
+    $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus) 
+        VALUES ('$custPO', '$custID', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
+    mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
+ }
+    // $squery = "SELECT * FROM customers WHERE custID='{$_GET['CustNum']}'";
+    // $sresult = mysqli_query($DBConnect, $squery);
+    // $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
 //     $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
 //   ('{$_GET['CustNum']}',NOW(),'{$_GET['CustMOP']}','Pending')";
-//     mysqli_query($dbc, $query2);
-//     $poid = mysqli_insert_id($dbc);
+//     mysqli_query($DBConnect, $query2);
+//     $poid = mysqli_insert_id($DBConnect);
 
 //     $query2 = "INSERT INTO customer_orders (custID, custdateOrdered, custMOP, custStatus) VALUES
 //   ('{$_GET['CustNum']}', NOW(), '{$_GET['custMOP']}', 'Pending')";
-//   mysqli_query($DBConnect, $query2);
-//   $poid = mysqli_insert_id($DBConnect);
+//   mysqli_query($DBConnectonnect, $query2);
+//   $poid = mysqli_insert_id($DBConnectonnect);
 
     // for ($i = 0; $i < sizeof($_GET['products']); $i++) {
     //     $amount = $_GET['qty'][$i] * $_GET['unitp'][$i];
     //     $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
     // ('{$poid}','{$_GET['products'][$i]}','{$_GET['qty'][$i]}','{$_GET['unitp'][$i]}','{$amount}')";
-    //     mysqli_query($dbc, $query3);
+    //     mysqli_query($DBConnect, $query3);
     // }
     // header('Location: supplierorderlist.php');
-}
+// }
 
 ?>
 <!DOCTYPE html>
@@ -194,7 +216,7 @@ if (isset($_GET['submit'])) {
                                                 id="UserProfile-DDItem-SettingsIcon"></i>&nbsp;Settings</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" role="presentation" id="UserProfile-DDItem-Logout"
-                                       href="login.php" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img
+                                       href="index.html" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img
                                                 id="UserProfile-DDItem-LogoutIcon"
                                                 style="width: 15px;height: 15px;margin-right: 8px;"
                                                 src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
@@ -235,15 +257,15 @@ if (isset($_GET['submit'])) {
                                         <option value=""></option>
                                         <?php
                                         $query = "SELECT * FROM customers";
-                                        $result = mysqli_query($dbc, $query);
+                                        $result = mysqli_query($DBConnect, $query);
 
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                                             echo "<option value='{$row['custID']}'>{$row['custName']}</option>";
                                         }
                                         ?>
                                         </select><br>
-
-
+                                        
+                                            
                                     </div>
                                     <div id="suppinfo">
                                         <button><a href="customercreate.php">Add Customer</a></button>
@@ -316,6 +338,7 @@ if (isset($_GET['submit'])) {
                 };
                 xmlhttp.open("GET", "getcust.php?q=" + str, true);
                 xmlhttp.send();
+                
             }
         }
 

@@ -3,15 +3,15 @@
 
 $q = intval($_GET['q']);
 
-$sql="SELECT * FROM customers WHERE custID = '".$q."'";
+$sql="SELECT * FROM customers WHERE custID = $q";
 $result = mysqli_query($DBConnect,$sql);
 
-$sql2 = "SELECT * FROM customers WHERE custID = '".$q."'";
+$sql2 = "SELECT * FROM customers WHERE custID = $q";
 $result3 = mysqli_query($DBConnect,$sql2);
 
 // if (isset($_POST['submit'])) {
 //   $squery = "SELECT * FROM customers WHERE custID='{$q}'";
-//   $sresult = mysqli_query($DBConnect, $squery);
+//   $sresult = mysqli_query($DBConnectonnect, $squery);
 //   $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
   // $custPO = $_POST["CustPONum"];
@@ -23,37 +23,40 @@ $result3 = mysqli_query($DBConnect,$sql2);
   // $custCourier = $_POST["custCourier"];
   // $add = "INSERT INTO customer_orders (custPO, custID, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus) 
   //     VALUES ('$custPO', '$custID', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
-  // mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
+  // mysqli_query($DBConnectonnect, $add) or die (mysqli_error($DBConnectonnect));
   // echo "<script type='text/javascript'> document.location = 'customerpo.php'; </script>";
 
   // $query2 = "INSERT INTO customer_orders (custID, custdateOrdered, custMOP, custStatus) VALUES
   // ('{$q}', NOW(), '{$_POST['custMOP']}', 'Pending')";
-  // mysqli_query($DBConnect, $query2);
-  // $poid = mysqli_insert_id($DBConnect);
+  // mysqli_query($DBConnectonnect, $query2);
+  // $poid = mysqli_insert_id($DBConnectonnect);
 
   // $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
   // ('{$q}',NOW(),'{$_POST['CustMOP']}','Pending')";
-  // mysqli_query($DBConnect, $query2);
-  // $poid = mysqli_insert_id($DBConnect);
+  // mysqli_query($DBConnectonnect, $query2);
+  // $poid = mysqli_insert_id($DBConnectonnect);
 
   // for ($i = 0; $i < sizeof($_POST['products']); $i++) {
   //   $amount = $_POST['qty'][$i] * $_POST['unitp'][$i];
   //   $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
   //   ('{$poid}','{$_POST['products'][$i]}','{$_POST['qty'][$i]}','{$_POST['unitp'][$i]}','{$amount}')";
-  //   mysqli_query($DBConnect, $query3);
+  //   mysqli_query($DBConnectonnect, $query3);
   // }
 
 
 ?>
-<?php while ($supp = mysqli_fetch_array($result3,MYSQLI_ASSOC)){  ?>
-<form method="POST">
-                        <?php
+<!DOCTYPE html>
+<html>
+<body>
+<form method="POST" action="customerpo.php">
+<?php $q = intval($_GET['q']);
+  while ($supp = mysqli_fetch_array($result3,MYSQLI_ASSOC)){  
                             $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders");
                             while($row = mysqli_fetch_array($query)){
                                 $id=$row["custPO"] + 1;
-                            
                             }
-                            echo "<div id='Table-PODetail1' class='dataTables_length' aria-controls='dataTable' style='padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;'><label id='Table-PONumLabel' style='margin-top: 0px;margin-bottom: 0px;width: 100%;'>Customer PO #:&nbsp;<input class='border rounded border-dark float-right' id='Table-PONumInput' style='border-radius: 20px;margin-left: 0px;width: 185px;' name='CustPONum' type='text' value='".$id."' size='30' readonly><br/></label></div>";
+                            echo "<div id='Table-PODetail1' class='dataTables_length' aria-controls='dataTable' style='padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;'><label id='Table-PONumLabel' style='margin-top: 0px;margin-bottom: 0px;width: 100%;'>Customer PO #:&nbsp;<input class='border rounded border-dark float-right' id='Table-PONumInput' style='border-radius: 20px;margin-left: 0px;width: 185px;' name='CustPONum' type='text' value='".$id."' size='30' disabled><br/></label></div>";
+                          
                         ?>
             <div
                 id="Table-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Name:&nbsp;
@@ -63,7 +66,7 @@ $result3 = mysqli_query($DBConnect,$sql2);
             id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Email:&nbsp;
               <input class="border rounded border-dark float-right" type="email" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustEmail" value="<?php echo $supp['custEmail']; ?>" disabled></label>
             </div>
-          </div>
+          
     <div id="Table-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Number:&nbsp;
       <input class="border rounded border-dark float-right" type="tel" id="Table-NumInput" style="border-radius: 20px;width: 185px;" autocomplete="on" name="CustNum" value="<?php echo $supp['custNumber']; ?>" disabled></label></div>
     <div
@@ -114,9 +117,8 @@ $result3 = mysqli_query($DBConnect,$sql2);
         echo "</optgroup></select></label>";
         ?>
         </div>
-        </div>
-        </div>
-    </div>
+        <?php }?>
+        
 <?php
 echo " <table id='itemt' class='table my-0'>
 <tr class='text-center' style='background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);'>
@@ -172,31 +174,15 @@ echo "<td><select name = 'tblinventory'>
   echo "</tfoot>";
 echo "</table>";
 echo "<br><br>";
-echo "<button type='submit' class='btn btn-success' name='submit'>Submit</button>";
+// echo "<button type='submit' class='btn btn-success' name='submit'>Submit</button>";
 ?>
 
-<?php } ?>
 
-<?php
-  require("connect.php");
+<button type='submit' class='btn btn-success' name='submit'>Submit</button>
+</form>
 
-  if(isset($_POST["submit"])){
-    $custPO = $_POST["CustPONum"];
-    // $custID = $q;
-    $custMOP = $_POST["custMOP"];
-    $custdateOrder = $_POST["CustDateOrd"];
-    $custdatePickup = $_POST["CustDatePick"];
-    $custPlatform = $_POST["custPlatform"];
-    $custCourier = $_POST["custCourier"];
-    $add = "INSERT INTO customer_orders (custPO, custID, custMOP, custDateOrdered, custDatePickup, custPlatform, custStatus) 
-        VALUES ('$custPO', '$q', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
-    mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
-    echo "<script type='text/javascript'> document.location = 'customerpo.php'; </script>";
-  }
-?>
 
-<html>
-    <body>
+
         <script src="assets/js/custom3.js"></script>
     </body>
 </html>

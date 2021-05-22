@@ -193,14 +193,18 @@
                             <?php
                             require_once("connect.php");
                             
-                                $query = mysqli_query($DBConnect, "SELECT * FROM sales_customer s ORDER by s.PONumber");  //getting PO
+                                $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders WHERE custStatus = 'Received' ORDER by custPO");  //getting PO
                                 while($retrieve = mysqli_fetch_array($query)){
                                     echo "<tr class='text-center' id='Table-Row'>"; 
                                     echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
-                                    echo "<td>" . $retrieve["PONumber"].  "</td>";
-                                    echo "<td>". $retrieve["dateOrdered"].  "</td>";
-                                    echo "<td>" . $retrieve["custName"].  "</td>";
-                                    echo "<td>" . $retrieve["status"].  "</td>";
+                                    echo "<td>" . $retrieve["custPO"].  "</td>";
+                                    // echo "<td>". $retrieve["custID"].  "</td>";
+                                    // echo "<td>" . $retrieve["custMOP"].  "</td>";
+                                    echo "<td>" . $retrieve["custDateOrdered"].  "</td>";
+                                    echo "<td>" . $retrieve["custDatePickup"].  "</td>";
+                                    echo "<td>" . $retrieve["custPlatform"].  "</td>";
+                                    echo "<td>" . $retrieve["custCourier"].  "</td>";
+                                    echo "<td>" . $retrieve["custStatus"].  "</td>";
                                     echo "</tr>";
                                 }
                             ?>
