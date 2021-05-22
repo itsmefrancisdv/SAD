@@ -107,7 +107,7 @@
                     class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
                     <a
                         class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img style="width: 15px;height: 15px;margin-right: 8px;" src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="login.php" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img style="width: 15px;height: 15px;margin-right: 8px;" src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
             </div>
         </li>
     </ul>

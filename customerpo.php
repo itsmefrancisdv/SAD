@@ -194,7 +194,7 @@ if (isset($_GET['submit'])) {
                                                 id="UserProfile-DDItem-SettingsIcon"></i>&nbsp;Settings</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" role="presentation" id="UserProfile-DDItem-Logout"
-                                       href="index.html" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img
+                                       href="login.php" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img
                                                 id="UserProfile-DDItem-LogoutIcon"
                                                 style="width: 15px;height: 15px;margin-right: 8px;"
                                                 src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
