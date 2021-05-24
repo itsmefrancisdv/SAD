@@ -122,12 +122,12 @@
     </nav>
     <div class="container-fluid" id="Page-Content">
         <div id="Breadcrumb-Border" style="width: auto;margin-bottom: 10px;"></div>
-        <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon" src="assets/img/CustTracker.png" style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
+        <div class="d-sm-flex align-items-center mb-4" id="Page-Header">
             <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Sales: Customer Order Tracker</h3>
         </div>
         <div class="card shadow" id="CustTR_Table" style="margin-right: 8vw;margin-left: 8vw;">
-            <div class="card-header py-3" id="Table-Header" style="background-color: rgb(235,235,235);background: linear-gradient(to right, #2657eb, #de6161);">
-                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Customer Order Tracker</p>
+        <div class="card-header py-3" id="Table-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                        <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Customer Order Tracker</p>
                 <div class="row" id="Table-HeaderDetails">
                     <div class="col" id="Table-HeaderDetail-1">
                         <p class="text-right m-0 font-weight-bold" id="Table-TodayDate-Intro" style="font-size: 15px;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: normal;">As of TODAY:&nbsp;</p>
@@ -181,13 +181,14 @@
                                     echo "<tr class='text-center' id='Table-Row'>"; 
                                     echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
                                     echo "<td>" . $retrieve["custPO"].  "</td>";
-                                    echo "<td>". $retrieve["custID"].  "</td>";
-                                    echo "<td>" . $retrieve["custMOP"].  "</td>";
                                     echo "<td>" . $retrieve["custDateOrdered"].  "</td>";
-                                    echo "<td>" . $retrieve["custDatePickup"].  "</td>";
-                                    echo "<td>" . $retrieve["custPlatform"].  "</td>";
-                                    echo "<td>" . $retrieve["custCourier"].  "</td>";
+                                    echo "<td>" . $retrieve["custName"].  "</td>";
                                     echo "<td>" . $retrieve["custStatus"].  "</td>";
+                                    // echo "<td>". $retrieve["custID"].  "</td>";
+                                    // echo "<td>" . $retrieve["custMOP"].  "</td>";
+                                    // echo "<td>" . $retrieve["custDatePickup"].  "</td>";
+                                    // echo "<td>" . $retrieve["custPlatform"].  "</td>";
+                                    // echo "<td>" . $retrieve["custCourier"].  "</td>";
                                     echo "</tr>";
                                 }
                             ?>

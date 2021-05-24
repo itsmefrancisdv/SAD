@@ -48,7 +48,7 @@ $result3 = mysqli_query($DBConnect,$sql2);
 <!DOCTYPE html>
 <html>
 <body>
-<form method="POST" action="customerpo.php">
+<form method="POST">
 <?php $q = intval($_GET['q']);
   while ($supp = mysqli_fetch_array($result3,MYSQLI_ASSOC)){  
                             $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders");

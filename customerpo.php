@@ -1,29 +1,33 @@
 <?php
-require_once('connect.php');
+    require_once('connect.php');
 
- if (isset($_POST['submit'])) {
-    $tmpcid = $_POST['custID'];
-    $query = "SELECT * FROM customers WHERE custID = $tmpcid";
-    $result = mysqli_query($DBConnect, $query);
+    if (isset($_GET['submit'])) {
+        $squery = "SELECT * FROM suppliers WHERE supplierID='{$_GET['CustNum']}'";
+        $sresult = mysqli_query($DBConnect, $squery);
+        $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
+    }
+    if (isset($_POST['submit'])) {
+        $tmpcid = $_POST['custID'];
+        $query = "SELECT * FROM customers WHERE custID = $tmpcid";
+        $result = mysqli_query($DBConnect, $query);
 
-    // while ($rows = mysqli_fetch_array($result)){
-    //     $cid = $rows['custID'];
-    //     }
-    $q = intval($_GET['q']);
-    
-
-    $custPO = $_POST["CustPONum"];
-    $custID = $q;
-    $custName = $_POST["CustName"];
-    $custMOP = $_POST["CustMOP"];
-    $custdateOrder = $_POST["CustDateOrd"];
-    $custdatePickup = $_POST["CustDatePick"];
-    $custPlatform = $_POST["CustPlatform"];
-    $custCourier = $_POST["CustCourier"];
-    $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus) 
-        VALUES ('$custPO', '$custID', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
-    mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
- }
+        // while ($rows = mysqli_fetch_array($result)){
+        //     $cid = $rows['custID'];
+        //     }
+        $q = intval($_GET['q']);
+        
+        $custPO = $_POST["CustPONum"];
+        $custID = $_POST["custID"];
+        $custName = $_POST["CustName"];
+        $custMOP = $_POST["CustMOP"];
+        $custdateOrder = $_POST["CustDateOrd"];
+        $custdatePickup = $_POST["CustDatePick"];
+        $custPlatform = $_POST["CustPlatform"];
+        $custCourier = $_POST["CustCourier"];
+        $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus) 
+            VALUES ('$custPO', '$squery', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
+        mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
+    }
     // $squery = "SELECT * FROM customers WHERE custID='{$_GET['CustNum']}'";
     // $sresult = mysqli_query($DBConnect, $squery);
     // $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
@@ -35,8 +39,8 @@ require_once('connect.php');
 
 //     $query2 = "INSERT INTO customer_orders (custID, custdateOrdered, custMOP, custStatus) VALUES
 //   ('{$_GET['CustNum']}', NOW(), '{$_GET['custMOP']}', 'Pending')";
-//   mysqli_query($DBConnectonnect, $query2);
-//   $poid = mysqli_insert_id($DBConnectonnect);
+//   mysqli_query($DBConnect, $query2);
+//   $poid = mysqli_insert_id($DBConnect);
 
     // for ($i = 0; $i < sizeof($_GET['products']); $i++) {
     //     $amount = $_GET['qty'][$i] * $_GET['unitp'][$i];
@@ -228,19 +232,14 @@ require_once('connect.php');
             <form id='totalsum'>
                 <div class="container-fluid" id="Page-Content">
                     <div id="Breadcrumb-Border" style="width: auto;margin-bottom: 10px;"></div>
-                    <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon"
-                                                                                         src="assets/img/SuppPO.png"
-                                                                                         style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
+                    <div class="d-sm-flex align-items-center mb-4" id="Page-Header">
                         <h3 class="text-dark mb-0" id="Page-Header-Title"
                             style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">
                             Sales: Customer Purchase Order</h3>
                     </div>
                     <div class="card shadow" id="SuppPO_Table" style="margin-right: 8vw;margin-left: 8vw;">
-                        <div class="card-header py-3" id="Table-Header"
-                             style="background-color: rgb(235,235,235);background: linear-gradient(to right, #2657eb, #de6161);">
-                            <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle"
-                               style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">
-                                Customer PO Form</p>
+                    <div class="card-header py-3" id="Table-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                        <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Customer PO Form</p>
                         </div>
                         <div class="card-body" id="Table-Body" style="padding-bottom: 0px;padding-top: 10px;">
                             <div class="row" id="Table-PODetails">
