@@ -193,9 +193,11 @@
                             <form method="POST" action="">
                             <?php
                             require_once("connect.php");
+                            $i = 0;
                             
                                 $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders WHERE custStatus = 'Received' ORDER by custPO");  //getting PO
                                 while($retrieve = mysqli_fetch_array($query)){
+                                    $i++;
                                     echo "<tr class='text-center' id='Table-Row'>"; 
                                     echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
                                     echo "<td>" . $retrieve["custPO"].  "</td>";
