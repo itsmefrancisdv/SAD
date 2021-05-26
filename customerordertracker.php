@@ -348,11 +348,11 @@
                                                                 $all = $_POST["checkboxid"];
                                                                 $extract = implode(',', $all);
                                                                 echo $extract;
-                                                                $query = "DELETE FROM sales_customer WHERE PONumber IN($extract)";
+                                                                $query = "DELETE FROM customer_orders WHERE custPO IN($extract)";
                                                                 $query2 = mysqli_query($DBConnect, $query);
 
                                                                 if($query2){
-                                                                    echo "<script type='text/javascript'> document.location = 'Sales_custOrderTracker.php'; </script>";
+                                                                    echo "<script type='text/javascript'> document.location = 'customerordertracker.php'; </script>";
                                                                 }
                                                             }
                                                         ?>

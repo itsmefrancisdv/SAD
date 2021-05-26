@@ -379,7 +379,7 @@
                                                                 $all = $_POST["checkboxid"];
                                                                 $extract = implode(',', $all);
                                                                 echo $extract;
-                                                                $query = "DELETE FROM sales_customer WHERE PONumber IN($extract)";
+                                                                $query = "DELETE FROM customer_orders WHERE custPO IN($extract)";
                                                                 $query2 = mysqli_query($DBConnect, $query);
 
                                                                 if($query2){
