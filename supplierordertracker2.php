@@ -227,7 +227,7 @@ if (isset($_POST['cancel'])){
 
                           <?php
                           $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID";
-                          $result = mysqli_query($dbc, $query);
+                          $result = mysqli_query($DBConnect, $query);
                           $i = 0;
 
                           while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {

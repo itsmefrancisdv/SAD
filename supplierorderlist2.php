@@ -4,34 +4,34 @@ require_once('connect.php');
 if (isset($_POST['submit'])) {
   $query = "INSERT INTO suppliers (supplierName,supplierEmail,supplierNumber,supplierAddress) VALUES
   ('{$_POST['suppName']}','{$_POST['suppEmail']}','{$_POST['suppNumber']}','{$_POST['suppAddress']}')";
-  mysqli_query($dbc, $query);
-  $suppid = mysqli_insert_id($dbc);
+  mysqli_query($DBConnect, $query);
+  $suppid = mysqli_insert_id($DBConnect);
 
   $squery = "SELECT * FROM suppliers WHERE supplierID='{$suppid}'";
-  $sresult = mysqli_query($dbc, $squery);
+  $sresult = mysqli_query($DBConnect, $squery);
   $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
   $query2 = "INSERT INTO purchase_orders (supplierID,PONumber,dateOrdered,paymentMethod,status) VALUES
   ('{$suppid}','{$_POST['suppPO']}',NOW(),'{$_POST['suppMOP']}','Pending')";
-  mysqli_query($dbc, $query2);
-  $poid = mysqli_insert_id($dbc);
+  mysqli_query($DBConnect, $query2);
+  $poid = mysqli_insert_id($DBConnect);
 
   for ($i = 0; $i < sizeof($_POST['product']); $i++) {
     $query = "INSERT INTO items (itemName) VALUES ('{$_POST['product'][$i]}')";
-    mysqli_query($dbc, $query);
-    $itemid = mysqli_insert_id($dbc);
+    mysqli_query($DBConnect, $query);
+    $itemid = mysqli_insert_id($DBConnect);
 
     $amount = $_POST['qty'][$i] * $_POST['unitp'][$i];
     $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
     ('{$poid}','{$itemid}','{$_POST['qty'][$i]}','{$_POST['unitp'][$i]}','{$amount}')";
-    mysqli_query($dbc, $query3);
+    mysqli_query($DBConnect, $query3);
   }
 }
 
 if (isset($_POST['confirm'])) {
     for ($i = 0; $i < sizeof($_POST['poid']); $i++) {
       $query = "UPDATE purchase_orders SET status='Deleted' WHERE purchaseID='{$_POST['poid'][$i]}'";
-      mysqli_query($dbc, $query);
+      mysqli_query($DBConnect, $query);
     }
   }
 ?>
@@ -213,7 +213,7 @@ if (isset($_POST['confirm'])) {
                           <form method="POST">
                           <?php
                           $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Received'";
-                          $result = mysqli_query($dbc, $query);
+                          $result = mysqli_query($DBConnect, $query);
                           $i = 0;
 
                           while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -264,7 +264,7 @@ if (isset($_POST['confirm'])) {
                                           $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
                                                       FROM dblazerosa2.purchase_order_items
                                                       WHERE purchaseID =" .  $row['purchaseID'];
-                                          $productresult = mysqli_query($dbc, $productquery);
+                                          $productresult = mysqli_query($DBConnect, $productquery);
                                           while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
                                             if ($productcount < $productrow['ordercount']) {
                                               $finalquery = "SELECT p.*, poi.*, i.*
@@ -273,7 +273,7 @@ if (isset($_POST['confirm'])) {
                                                 ON p.purchaseID = poi.purchaseID
                                                 JOIN tblinventory i
                                                 ON poi.itemID = i.pID";
-                                              $finalresult = mysqli_query($dbc, $finalquery);
+                                              $finalresult = mysqli_query($DBConnect, $finalquery);
                                                  while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
                                                 if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                                   $productcount++;

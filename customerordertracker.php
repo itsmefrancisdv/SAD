@@ -176,9 +176,11 @@
                             <form method="POST" action="">
                             <?php
                             require_once("connect.php");
+                                $i = 0;
                             
                                 $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders WHERE custStatus != 'Received' ORDER by custPO");  //getting PO
                                 while($retrieve = mysqli_fetch_array($query)){
+                                    $i++;
                                     echo "<tr class='text-center' id='Table-Row'>"; 
                                     echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
                                     echo "<td>" . $retrieve["custPO"].  "</td>";
@@ -240,35 +242,35 @@
                                         </tr>
                                         <tbody>
                                           <?php
-                                          $productcount = 0;
-                                          $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
-                                                      FROM dblazerosa2.purchase_order_items
-                                                      WHERE purchaseID =" .  $row['purchaseID'];
-                                          $productresult = mysqli_query($dbc, $productquery);
-                                          while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
-                                            if ($productcount < $productrow['ordercount']) {
-                                              $finalquery = "SELECT p.*, poi.*, i.*
-                                                FROM purchase_orders p
-                                                JOIN purchase_order_items poi
-                                                ON p.purchaseID = poi.purchaseID
-                                                JOIN tblinventory i
-                                                ON poi.itemID = i.pID";
-                                              $finalresult = mysqli_query($dbc, $finalquery);
-                                              while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
-                                                if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
-                                                  $productcount++;
-                                          ?>
-                                                  <tr>
-                                                    <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
-                                                    <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
-                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
-                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
-                                                  </tr>
-                                          <?php
-                                                }
-                                              }
-                                            }
-                                          }
+                                        //   $productcount = 0;
+                                        //   $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
+                                        //               FROM dblazerosa2.purchase_order_items
+                                        //               WHERE purchaseID =" .  $row['purchaseID'];
+                                        //   $productresult = mysqli_query($DBConnect, $productquery);
+                                        //   while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
+                                        //     if ($productcount < $productrow['ordercount']) {
+                                        //       $finalquery = "SELECT p.*, poi.*, i.*
+                                        //         FROM purchase_orders p
+                                        //         JOIN purchase_order_items poi
+                                        //         ON p.purchaseID = poi.purchaseID
+                                        //         JOIN tblinventory i
+                                        //         ON poi.itemID = i.pID";
+                                        //       $finalresult = mysqli_query($DBConnect, $finalquery);
+                                        //       while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
+                                        //         if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
+                                        //           $productcount++;
+                                        //   ?>
+                                        //           <tr>
+                                        //             <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
+                                        //             <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
+                                        //             <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
+                                        //             <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
+                                        //           </tr>
+                                        //   <?php
+                                        //         }
+                                        //       }
+                                        //     }
+                                        //   }
                                           ?>
                                         </tbody>
                                       </table>
@@ -376,6 +378,56 @@
                         </div>
                     </div>
                 </div>
+                <div class="col" id="EditInv-Column">
+                <div id="ViewInv_Edit"><a class="btn btn-warning float-right" role="button" id="EditButton" data-toggle="modal" href="#EditPopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">EDIT</a>
+                    <div
+                        class="modal fade" role="dialog" tabindex="-1" id="EditPopup">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" id="EditInv-Modal">
+                            <div class="modal-content" id="EditInv-Modal-Content">
+                                <div class="modal-header" id="EditInv-Modal-Header" style="background-color: #f6c23e;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                    <h4 id="EditInv-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">Edit Order Tracker</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="EditInv-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                <div class="modal-body" id="EditInv-ModalBody">
+                                    <div class="table-responsive table mt-2" id="ViewInv-EditTableFrame" role="grid" aria-describedby="dataTable_info" style="width: auto;">
+                                        <table class="table my-0" id="ViewInv-EditTable">
+                                            <thead id="EditTable-Header">
+                                                <tr id="EditTable-HeaderRow" style="background-color: #FF7A00;font-family: Nunito, sans-serif;color: rgb(0,0,0);">
+                                                <td><strong>PO #</strong></td>
+                                                <td><strong>Date Ordered</strong></td>
+                                                <td class="text-left"><strong>Customer Name</strong></td>
+                                                <td><strong>Status</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="EditTable-Body">
+                                                <?php
+                                                    require("connect.php");
+                                                    if(isset($_POST["edit"])){
+                                                        $all = $_POST["checkboxid"];
+                                                        $extract = implode($all);
+                                                        $poedit = $_POST["poedit"];
+                                                        $dateorderedit = $_POST["dateorderedit"];
+                                                        $nameedit = $_POST["nameedit"];
+                                                        $statusedit = $_POST["statusedit"];
+                                                        // echo $extract;
+                                                        $query = "UPDATE customer_orders SET custPO='$poedit', custDateOrdered='$dateorderedit', custName='$nameedit',
+                                                        custStatus='$statusedit' WHERE custPO='$poedit'";
+                                                        $query2 = mysqli_query($DBConnect, $query);
+
+                                                        if($query2){
+                                                            echo "<script type='text/javascript'> document.location = 'customerordertracker.php'; </script>";
+                                                        }
+                                                    }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" id="EditInv-ModalFooter"><button class="btn btn-light text-danger" id="EditInv-CancelButton" data-dismiss="modal" type="button" style="font-family: 'Open Sans', sans-serif;">Cancel</button><button class="btn btn-success" id="EditInv-ConfirmButton"
+                                        name = "edit" type="submit" style="padding-right: 25px;padding-left: 25px;border-radius: 50px 10px;font-family: 'Open Sans', sans-serif;">SAVE CHANGES</button></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
                 <div class="col" id="Add-Column">
                     <form method="POST" action="customerpo.php">
                     <div id="Add"><button class="btn btn-success float-right" type="submit" role="button" id="AddButton" data-toggle="modal" href="Sales_CustPOForm.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</button>
@@ -402,6 +454,7 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/custom4.js"></script>
 </body>
 
 </html>
