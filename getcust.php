@@ -26,10 +26,10 @@ $result3 = mysqli_query($DBConnect,$sql2);
   // mysqli_query($DBConnectonnect, $add) or die (mysqli_error($DBConnectonnect));
   // echo "<script type='text/javascript'> document.location = 'customerpo.php'; </script>";
 
-  // $query2 = "INSERT INTO customer_orders (custID, custdateOrdered, custMOP, custStatus) VALUES
-  // ('{$q}', NOW(), '{$_POST['custMOP']}', 'Pending')";
-  // mysqli_query($DBConnectonnect, $query2);
-  // $poid = mysqli_insert_id($DBConnectonnect);
+  // $query2 = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus, custTotal) 
+  // VALUES ('{$q}', '$custID', '{$_POST['CustName']}', '{$_POST['CustMOP']}', '{$_POST['CustDateOrd']}', '{$_POST['CustDatePick']}', '{$_POST['CustPlatform']}', '{$_POST['CustCourier']}', 'Pending', '{$_POST['CustName']}')";
+  // mysqli_query($DBConnect, $query2);
+  // $poid = mysqli_insert_id($DBConnect);
 
   // $query2 = "INSERT INTO purchase_orders (supplierID,dateOrdered,paymentMethod,status) VALUES
   // ('{$q}',NOW(),'{$_POST['CustMOP']}','Pending')";
@@ -51,13 +51,13 @@ $result3 = mysqli_query($DBConnect,$sql2);
 <form method="POST">
 <?php $q = intval($_GET['q']);
   while ($supp = mysqli_fetch_array($result3,MYSQLI_ASSOC)){  
-                            $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders");
-                            while($row = mysqli_fetch_array($query)){
-                                $id=$row["custPO"] + 1;
-                            }
-                            echo "<div id='Table-PODetail1' class='dataTables_length' aria-controls='dataTable' style='padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;'><label id='Table-PONumLabel' style='margin-top: 0px;margin-bottom: 0px;width: 100%;'>Customer PO #:&nbsp;<input class='border rounded border-dark float-right' id='Table-PONumInput' style='border-radius: 20px;margin-left: 0px;width: 185px;' name='CustPONum' type='text' value='".$id."' size='30' disabled><br/></label></div>";
-                          
-                        ?>
+  $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders");
+  while($row = mysqli_fetch_array($query)){
+      $id=$row["custPO"] + 1;
+  }
+  echo "<div id='Table-PODetail1' class='dataTables_length' aria-controls='dataTable' style='padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;'><label id='Table-PONumLabel' style='margin-top: 0px;margin-bottom: 0px;width: 100%;'>Customer PO #:&nbsp;<input class='border rounded border-dark float-right' id='Table-PONumInput' style='border-radius: 20px;margin-left: 0px;width: 185px;' name='CustPONum' type='text' value='".$id."' size='30' disabled><br/></label></div>";
+
+?>
             <div
                 id="Table-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Name:&nbsp;
                   <input class="border rounded border-dark float-right" type="text" id="Table-NameInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustName" value="<?php echo $supp['custName']; ?>" disabled></label>
@@ -68,7 +68,7 @@ $result3 = mysqli_query($DBConnect,$sql2);
             </div>
           
     <div id="Table-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Number:&nbsp;
-      <input class="border rounded border-dark float-right" type="tel" id="Table-NumInput" style="border-radius: 20px;width: 185px;" autocomplete="on" name="CustNum" value="<?php echo $supp['custNumber']; ?>" disabled></label></div>
+      <input class="border rounded border-dark float-right" type="tel" id="Table-NumInput" style="border-radius: 20px;width: 185px;" autocomplete="on" name="CustNumb" value="<?php echo $supp['custNumber']; ?>" disabled></label></div>
     <div
         id="Table-PODetail5" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-AddrLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Address:&nbsp;
           <input class="border rounded border-dark float-right" type="text" id="Table-AddrInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustAddr" value="<?php echo $supp['custAddress']; ?>"disabled></label></div>
@@ -81,7 +81,7 @@ $result3 = mysqli_query($DBConnect,$sql2);
         echo "<optgroup label='Please Select MOP'>";
         while ($rows = mysqli_fetch_array($result)){
           $MOP = $rows['MOP'];
-          echo "<option value='$MOP' label='$MOP' name='custMOP'>$MOP</option>";
+          echo "<option value='$MOP' label='$MOP' >$MOP</option>";
           }
         echo "</optgroup></select></label>";
         ?>
@@ -100,7 +100,7 @@ $result3 = mysqli_query($DBConnect,$sql2);
         
         while ($rows = mysqli_fetch_array($result)){
           $platform = $rows['platformName'];
-          echo "<option value='$platform' label='$platform' name='custPlatform'>$platform</option>";
+          echo "<option value='$platform' label='$platform'>$platform</option>";
           }
         echo "</optgroup></select></label>";
         ?>
@@ -112,12 +112,12 @@ $result3 = mysqli_query($DBConnect,$sql2);
         
         while ($rows = mysqli_fetch_array($result)){
           $courier = $rows['courierName'];
-          echo "<option value='$courier' label='$courier' name='custCourier'>$courier</option>";
+          echo "<option value='$courier' label='$courier'>$courier</option>";
           }
         echo "</optgroup></select></label>";
         ?>
         </div>
-        <?php }?>
+        
         
 <?php
 echo " <table id='itemt' class='table my-0'>
@@ -169,7 +169,7 @@ echo "<td><select name = 'tblinventory'>
   echo "<td></td>";
   echo "<td></td>";
   echo "<td class='text-right' style='font-weight: bold;font-size: 20px;' >TOTAL:</td>";
-  echo "<td id='total-cost'></td>";
+  echo "<td id='total-cost' name='custtotal'></td>";
   echo "</tr>";
   echo "</tfoot>";
 echo "</table>";
@@ -180,6 +180,7 @@ echo "<br><br>";
 
 <button type='submit' class='btn btn-success' name='submit'>Submit</button>
 </form>
+<?php }?>
 
 
 

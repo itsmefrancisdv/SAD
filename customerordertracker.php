@@ -160,18 +160,19 @@
                                 <th class="text-center" style="width: 40px;"><input type="checkbox" id="Checkbox-Header" disabled=""></th>
                                 <th style="width: 85px;">PO #</th>
                                 <th style="width: 100px;">Date Ordered</th>
-                                <th class="text-left" style="width: 350px;">Customer Name</th>
+                                <th class="text-center" style="width: 350px;">Customer Name</th>
                                 <th style="width: 150px;">Status</th>
+                                <th style="width: 150px;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="Table-Body">
-                            <tr class="text-center" id="Table-Row">
+                            <!-- <tr class="text-center" id="Table-Row">
                                 <td id="Checkbox-Entry"><input type="checkbox" id="Checkbox-EntryItem"></td>
                                 <td id="PONum-Entry">PO#</td>
                                 <td id="DateOrd-Entry">DateOrdered</td>
                                 <td class="text-left" id="CustName-Entry">CustomerName</td>
                                 <td id="Status-Entry">Status</td>
-                            </tr>
+                            </tr> -->
                             <form method="POST" action="">
                             <?php
                             require_once("connect.php");
@@ -189,10 +190,102 @@
                                     // echo "<td>" . $retrieve["custDatePickup"].  "</td>";
                                     // echo "<td>" . $retrieve["custPlatform"].  "</td>";
                                     // echo "<td>" . $retrieve["custCourier"].  "</td>";
-                                    echo "</tr>";
-                                }
+                                    // echo "</tr>";
+                                // }
                             ?>
-                            
+                            <td>
+                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button>
+
+                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
+                              <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                  <label for="custName">Customer Name</label><br>
+                                      <input type="text" name="custName"  value="<?php echo $retrieve['custName']; ?>" disabled><br><br>
+                                      
+                                      <label for="custPO">Customer Purchase Order Number</label><br>
+                                      <input type="text" name="custPO"  value="<?php echo $retrieve['custPO']; ?>" disabled><br><br>
+
+                                      <label for="custEmail">Customer Email</label><br>
+                                      <input type="email" name="custEmail"  value="<?php echo $retrieve['custEmail']; ?>" disabled><br><br>
+                                      
+                                      <label for="custNumber">Customer Contact Number</label><br>
+                                      <input type="text" name="custNumber" value="<?php echo $retrieve['custNumber']; ?>" disabled><br><br>
+                                      
+                                      <label for="custAddress">Customer Address</label><br>
+                                      <input type="text" name="custAddress" value="<?php echo $retrieve['custAddress']; ?>" disabled><br><br>
+                                      
+                                      <label for="custMOP">Mode of Payment</label><br>
+                                      <input type="text" name="custMOP"  value="<?php echo $retrieve['custMOP']; ?>" disabled><br><br>
+
+                                      <label for="custDateOrder">Date Ordered</label><br>
+                                      <input type="text" name="custDateOrder"  value="<?php echo $retrieve['custDateOrdered']; ?>" disabled><br><br>
+
+                                      <label for="custPickupDate">Pickup Date</label><br>
+                                      <input type="text" name="custPickupDate"  value="<?php echo $retrieve['custDatePickup']; ?>" disabled><br><br>
+
+                                      <label for="custPlatform">Platform</label><br>
+                                      <input type="text" name="custPlatform"  value="<?php echo $retrieve['custPlatform']; ?>" disabled><br><br>
+
+                                      <label for="custCourier">Courier</label><br>
+                                      <input type="text" name="custCourier"  value="<?php echo $retrieve['custCourier']; ?>" disabled><br><br>
+                                      <br><br><br>
+
+                                      <table>
+                                        <tr>
+                                          <th>Product Name</th>
+                                          <th>Quantity</th>
+                                          <th>Unit Price</th>
+                                          <th>Amount</th>
+                                        </tr>
+                                        <tbody>
+                                          <?php
+                                          $productcount = 0;
+                                          $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
+                                                      FROM dblazerosa2.purchase_order_items
+                                                      WHERE purchaseID =" .  $row['purchaseID'];
+                                          $productresult = mysqli_query($dbc, $productquery);
+                                          while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
+                                            if ($productcount < $productrow['ordercount']) {
+                                              $finalquery = "SELECT p.*, poi.*, i.*
+                                                FROM purchase_orders p
+                                                JOIN purchase_order_items poi
+                                                ON p.purchaseID = poi.purchaseID
+                                                JOIN tblinventory i
+                                                ON poi.itemID = i.pID";
+                                              $finalresult = mysqli_query($dbc, $finalquery);
+                                              while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
+                                                if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
+                                                  $productcount++;
+                                          ?>
+                                                  <tr>
+                                                    <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
+                                                    <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
+                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
+                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
+                                                  </tr>
+                                          <?php
+                                                }
+                                              }
+                                            }
+                                          }
+                                          ?>
+                                        </tbody>
+                                      </table>
+                                      <br><br>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </td>
+                          <?php
+                            echo "</tr>";
+                          }
+                          ?>
                         </tbody>
                         <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
                             <tr class="text-center" id="Table-FooterRow" style="color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
@@ -201,6 +294,7 @@
                                 <td><strong>Date Ordered</strong></td>
                                 <td class="text-left"><strong>Customer Name</strong></td>
                                 <td><strong>Status</strong></td>
+                                <td><strong>Action</strong></td>
                             </tr>
                         </tfoot>
                     </table>

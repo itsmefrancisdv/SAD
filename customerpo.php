@@ -24,8 +24,9 @@
         $custdatePickup = $_POST["CustDatePick"];
         $custPlatform = $_POST["CustPlatform"];
         $custCourier = $_POST["CustCourier"];
-        $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus) 
-            VALUES ('$custPO', '$squery', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending')";
+        $custTotal = $_POST["custtotal"];
+        $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus, custTotal) 
+            VALUES ('$custPO', '$squery', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending', '$custTotal')";
         mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
     }
     // $squery = "SELECT * FROM customers WHERE custID='{$_GET['CustNum']}'";

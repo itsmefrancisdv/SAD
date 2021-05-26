@@ -121,7 +121,7 @@
                 <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
             </ol>
         </div>
-        <div class="d-sm-flex align-items-center mb-4"><img id="Home-Icon-1" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
+        <div class="d-sm-flex align-items-center mb-4">
             <h3 class="text-dark mb-0" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;">Welcome Home, Patrick !</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
         <div class="row">
             <div class="col-md-6 col-xl-3 mb-4">
@@ -341,7 +341,7 @@
     </div>
     <div></div>
     </div>
-    <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button">
+    <!-- <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button">
         <div class="container">
             <div><a class="navbar-brand" href="#"><span><img src="logo.png">Creativarian </span> </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
             <div
@@ -364,7 +364,7 @@
         <div class="container my-auto">
             <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
         </div>
-    </footer>
+    </footer> -->
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
