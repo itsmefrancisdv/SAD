@@ -193,15 +193,15 @@
                             <form method="POST" action="">
                             <?php
                             require_once("connect.php");
-                            
+                                $i = 0;
                                 $query = mysqli_query($DBConnect, "SELECT * FROM customer_orders WHERE custStatus = 'Received' ORDER by custPO");  //getting PO
                                 while($retrieve = mysqli_fetch_array($query)){
                                     echo "<tr class='text-center' id='Table-Row'>"; 
-                                    echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
-                                    echo "<td>" . $retrieve["custPO"].  "</td>";
-                                    echo "<td>" . $retrieve["custDateOrdered"].  "</td>";
-                                    echo "<td>" . $retrieve["custName"].  "</td>";
-                                    echo "<td>" . $retrieve["custStatus"].  "</td>";
+                                    echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[custPO]></td>";
+                                    echo "<td class='po'>" . $retrieve["custPO"].  "</td>";
+                                    echo "<td class='date'>" . $retrieve["custDateOrdered"].  "</td>";
+                                    echo "<td class='name'>" . $retrieve["custName"].  "</td>";
+                                    echo "<td class='status'>" . $retrieve["custStatus"].  "</td>";
                                     // echo "<td>". $retrieve["custID"].  "</td>";
                                     // echo "<td>" . $retrieve["custMOP"].  "</td>";
                                     // echo "<td>" . $retrieve["custDatePickup"].  "</td>";
@@ -211,9 +211,9 @@
                                 // }
                             ?>
                             <td>
-                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button>
+                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?= $i ?>'>VIEW</button>
 
-                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
+                            <div id="viewModal<?= $i++ ?>" class="modal fade" role="dialog">
                               <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                   <div class="modal-body">
@@ -259,35 +259,35 @@
                                         </tr>
                                         <tbody>
                                           <?php
-                                          $productcount = 0;
-                                          $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
-                                                      FROM dblazerosa2.purchase_order_items
-                                                      WHERE purchaseID =" .  $row['purchaseID'];
-                                          $productresult = mysqli_query($dbc, $productquery);
-                                          while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
-                                            if ($productcount < $productrow['ordercount']) {
-                                              $finalquery = "SELECT p.*, poi.*, i.*
-                                                FROM purchase_orders p
-                                                JOIN purchase_order_items poi
-                                                ON p.purchaseID = poi.purchaseID
-                                                JOIN tblinventory i
-                                                ON poi.itemID = i.pID";
-                                              $finalresult = mysqli_query($dbc, $finalquery);
-                                              while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
-                                                if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
-                                                  $productcount++;
+                                        //   $productcount = 0;
+                                        //   $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
+                                        //               FROM dblazerosa2.purchase_order_items
+                                        //               WHERE purchaseID =" .  $row['purchaseID'];
+                                        //   $productresult = mysqli_query($dbc, $productquery);
+                                        //   while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
+                                        //     if ($productcount < $productrow['ordercount']) {
+                                        //       $finalquery = "SELECT p.*, poi.*, i.*
+                                        //         FROM purchase_orders p
+                                        //         JOIN purchase_order_items poi
+                                        //         ON p.purchaseID = poi.purchaseID
+                                        //         JOIN tblinventory i
+                                        //         ON poi.itemID = i.pID";
+                                        //       $finalresult = mysqli_query($dbc, $finalquery);
+                                        //       while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
+                                        //         if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
+                                        //           $productcount++;
                                           ?>
-                                                  <tr>
+                                                  <!-- <tr>
                                                     <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                                     <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
                                                     <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
                                                     <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
-                                                  </tr>
+                                                  </tr> -->
                                           <?php
-                                                }
-                                              }
-                                            }
-                                          }
+                                        //         }
+                                        //       }
+                                        //     }
+                                        //   }
                                           ?>
                                         </tbody>
                                       </table>
@@ -379,7 +379,7 @@
                                                                 $all = $_POST["checkboxid"];
                                                                 $extract = implode(',', $all);
                                                                 echo $extract;
-                                                                $query = "DELETE FROM customer_orders WHERE custPO IN($extract)";
+                                                                $query = "DELETE FROM sales_customer WHERE PONumber IN($extract)";
                                                                 $query2 = mysqli_query($DBConnect, $query);
 
                                                                 if($query2){
