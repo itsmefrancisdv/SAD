@@ -203,18 +203,6 @@
 
                                 $amount = $discountprice * (1-($retrieve["pShopeeRate"] / 100));
                                 echo "<td>".$amount. "</td>";
-                                // echo "<td class='quantity'>".$retrieve["pQuantity"]. "</td>";
-                                // echo "<td class='reorder'>".$retrieve["pReorderPoint"]. "</td>";
-                                // if($retrieve["pQuantity"] > $retrieve["pReorderPoint"]){
-                                //     // $availability = $retrieve["pAvailability"];
-                                //     $availability = "high";
-                                //     echo "<td>".$availability."</td>";
-                                // }
-                                // else if($retrieve["pQuantity"] <= $retrieve["pReorderPoint"]){
-                                //     // $availability = $retrieve["pAvailability"];
-                                //     $availability = "low";
-                                //     echo "<td>".$availability."</td>";
-                                // }
 
                                 echo "</tr>";
                                 
@@ -234,18 +222,6 @@
 							*/
 
                         ?>
-
-						<!--
-                            <tr id="Table-Row">
-                                <td id="Checkbox-Entry"><input type="checkbox" id="Checkbox-EntryItem"></td>
-                                <td id="ProductID-Entry">Product ID</td>
-                                <td id="ProductName-Entry"><img class="rounded-circle mr-2" id="Product-Icon" width="30" height="30" src="assets/img/avatars/avatar1.jpeg">ProductName</td>
-                                <td id="Brand-Entry">ProductBrand</td>
-                                <td id="QTY-Entry">ProductQTY</td>
-                                <td id="RP-Entry">ProductRP</td>
-                                <td class="table-success" id="Avail-Entry">AvailHigh<button class="btn btn-primary btn-sm border-dark shadow float-right" id="Reorder-Button" type="button" style="background-color: #ff7a00;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-weight: bold;font-size: 12px;border-radius: 50px 10px;padding-right: 15px;padding-left: 16px;border-width: 2px;/*border-color: rgb(0,0,0);*/">REORDER</button></td>
-                            </tr>
-                        -->
 
                         </tbody>
                         <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
@@ -435,8 +411,8 @@
             </div>
         </div>
         <div class="col" id="AddInv-Column">
-            <div id="ViewInv_Add"><a class="btn btn-success float-right" role="button" id="AddButton" data-toggle="modal" href="#AddPopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</a>
-                <div
+            <div id="ViewInv_Add"><a class="btn btn-success float-right" role="button" id="AddButton"  type="submit" href="viewinventory.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</a>   
+            <!-- <div
                     class="modal fade" role="dialog" tabindex="-1" id="AddPopup">
                     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" id="AddInv-Modal">
                         <div class="modal-content" id="AddInv-ModalContent">
@@ -465,7 +441,7 @@
                                                         autocomplete="on"></td>
                                                 <td id="QTY-InputEntry"><input class="border rounded-0 border-white" type="number" id="QTY-Input" name="pqty" placeholder="Quantity" style="width: 100%;"></td>
                                                 <td id="RP-InputEntry"><input class="border rounded-0 border-white" type="number" id="RP-Input" name="prp" placeholder="Reorder Point" style="width: 100%;"></td>
-                                            </tr>
+                                            </tr> -->
                                             <?php
                                                 require("connect.php");
                                                 if(isset ($_POST["confirm"])){
@@ -481,7 +457,7 @@
 
                                                 }
                                             ?>
-                                        </tbody>
+                                        <!-- </tbody>
                                         <tfoot id="AddTable-Footer" style="background-color: #dcdcdc;">
                                             <tr id="AddTable-FooterRow">
                                                 <td><strong>Product ID</strong></td>
@@ -497,7 +473,7 @@
                             <div class="modal-footer" id="AddInv-ModalFooter"><button class="btn btn-light text-danger" id="AddInv-CancelButton" data-dismiss="modal" type="button" style="font-family: 'Open Sans', sans-serif;">Cancel</button><button class="btn btn-success" id="AddInv-ConfirmButton" type="submit"
                                     name = "confirm" style="font-family: 'Open Sans', sans-serif;padding-right: 25px;padding-left: 25px;border-radius: 50px 10px;">CONFIRM</button></div>
                         </div>
-                    </div>
+                    </div> -->
                     </form>
             </div>
         </div>
