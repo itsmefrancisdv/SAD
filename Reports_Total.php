@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>LazeRosa - Reports: Shrinkage</title>
+    <title>LazeRosa - Reports: Total Sales and Expenses</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
@@ -23,46 +23,46 @@
 </head>
 
 <body id="Page-Body">
-    <div id="Page-Wrapper">
-            <div class="d-flex flex-column" id="Body-Wrapper">
-                <div id="Body">
-                    <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
-                        <div class="container-fluid" id="Navbar-Container">
-                            <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;">
-                                <div id="Navbar-ButtonGroup" class="input-group" style="width: 100%;min-width: 1000px;"><img id="Site-Logo" src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 100pxpx;height: 90px;">
-                                    <div class="collapse navbar-collapse" id="Header-Menu">
-                                        <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
-                                            <li class="nav-item d-block" role="presentation" id="Home-Select" style="padding: 0px;padding-top: 0px;width: 85px;height: 100%;margin-right: 25px;">
-                                                <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="dashboard.php" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
-                                            </li>
-                                            <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Inventory-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Inventory-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Inventory-Icon" src="assets/img/SYSTIMP/Inventory%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Inventory</span></a>
-                                                <div class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;">
-                                                <a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="viewinventory.php" style="height: 50px;margin-top: 5px;"><span id="ViewInv-Text">View Inventory</span></a>
-                                                <a class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="pricelist.php" style="height: 50px;margin-top: 5px;"><span id="Pricelist-Text">Pricelist</span></a></div>
-                                    </li>
-                                    <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Sales-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Sales-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Sales-Icon" src="assets/img/SYSTIMP/Sales%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Sales</span></a>
-                                        <div
-                                            class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;">
-                                            <a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="customerpo.php" style="height: 50px;margin-top: 5px;"><span id="CustPO-Text">Customer PO</span></a>
-                                            <a class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="customerorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="CustOrderList-Text">Customer Order List</span></a>
-                                            <a class="dropdown-item d-block" role="presentation" id="CustTracker-Link" href="customerordertracker.php" style="height: 50px;margin-top: 5px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
+<div id="Page-Wrapper">
+        <div class="d-flex flex-column" id="Body-Wrapper">
+            <div id="Body">
+                <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
+                    <div class="container-fluid" id="Navbar-Container">
+                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;">
+                            <div id="Navbar-ButtonGroup" class="input-group" style="width: 100%;min-width: 1000px;"><img id="Site-Logo" src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 100pxpx;height: 90px;">
+                                <div class="collapse navbar-collapse" id="Header-Menu">
+                                    <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
+                                        <li class="nav-item d-block" role="presentation" id="Home-Select" style="padding: 0px;padding-top: 0px;width: 85px;height: 100%;margin-right: 25px;">
+                                            <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="dashboard.php" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
+                                        </li>
+                                        <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Inventory-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Inventory-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Inventory-Icon" src="assets/img/SYSTIMP/Inventory%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Inventory</span></a>
+                                            <div class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;">
+                                            <a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="viewinventory.php" style="height: 50px;margin-top: 5px;"><span id="ViewInv-Text">View Inventory</span></a>
+                                            <a class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="pricelist.php" style="height: 50px;margin-top: 5px;"><span id="Pricelist-Text">Pricelist</span></a></div>
                                 </li>
-                                <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reorder-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reorder-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reorder-Icon" src="assets/img/SYSTIMP/Reorder%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reorder</span></a>
+                                <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Sales-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Sales-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Sales-Icon" src="assets/img/SYSTIMP/Sales%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Sales</span></a>
                                     <div
-                                        class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
-                                        <a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="supplierpo.php" style="height: 50px;margin-top: 5px;"><span id="SuppPO-Text">Supplier PO</span></a>
-                                        <a class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="supplierorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="SuppOrderList-Text">Supplier Order List</span></a>
-                                        <a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link" href="supplierordertracker.php" style="height: 50px;margin-top: 5px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
-                        </li>
-                        <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
-                            <div
-                                class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
-                                <a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.html" style="height: 50px;margin-top: 5px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
-                                <a class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_DamRet.html" style="height: 50px;margin-top: 5px;width: auto;"><span id="DamRet-Text">Shrinkages</span></a></div>
-                </li>
-                </ul>
-            </div>
+                                        class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;">
+                                        <a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="customerpo.php" style="height: 50px;margin-top: 5px;"><span id="CustPO-Text">Customer PO</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="customerorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="CustOrderList-Text">Customer Order List</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="CustTracker-Link" href="customerordertracker.php" style="height: 50px;margin-top: 5px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
+                            </li>
+                            <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reorder-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reorder-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reorder-Icon" src="assets/img/SYSTIMP/Reorder%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reorder</span></a>
+                                <div
+                                    class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="supplierpo.php" style="height: 50px;margin-top: 5px;"><span id="SuppPO-Text">Supplier PO</span></a>
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="supplierorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="SuppOrderList-Text">Supplier Order List</span></a>
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link" href="supplierordertracker.php" style="height: 50px;margin-top: 5px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
+                    </li>
+                    <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
+                        <div
+                            class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                            <a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.php" style="height: 50px;margin-top: 5px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
+                            <a class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_Shrink.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="DamRet-Text">Shrinkages</span></a></div>
+            </li>
+            </ul>
         </div>
+    </div>
     </form>
     <ul class="nav navbar-nav flex-nowrap ml-auto" id="Header-Personal">
         <li class="nav-item dropdown d-sm-none no-arrow" id="Personal-Section"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
@@ -121,7 +121,7 @@
     </nav>
     <div class="container-fluid" id="Page-Content">
         <div class="d-sm-flex align-items-center mb-4" id="Page-Header" style="width: 100%;">
-            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">REPORTS: Shrinkage Report</h3>
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">REPORTS: Total Sales/Expenses Report</h3>
         </div>
         <hr>
         <div class="row" id="ReportsContent-Row" style="width: auto;">
@@ -139,6 +139,9 @@
                             <div class="col" id="Reports-EndRange-Column" style="width: 100%;"><label class="col-form-label" id="Reports-EndRange" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.3vw;">Ending Range:&nbsp;<input class="border rounded border-dark float-right" id="Reports-EndRange-Input" type="date" style="width: 12vw;margin-right: 0;margin-left: 0;border-radius: 20px;padding-left: 0px;" name="EndRange"></label></div>
                         </div>
                         <hr>
+                        <div class="row" id="Reports-ReportType-Row" style="width: 100%;">
+                            <div class="col" id="Reports-ReportType-Column" style="width: 100%;"><label class="col-form-label" id="Reports-ReportType" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.3vw;">Report Type:&nbsp;<select class="border rounded border-dark float-right" id="Reports-ReportType-Input" style="width: 12vw;border-radius: 20px;" name="ReportType"><optgroup label="Select Type"><option value="Sales">Sales</option><option value="Expenses">Expenses</option></optgroup></select></label></div>
+                        </div>
                         <hr>
                         <hr><button class="btn btn-success" id="GenerateReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">GENERATE REPORT</button>
                         <hr><button class="btn btn-secondary" id="PrintReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">PRINT GENERATED REPORT</button></div>
@@ -162,7 +165,7 @@
                                     <div class="col" id="GeneratedReport-Details-Column">
                                         <div class="row" id="GeneratedReport-Details-AddressColumn" style="padding-right: 12px;padding-left: 12px;"><span id="GeneratedReport-Details-Address" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.4vw;margin-left: 1vw;">Address :&nbsp;501 Emerald Bldg. Rosewood Pointe Condominium, Ususan, Taguig City 1632<br></span></div>
                                         <div
-                                            class="row" id="GeneratedReport-Details-ContactColumn" style="padding-right: 12px;padding-left: 12px;"><span id="GeneratedReport-Details-Contact" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.4vw;margin-left: 1vw;">Mobile No :&nbsp;0917 823 2964 <br></span></div>
+                                            class="row" id="GeneratedReport-Details-ContactColumn" style="padding-right: 12px;padding-left: 12px;"><span id="GeneratedReport-Details-Contact" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.4vw;margin-left: 1vw;">Mobile No :&nbsp;0917 823 2964<br></span></div>
                                     <div
                                         class="row" id="GeneratedReport-Details-EmailColumn" style="padding-right: 12px;padding-left: 12px;"><span id="GeneratedReport-Details-Email" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.4vw;margin-left: 1vw;">Email :&nbsp;skateeonline@yahoo.com<br></span></div>
                             </div>
@@ -170,7 +173,11 @@
                     </div>
                     <div class="col offset-xl-0" id="GeneratedReport-ReportDetails" style="width: 100%;">
                         <div class="row" id="GeneratedReport-ReportTitle-Row">
-                            <div class="col-auto col-xl-10 offset-xl-2" id="GeneratedReport-ReportTitle-Col" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportType" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;margin-right: 1vw;">Shrinkage Report</span></div>
+                            <div class="col" id="GeneratedReport-ReportTitle-Col1" style="padding: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-TotalLabel" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;">Total&nbsp;</span></div>
+                            <div class="col-auto"
+                                id="GeneratedReport-ReportTitle-Col2" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportType" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;">Sales</span></div>
+                            <div class="col-auto"
+                                id="GeneratedReport-ReportTitle-Col3" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportLabel" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;margin-right: 1vw;">&nbsp;Report</span></div>
                         </div>
                         <div class="row" id="GeneratedReport-StartRange-Row" style="margin-top: 20px;">
                             <div class="col-xl-5" id="GeneratedReport-StartRange-FromCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-StartRange-FromLabel" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">FROM:</span></div>
@@ -205,26 +212,22 @@
                         <table class="table my-0" id="GeneratedReport-Table">
                             <thead id="Table-Header">
                                 <tr class="text-center" id="Table-HeaderRow" style="background-color: #3e3e3e;font-family: 'Open Sans', sans-serif;color: rgb(255,255,255);/*background: linear-gradient(to right, #2657eb, #de6161);*/font-size: 0.8vw;">
-                                    <th style="width: 85px;">#</th>
-                                    <th style="width: 10vw;">Adjust Date&nbsp;</th>
-                                    <th class="text-left" style="width: 25.62225475841874vw;">Product Name</th>
-                                    <th style="width: 14.641288433382138vw;">Brand</th>
-                                    <th style="width: 6.295754026354319vw;">Original<br>Quantity</th>
-                                    <th style="width: 6.295754026354319vw;">Adjusted<br>Quantity</th>
-                                    <th style="width: 15vw;">Difference</th>
-                                    <th style="width: 10vw;">Cost Amount</th>
+                                    <th style="width: 1.5vw;">#</th>
+                                    <th style="width: 10vw;">Date&nbsp;</th>
+                                    <th class="text-left" style="width: 17vw;">Customer Name</th>
+                                    <th style="width: 10vw;">Platform</th>
+                                    <th style="width: 15vw;">Discount Rate</th>
+                                    <th style="width: 10vw;">Amount</th>
                                 </tr>
                             </thead>
                             <tbody id="Table-Body">
                                 <tr class="text-center" id="Table-Row" style="font-family: 'Open Sans', sans-serif;font-size: 0.8vw;">
                                     <td id="EntryNum-Entry">#</td>
-                                    <td id="Date-Entry">AdjDate</td>
-                                    <td class="text-left" id="ProdName-Entry">ProductName</td>
-                                    <td id="Brand-Entry">Brand</td>
-                                    <td id="OrigQTY-Entry">O_QTY</td>
-                                    <td id="AdjQTY-Entry">A_QTY</td>
-                                    <td id="Difference-Entry">Difference</td>
-                                    <td id="Amount-Entry">CostAmount</td>
+                                    <td id="Date-Entry">Date</td>
+                                    <td class="text-left" id="CustName-Entry">CustomerName</td>
+                                    <td>Platform</td>
+                                    <td>DiscountRate</td>
+                                    <td id="Amount-Entry">Amount</td>
                                 </tr>
                             </tbody>
                             <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
@@ -233,9 +236,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td id="GeneratedReport-Table-TotalCostLabelCell" style="width: 170px;"><strong class="float-right" id="GeneratedReport-Table-TotalSalesLabel" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">TOTAL COST :</strong></td>
+                                    <td id="GeneratedReport-Table-TotalSalesLabelCell"><strong class="float-right" id="GeneratedReport-Table-TotalSalesLabel" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">TOTAL AMOUNT :</strong></td>
                                     <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">XX,XXX.XX</strong></td>
                                 </tr>
                             </tfoot>
