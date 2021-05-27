@@ -184,8 +184,8 @@
                                     echo "<tr class='text-center' id='Table-Row'>"; 
                                     echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[custPO]></td>";
                                     echo "<td class='po'>" . $retrieve["custPO"].  "</td>";
-                                    echo "<td class='name'>" . $retrieve["custName"].  "</td>";
                                     echo "<td class='date'>" . $retrieve["custDateOrdered"].  "</td>";
+                                    echo "<td class='name'>" . $retrieve["custName"].  "</td>";
                                     echo "<td class='status'>" . $retrieve["custStatus"].  "</td>";
                                     // echo "<td>". $retrieve["custID"].  "</td>";
                                     // echo "<td>" . $retrieve["custMOP"].  "</td>";
@@ -378,6 +378,7 @@
                         </div>
                     </div>
                 </div>
+                <form method="POST">
                 <div class="col" id="EditInv-Column">
                 <div id="ViewInv_Edit"><a class="btn btn-warning float-right" role="button" id="EditButton" data-toggle="modal" href="#EditPopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">EDIT</a>
                     <div
@@ -428,6 +429,7 @@
                 </div>
             </div>
         </div>
+        </form>
                 <div class="col" id="Add-Column">
                     <form method="POST" action="customerpo.php">
                     <div id="Add"><button class="btn btn-success float-right" type="submit" role="button" id="AddButton" data-toggle="modal" href="Sales_CustPOForm.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</button>
@@ -454,7 +456,7 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
-    <script src="assets/js/custom4.js"></script>
+    <script src="assets/js/custom5.js"></script>
 </body>
 
 </html>
