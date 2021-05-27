@@ -312,7 +312,7 @@
                                 <td class="text-center"><input type="checkbox" id="Checkbox-Footer" disabled=""></td>
                                 <td><strong>PO #</strong></td>
                                 <td><strong>Date Ordered</strong></td>
-                                <td class="text-left"><strong>Customer Name</strong></td>
+                                <td class="text-center"><strong>Customer Name</strong></td>
                                 <td><strong>Status</strong></td>
                                 <td><strong>Action</strong></td>
                             </tr>

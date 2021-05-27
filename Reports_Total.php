@@ -170,7 +170,7 @@ require_once('connect.php');
                         </div>
                         <hr>
                         <div class="row" id="Reports-ReportType-Row" style="width: 100%;">
-                            <div class="col" id="Reports-ReportType-Column" style="width: 100%;"><label class="col-form-label" id="Reports-ReportType" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.3vw;">Report Type:&nbsp;<select class="border rounded border-dark float-right" id="Reports-ReportType-Input" style="width: 12vw;border-radius: 20px;" name="ReportType"><optgroup label="Select Type"><option value="Sales">Sales</option><option value="Expenses">Expenses</option></optgroup></select></label></div>
+                            <div class="col" id="Reports-ReportType-Column" style="width: 100%;"><label class="col-form-label" id="Reports-ReportType" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.3vw;">Report Type:&nbsp;<select class="border rounded border-dark float-right" id="Reports-ReportType-Input" style="width: 12vw;border-radius: 20px;" name="ReportType"><optgroup label="Select Type"><option value="Expenses">Expenses</option><option value="Sales">Sales</option></optgroup></select></label></div>
                         </div>
                         <hr>
                         <hr><button class="btn btn-success" id="GenerateReport-Button" type="submit" name="submit" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">GENERATE REPORT</button>
@@ -206,7 +206,7 @@ require_once('connect.php');
                         <div class="row" id="GeneratedReport-ReportTitle-Row">
                             <div class="col" id="GeneratedReport-ReportTitle-Col1" style="padding: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-TotalLabel" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;">Total&nbsp;</span></div>
                             <div class="col-auto"
-                                id="GeneratedReport-ReportTitle-Col2" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportType" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;">Sales</span></div>
+                                id="GeneratedReport-ReportTitle-Col2" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportType" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;">Expenses</span></div>
                             <div class="col-auto"
                                 id="GeneratedReport-ReportTitle-Col3" style="padding-right: 0px;padding-left: 0px;width: auto;"><span class="text-right float-right" id="GeneratedReport-ReportTitle-ReportLabel" style="font-family: 'Open Sans', sans-serif;font-size: 3vw;font-weight: bold;color: rgb(0,0,0);width: auto;margin-right: 1vw;">&nbsp;Report</span></div>
                         </div>
@@ -243,23 +243,25 @@ require_once('connect.php');
                         <table class="table my-0" id="GeneratedReport-Table">
                             <thead id="Table-Header">
                                 <tr class="text-center" id="Table-HeaderRow" style="background-color: #3e3e3e;font-family: 'Open Sans', sans-serif;color: rgb(255,255,255);/*background: linear-gradient(to right, #2657eb, #de6161);*/font-size: 0.8vw;">
-                                    <th style="width: 1.5vw;">#</th>
+                                    <th style="width: 1.5vw;"></th>
                                     <th style="width: 10vw;">Date&nbsp;</th>
-                                    <th class="text-left" style="width: 17vw;">Customer Name</th>
-                                    <th style="width: 10vw;">Platform</th>
-                                    <th style="width: 15vw;">Discount Rate</th>
+                                    <th class="text-left" style="width: 17vw;">Supplier Name</th>
+                                    <th style="width: 10vw;"></th>
+                                    <th style="width: 15vw;"></th>
+                                    <!-- <th style="width: 10vw;">Platform</th>
+                                    <th style="width: 15vw;">Discount Rate</th> -->
                                     <th style="width: 10vw;">Amount</th>
                                 </tr>
                             </thead>
                             <tbody id="Table-Body">
-                                <tr class="text-center" id="Table-Row" style="font-family: 'Open Sans', sans-serif;font-size: 0.8vw;">
-                                    <td>PO #</td>
+                                <!-- <tr class="text-center" id="Table-Row" style="font-family: 'Open Sans', sans-serif;font-size: 0.8vw;">
+                                    <td></td>
                                     <td id="Date-Entry">Date</td>
                                     <td class="text-left" id="CustName-Entry">CustomerName</td>
                                     <td>Platform</td>
                                     <td>DiscountRate</td>
                                     <td id="Amount-Entry">Amount</td>
-                                </tr>
+                                </tr> -->
 
                                 <?php 
                                     if(isset($_POST['submit'])){
@@ -267,25 +269,25 @@ require_once('connect.php');
                                         $rangeTill = date('Y-m-d', strtotime($_POST['EndRange']));
                                         $reportType = $_POST['ReportType'] == 'Expenses';
 
-                                        $totalAmount = 0;
+                                        $amt = 0;
 
-                                        $query = "SELECT p.*, s.*, poi.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID JOIN purchase_order_items poi 
-                                            ON p.purchaseID = poi.purchaseID WHERE status = 'Received' GROUP BY s.supplierName";
+                                        $query = "SELECT p.*, s.*, SUM(poi.amount) AS amount FROM purchase_orders p 
+                                            JOIN suppliers s ON p.supplierID = s.supplierID JOIN purchase_order_items poi 
+                                            ON p.purchaseID = poi.purchaseID WHERE status = 'Received' GROUP BY s.supplierName ORDER BY s.supplierName DESC";
 
                                         
                                         $result = mysqli_query($DBConnect, $query);
 
                                         while($retrieve = mysqli_fetch_array($result)){
-                                            $totalAmount = $retrieve["amount"];
                                             echo "<tr class='text-center' id='Table-Row' style='font-family: 'Open Sans', sans-serif;font-size: 0.8vw;'>";
-                                            echo "<td id='EntryNum-Entry'>{$retrieve['purchaseID']}</td>";
+                                            echo "<td></td>";
                                             echo "<td id='Date-Entry'>{$retrieve['dateOrdered']}</td>";
                                             echo "<td class='text-left' id='CustName-Entry'>{$retrieve['supplierName']}</td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
                                             echo "<td id='Amount-Entry'>{$retrieve['amount']}</td>";
                                             echo "</tr>";
-                                            // $totalAmount += $retrieve["amount"];
+                                            $amt = $amt + $retrieve["amount"];
                                         }
                                     }
                                 ?>
@@ -297,7 +299,7 @@ require_once('connect.php');
                                     <td></td>
                                     <td></td>
                                     <td id="GeneratedReport-Table-TotalSalesLabelCell"><strong class="float-right" id="GeneratedReport-Table-TotalSalesLabel" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">TOTAL AMOUNT :</strong></td>
-                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;"><?php echo $totalAmount;?></strong></td>
+                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;"><?php echo $amt;?></strong></td>
                                 </tr>
                             </tfoot>
                         </table>
