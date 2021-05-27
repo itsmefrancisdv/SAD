@@ -48,8 +48,11 @@
                                     <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
                                 </div>
                                 </div><button class="btn btn-primary btn-block text-white btn-user" name = "submit" type="submit" style="background: linear-gradient(to right, #2657eb, #de6161);background: linear-gradient(to right, #2657eb, #de6161);">LOGIN</button>
-                            <hr>
+                                <hr>
                             </form>
+                            <form class = "user" method="POST" action="register.php">
+                                    <button class="btn btn-primary btn-block text-white btn-user" name = "submit" type="submit" style="background: linear-gradient(to right, #2657eb, #de6161);background: linear-gradient(to right, #2657eb, #de6161);">REGISTER</button>
+                                </form>
                             <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
                         </div>
                     </div>
