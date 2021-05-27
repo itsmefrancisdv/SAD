@@ -182,11 +182,11 @@
                                 while($retrieve = mysqli_fetch_array($query)){
                                     $i++;
                                     echo "<tr class='text-center' id='Table-Row'>"; 
-                                    echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
-                                    echo "<td>" . $retrieve["custPO"].  "</td>";
-                                    echo "<td>" . $retrieve["custDateOrdered"].  "</td>";
-                                    echo "<td>" . $retrieve["custName"].  "</td>";
-                                    echo "<td>" . $retrieve["custStatus"].  "</td>";
+                                    echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[custPO]></td>";
+                                    echo "<td class='po'>" . $retrieve["custPO"].  "</td>";
+                                    echo "<td class='name'>" . $retrieve["custName"].  "</td>";
+                                    echo "<td class='date'>" . $retrieve["custDateOrdered"].  "</td>";
+                                    echo "<td class='status'>" . $retrieve["custStatus"].  "</td>";
                                     // echo "<td>". $retrieve["custID"].  "</td>";
                                     // echo "<td>" . $retrieve["custMOP"].  "</td>";
                                     // echo "<td>" . $retrieve["custDatePickup"].  "</td>";
@@ -260,12 +260,12 @@
                                         //         if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                         //           $productcount++;
                                         //   ?>
-                                        //           <tr>
+                                        <!-- //           <tr>
                                         //             <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                         //             <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
                                         //             <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
                                         //             <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
-                                        //           </tr>
+                                        //           </tr> -->
                                         //   <?php
                                         //         }
                                         //       }

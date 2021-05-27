@@ -1,7 +1,7 @@
 table = $('#EditTable-Body');
 
 $('#EditButton').on('click', () => {
-    $('#CustOL-Table :checked').each(function() {
+    $('#CustOL-Table :checked, #Table-Body #Table-Body :checked').each(function() {
         og_row = $(this).parent().parent();
         new_row = $('<tr></tr>'); // create row for modal
         
