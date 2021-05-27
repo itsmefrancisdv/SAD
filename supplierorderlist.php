@@ -1,37 +1,37 @@
 <?php
-require_once('mysql_connect.php');
+require_once('connect.php');
 
 if (isset($_POST['submit'])) {
   $query = "INSERT INTO suppliers (supplierName,supplierEmail,supplierNumber,supplierAddress) VALUES
   ('{$_POST['suppName']}','{$_POST['suppEmail']}','{$_POST['suppNumber']}','{$_POST['suppAddress']}')";
-  mysqli_query($dbc, $query);
-  $suppid = mysqli_insert_id($dbc);
+  mysqli_query($DBConnect, $query);
+  $suppid = mysqli_insert_id($DBConnect);
 
   $squery = "SELECT * FROM suppliers WHERE supplierID='{$suppid}'";
-  $sresult = mysqli_query($dbc, $squery);
+  $sresult = mysqli_query($DBConnect, $squery);
   $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
 
   $query2 = "INSERT INTO purchase_orders (supplierID,PONumber,dateOrdered,paymentMethod,status) VALUES
   ('{$suppid}','{$_POST['suppPO']}',NOW(),'{$_POST['suppMOP']}','Pending')";
-  mysqli_query($dbc, $query2);
-  $poid = mysqli_insert_id($dbc);
+  mysqli_query($DBConnect, $query2);
+  $poid = mysqli_insert_id($DBConnect);
 
   for ($i = 0; $i < sizeof($_POST['product']); $i++) {
     $query = "INSERT INTO items (itemName) VALUES ('{$_POST['product'][$i]}')";
-    mysqli_query($dbc, $query);
-    $itemid = mysqli_insert_id($dbc);
+    mysqli_query($DBConnect, $query);
+    $itemid = mysqli_insert_id($DBConnect);
 
     $amount = $_POST['qty'][$i] * $_POST['unitp'][$i];
     $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
     ('{$poid}','{$itemid}','{$_POST['qty'][$i]}','{$_POST['unitp'][$i]}','{$amount}')";
-    mysqli_query($dbc, $query3);
+    mysqli_query($DBConnect, $query3);
   }
 }
 
 if (isset($_POST['confirm'])) {
     for ($i = 0; $i < sizeof($_POST['poid']); $i++) {
       $query = "UPDATE purchase_orders SET status='Deleted' WHERE purchaseID='{$_POST['poid'][$i]}'";
-      mysqli_query($dbc, $query);
+      mysqli_query($DBConnect, $query);
     }
   }
 ?>
@@ -61,7 +61,7 @@ if (isset($_POST['confirm'])) {
 </head>
 
 <body id="Page-Body">
-    <div id="Page-Wrapper">
+<div id="Page-Wrapper">
         <div class="d-flex flex-column" id="Body-Wrapper">
             <div id="Body">
                 <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
@@ -71,35 +71,32 @@ if (isset($_POST['confirm'])) {
                                 <div class="collapse navbar-collapse" id="Header-Menu">
                                     <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
                                         <li class="nav-item d-block" role="presentation" id="Home-Select" style="padding: 0px;padding-top: 0px;width: 85px;height: 100%;margin-right: 25px;">
-                                            <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="Home_Dashboard.html" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
+                                            <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="dashboard.php" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
                                         </li>
                                         <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Inventory-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Inventory-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Inventory-Icon" src="assets/img/SYSTIMP/Inventory%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Inventory</span></a>
-                                            <div
-                                                class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;"><a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="Inv_ViewInv.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="ViewInv-Icon" src="assets/img/SYSTIMP/ViewInv.png" style="width: 20px;"><span id="ViewInv-Text">View Inventory</span></a>
-                                                <a
-                                                    class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="Inv_Pricelist.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="Pricelist-Icon" src="assets/img/Pricelist.png" style="width: 20px;"><span id="Pricelist-Text">Pricelist</span></a>
-                                </div>
+                                            <div class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;">
+                                            <a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="viewinventory.php" style="height: 50px;margin-top: 5px;"><span id="ViewInv-Text">View Inventory</span></a>
+                                            <a class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="pricelist.php" style="height: 50px;margin-top: 5px;"><span id="Pricelist-Text">Pricelist</span></a></div>
                                 </li>
                                 <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Sales-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Sales-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Sales-Icon" src="assets/img/SYSTIMP/Sales%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Sales</span></a>
                                     <div
-                                        class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;"><a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="Sales_CustPO.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="CustPO-Icon" src="assets/img/CustPO.png" style="width: 20px;"><span id="CustPO-Text">Customer PO</span></a>
-                                        <a
-                                            class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="Sales_CustOL.html" style="height: 50px;margin-top: 5px;width: auto;"><img class="d-block" id="CustOrderList-Icon" src="assets/img/CustOrderList.png" style="width: 20px;"><span id="CustOrderList-Text">Customer Order List</span></a><a class="dropdown-item d-block" role="presentation" id="CustTracker-Link"
-                                                href="Sales_CustTR.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="CustTracker-Icon" src="assets/img/CustTracker.png" style="width: 20px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
+                                        class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;">
+                                        <a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="customerpo.php" style="height: 50px;margin-top: 5px;"><span id="CustPO-Text">Customer PO</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="customerorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="CustOrderList-Text">Customer Order List</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="CustTracker-Link" href="customerordertracker.php" style="height: 50px;margin-top: 5px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
                             </li>
                             <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reorder-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reorder-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reorder-Icon" src="assets/img/SYSTIMP/Reorder%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reorder</span></a>
                                 <div
-                                    class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;"><a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="Reorder_SuppPO.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="SuppPO-Icon" src="assets/img/SuppPO.png" style="width: 20px;"><span id="SuppPO-Text">Supplier PO</span></a>
-                                    <a
-                                        class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="Reorder_SuppOL.html" style="height: 50px;margin-top: 5px;width: auto;"><img class="d-block" id="SuppOrderList-Icon" src="assets/img/SuppOrderList.png" style="width: 20px;"><span id="SuppOrderList-Text">Supplier Order List</span></a><a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link"
-                                            href="supplierordertracker.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="SuppTracker-Icon" src="assets/img/SuppTracker.png" style="width: 20px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
+                                    class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="supplierpo.php" style="height: 50px;margin-top: 5px;"><span id="SuppPO-Text">Supplier PO</span></a>
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="supplierorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="SuppOrderList-Text">Supplier Order List</span></a>
+                                    <a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link" href="supplierordertracker.php" style="height: 50px;margin-top: 5px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
                     </li>
                     <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
                         <div
-                            class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;"><a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.html" style="height: 50px;margin-top: 5px;"><img class="d-block" id="TotSalesEx-Icon" src="assets/img/TotSalesEx.png" style="width: 20px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
-                            <a
-                                class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_DamRet.html" style="height: 50px;margin-top: 5px;width: auto;"><img class="d-block" id="DamRet-Icon" src="assets/img/DamRet.png" style="width: 20px;"><span id="DamRet-Text">Damaged/Returned</span></a>
-            </div>
+                            class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                            <a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.php" style="height: 50px;margin-top: 5px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
+                            <a class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_Shrink.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="DamRet-Text">Shrinkages</span></a></div>
             </li>
             </ul>
         </div>
@@ -162,12 +159,12 @@ if (isset($_POST['confirm'])) {
     </nav>
     <div class="container-fluid" id="Page-Content">
         <div id="Breadcrumb-Border" style="width: auto;margin-bottom: 10px;"></div>
-        <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon" src="assets/img/SuppOrderList.png" style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
+        <div class="d-sm-flex align-items-center mb-4" id="Page-Header">
             <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Reorder: Supplier Order List</h3>
         </div>
         <div class="card shadow" id="SuppOL_Table" style="margin-right: 8vw;margin-left: 8vw;">
-            <div class="card-header py-3" id="Table-Header" style="background-color: rgb(235,235,235);background: linear-gradient(to right, #2657eb, #de6161);">
-                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Supplier Order List</p>
+        <div class="card-header py-3" id="Table-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                        <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Supplier Order List</p>
                 <div class="row" id="Table-HeaderDetails">
                     <div class="col" id="Table-HeaderDetail-1">
                         <p class="text-right m-0 font-weight-bold" id="Table-TodayDate-Intro" style="font-size: 15px;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: normal;">As of TODAY:&nbsp;</p>
@@ -210,7 +207,7 @@ if (isset($_POST['confirm'])) {
                           <form method="POST">
                           <?php
                           $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Received'";
-                          $result = mysqli_query($dbc, $query);
+                          $result = mysqli_query($DBConnect, $query);
                           $i = 0;
 
                           while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -261,7 +258,7 @@ if (isset($_POST['confirm'])) {
                                           $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
                                                       FROM dblazerosa2.purchase_order_items
                                                       WHERE purchaseID =" .  $row['purchaseID'];
-                                          $productresult = mysqli_query($dbc, $productquery);
+                                          $productresult = mysqli_query($DBConnect, $productquery);
                                           while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
                                             if ($productcount < $productrow['ordercount']) {
                                               $finalquery = "SELECT p.*, poi.*, i.*
@@ -270,7 +267,7 @@ if (isset($_POST['confirm'])) {
                                                 ON p.purchaseID = poi.purchaseID
                                                 JOIN tblinventory i
                                                 ON poi.itemID = i.pID";
-                                              $finalresult = mysqli_query($dbc, $finalquery);
+                                              $finalresult = mysqli_query($DBConnect, $finalquery);
                                                  while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
                                                 if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                                   $productcount++;

@@ -1,3 +1,31 @@
+<?php
+require_once('connect.php');
+// if(isset($_POST['submit'])){
+//     // $_POST['ReportType'] == 'Expenses'
+
+//     $rangeFrom = date('Y-m-d', strtotime($_POST['StartRange']));
+//     $rangeTill = date('Y-m-d', strtotime($_POST['EndRange']));
+
+//     echo "<br /> outside!! <br />";
+//     $totalSales = 0;
+
+//     // $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Received'";
+
+
+//     // $query = mysqli_query($DBConnect, "SELECT * FROM sales_list s WHERE s.dateOrdered BETWEEN '$rangeFrom' AND '$rangeTill' 
+//     // ORDER BY s.dateOrdered ASC");  //remove order by if by PO#,  this can be useful 'ORDER BY ordered_at DESC, shipped_at ASC;'
+//     // while($retrieve = mysqli_fetch_array($query)){
+//     //     echo "cusNum: " . $retrieve["custID"]. "<br />";
+//     //     echo "productID: " . $retrieve["pID"]. "<br />";
+//     //     echo "dateOrdered: ". $retrieve["dateOrdered"].  "<br />";
+//     //     echo "quantity: " . $retrieve["quantity"].  "<br />";
+//     //     echo "unitPrice: " . $retrieve["unitPrice"]. "<br />";
+//     //     echo "total: " . $retrieve["amount"].  "<br />";
+//     //     $totalSales += $retrieve["amount"];
+//     // };
+//     // echo "TOTAL SALES: ".$totalSales."<br />";
+// }
+// ?>
 <!DOCTYPE html>
 <html>
 
@@ -119,12 +147,14 @@
     </ul>
     </div>
     </nav>
+    <form method="POST">
     <div class="container-fluid" id="Page-Content">
         <div class="d-sm-flex align-items-center mb-4" id="Page-Header" style="width: 100%;">
-            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">REPORTS: Total Sales/Expenses Report</h3>
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">Reports: Total Sales/Expenses Report</h3>
         </div>
         <hr>
         <div class="row" id="ReportsContent-Row" style="width: auto;">
+        
             <div class="col-lg-5 col-xl-4" id="Reports-TimelineSelection-Column">
                 <div class="card shadow mb-4" id="Reports-TimelineSelection-Card">
                     <div class="card-header py-3" id="Reports-TimelineSelection-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
@@ -143,10 +173,11 @@
                             <div class="col" id="Reports-ReportType-Column" style="width: 100%;"><label class="col-form-label" id="Reports-ReportType" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.3vw;">Report Type:&nbsp;<select class="border rounded border-dark float-right" id="Reports-ReportType-Input" style="width: 12vw;border-radius: 20px;" name="ReportType"><optgroup label="Select Type"><option value="Sales">Sales</option><option value="Expenses">Expenses</option></optgroup></select></label></div>
                         </div>
                         <hr>
-                        <hr><button class="btn btn-success" id="GenerateReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">GENERATE REPORT</button>
+                        <hr><button class="btn btn-success" id="GenerateReport-Button" type="submit" name="submit" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">GENERATE REPORT</button>
                         <hr><button class="btn btn-secondary" id="PrintReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">PRINT GENERATED REPORT</button></div>
                 </div>
             </div>
+        </form>
             <div class="col-lg-7 col-xl-8" id="Reports-GeneratedReport-Column" style="width: 100vw;">
                 <div class="card shadow mb-4" id="Reports-GeneratedReport-Card" style="width: 100%;">
                     <div class="card-header py-3" id="Reports-GeneratedReport-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
@@ -182,12 +213,12 @@
                         <div class="row" id="GeneratedReport-StartRange-Row" style="margin-top: 20px;">
                             <div class="col-xl-5" id="GeneratedReport-StartRange-FromCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-StartRange-FromLabel" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">FROM:</span></div>
                             <div class="col" id="GeneratedReport-StartRange-DateCol"
-                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-StartRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;">StartDate</span></div>
+                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-StartRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeFrom = date('Y-m-d', strtotime($_POST['StartRange']));  echo $rangeFrom;}?></span></div>
                         </div>
                         <div class="row" id="GeneratedReport-EndRange-Row">
                             <div class="col-xl-5" id="GeneratedReport-EndRange-ToCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-EndRange-ToLabel" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">TO:</span></div>
                             <div class="col" id="GeneratedReport-EndRange-DateCol"
-                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-EndRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;">EndDate</span></div>
+                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-EndRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeTill = date('Y-m-d', strtotime($_POST['EndRange'])); echo $rangeTill; }?></span></div>
                         </div>
                         <div class="row" id="GeneratedReport-Generated-Row">
                             <div class="col-xl-5" id="GeneratedReport-Generated-LabelCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-Generated-Label" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">GENERATED ON:</span></div>
@@ -222,13 +253,41 @@
                             </thead>
                             <tbody id="Table-Body">
                                 <tr class="text-center" id="Table-Row" style="font-family: 'Open Sans', sans-serif;font-size: 0.8vw;">
-                                    <td id="EntryNum-Entry">#</td>
                                     <td id="Date-Entry">Date</td>
                                     <td class="text-left" id="CustName-Entry">CustomerName</td>
                                     <td>Platform</td>
                                     <td>DiscountRate</td>
                                     <td id="Amount-Entry">Amount</td>
                                 </tr>
+
+                                <?php 
+                                    if(isset($_POST['submit'])){
+                                        $rangeFrom = date('Y-m-d', strtotime($_POST['StartRange']));
+                                        $rangeTill = date('Y-m-d', strtotime($_POST['EndRange']));
+                                        $reportType = $_POST['ReportType'] == 'Expenses';
+
+                                        $totalAmount = 0;
+
+                                        $query = "SELECT p.*, s.*, poi.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID JOIN purchase_order_items poi 
+                                            ON p.purchaseID = poi.purchaseID WHERE status = 'Received' GROUP BY s.supplierName";
+
+                                        
+                                        $result = mysqli_query($DBConnect, $query);
+
+                                        while($retrieve = mysqli_fetch_array($result)){
+                                            $totalAmount = $retrieve["amount"];
+                                            echo "<tr class='text-center' id='Table-Row' style='font-family: 'Open Sans', sans-serif;font-size: 0.8vw;'>";
+                                            echo "<td id='EntryNum-Entry'>{$retrieve['purchaseID']}</td>";
+                                            echo "<td id='Date-Entry'>{$retrieve['dateOrdered']}</td>";
+                                            echo "<td class='text-left' id='CustName-Entry'>{$retrieve['supplierName']}</td>";
+                                            echo "<td></td>";
+                                            echo "<td></td>";
+                                            echo "<td id='Amount-Entry'>{$retrieve['amount']}</td>";
+                                            echo "</tr>";
+                                            // $totalAmount += $retrieve["amount"];
+                                        }
+                                    }
+                                ?>
                             </tbody>
                             <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
                                 <tr class="text-center" id="Table-FooterRow" style="color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #d0d0d0;">
@@ -237,7 +296,7 @@
                                     <td></td>
                                     <td></td>
                                     <td id="GeneratedReport-Table-TotalSalesLabelCell"><strong class="float-right" id="GeneratedReport-Table-TotalSalesLabel" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">TOTAL AMOUNT :</strong></td>
-                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">XX,XXX.XX</strong></td>
+                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;"><?php echo $totalAmount;?></strong></td>
                                 </tr>
                             </tfoot>
                         </table>

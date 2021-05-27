@@ -1,71 +1,27 @@
-<?php
-require_once('connect.php');
+<?php 
 
-if (isset($_POST['submit'])) {
-  $query = "INSERT INTO suppliers (supplierName,supplierEmail,supplierNumber,supplierAddress) VALUES
-  ('{$_POST['suppName']}','{$_POST['suppEmail']}','{$_POST['suppNumber']}','{$_POST['suppAddress']}')";
-  mysqli_query($dbc, $query);
-  $suppid = mysqli_insert_id($dbc);
+//the fields for the table that I made:  ID, dateOrdered, custName, status
+//change it na lang when needed
 
-  $squery = "SELECT * FROM suppliers WHERE supplierID='{$suppid}'";
-  $sresult = mysqli_query($dbc, $squery);
-  $supp = mysqli_fetch_array($sresult, MYSQLI_ASSOC);
-
-  $query2 = "INSERT INTO purchase_orders (supplierID,PONumber,dateOrdered,paymentMethod,status) VALUES
-  ('{$suppid}','{$_POST['suppPO']}',NOW(),'{$_POST['suppMOP']}','Pending')";
-  mysqli_query($dbc, $query2);
-  $poid = mysqli_insert_id($dbc);
-
-  for ($i = 0; $i < sizeof($_POST['product']); $i++) {
-    $query = "INSERT INTO items (itemName) VALUES ('{$_POST['product'][$i]}')";
-    mysqli_query($dbc, $query);
-    $itemid = mysqli_insert_id($dbc);
-
-    $amount = $_POST['qty'][$i] * $_POST['unitp'][$i];
-    $query3 = "INSERT INTO purchase_order_items (purchaseID,itemID,quantity,unitPrice,amount) VALUES
-    ('{$poid}','{$itemid}','{$_POST['qty'][$i]}','{$_POST['unitp'][$i]}','{$amount}')";
-    mysqli_query($dbc, $query3);
-  }
-}
-
-if (isset($_POST['confirm'])) {
-  for ($i = 0; $i < sizeof($_POST['poid']); $i++) {
-    $query = "UPDATE purchase_orders SET status='Deleted' WHERE purchaseID='{$_POST['poid'][$i]}'";
-    mysqli_query($dbc, $query);
-  }
-}
-
-if (isset($_POST['receive'])){
-  $query = "UPDATE purchase_orders SET status='Received' WHERE purchaseID='{$_POST['receive']}'";
-  mysqli_query($dbc,$query);
-
-  $iquery = "SELECT * FROM purchase_order_items WHERE purchaseID='{$_POST['receive']}'";
-  $result = mysqli_query($dbc,$iquery);
-
-  while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-    $invq = "SELECT * FROM tblInventory WHERE pID='{$row['itemID']}'";
-    $invr = mysqli_query($dbc,$invq);
-    $inventory = mysqli_fetch_array($invr,MYSQLI_ASSOC);
-
-    $sum = $row['quantity'] + $inventory['pQuantity'];
-
-    $query2 = "UPDATE tblInventory SET pQuantity='{$sum}' WHERE pID='{$row['itemID']}'";
-    mysqli_query($dbc,$query2);
-  }
-}
-
-if (isset($_POST['cancel'])){
-  $query = "UPDATE purchase_orders SET status='Cancelled' WHERE purchaseID='{$_POST['cancel']}'";
-  mysqli_query($dbc,$query);
-}
+// require_once("connect.php");
+// if (isset($_POST['submit'])) { //adding
+//     $query = mysqli_query($DBConnect, "SELECT * FROM sales_customer s ORDER by s.PONumber DESC LIMIT 1"); //gets the latest PO
+//     $retrieve = mysqli_fetch_array($query);
+//     $last_po = $retrieve["PONumber"] + 1; //gets the latest PO and adds 1 to it
+    
+//     $add = "INSERT INTO sales_customer (PONumber,dateOrdered,custName,status) VALUES
+//     ('$last_po','{$_POST['date_ordered']}','{$_POST['cust_name']}','{$_POST['stat']}')";
+//     mysqli_query($DBConnect, $add) or die (mysqli_error());
+//   }
 ?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>LazeRosa - Supplier Order List</title>
+    <title>LazeRosa - Customer Order List</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
@@ -82,9 +38,6 @@ if (isset($_POST['cancel'])){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown-1.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown.css">
-    <link rel="stylesheet" type="text/css" href="assets/datatables.min.css"/>
-    <script src="assets/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="assets/datatables.min.js"></script>
 </head>
 
 <body id="Page-Body">
@@ -189,12 +142,12 @@ if (isset($_POST['cancel'])){
     </nav>
     <div class="container-fluid" id="Page-Content">
         <div id="Breadcrumb-Border" style="width: auto;margin-bottom: 10px;"></div>
-        <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon" src="assets/img/SuppOrderList.png" style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
-            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Reorder: Supplier Order Tracker</h3>
+        <div class="d-sm-flex align-items-center mb-4" id="Page-Header"><img id="Page-Header-Icon" src="assets/img/CustOrderList.png" style="width: 60px;margin-left: 0px;margin-right: 15px;margin-top: 0px;padding-top: 0px;padding-bottom: 0px;">
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 35px;">Sales: Customer Order List</h3>
         </div>
-        <div class="card shadow" id="SuppOL_Table" style="margin-right: 8vw;margin-left: 8vw;">
+        <div class="card shadow" id="CustOL_Table" style="margin-right: 8vw;margin-left: 8vw;">
             <div class="card-header py-3" id="Table-Header" style="background-color: rgb(235,235,235);background: linear-gradient(to right, #2657eb, #de6161);">
-                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Supplier Order Tracker</p>
+                <p class="text-center m-0 font-weight-bold" id="Table-HeaderTitle" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Customer Order List</p>
                 <div class="row" id="Table-HeaderDetails">
                     <div class="col" id="Table-HeaderDetail-1">
                         <p class="text-right m-0 font-weight-bold" id="Table-TodayDate-Intro" style="font-size: 15px;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: normal;">As of TODAY:&nbsp;</p>
@@ -202,148 +155,168 @@ if (isset($_POST['cancel'])){
                     <div class="col" id="Table-HeaderDetail-2">
                         <p class="text-left m-0 font-weight-bold" id="Table-TodayDate" style="font-size: 15px;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: lighter;">TodayDate<script>
         var d = new Date();
-
+        
         document.getElementById("Table-TodayDate").innerHTML = d.toDateString();
 </script></p>
                     </div>
                 </div>
             </div>
             <div class="card-body" id="Table-Body">
-
-                <div class="table-responsive table mt-2" id="SuppOL-TableFrame" role="grid" aria-describedby="dataTable_info">
-                    <table class="table my-0" id="pot">
+                <div class="row" id="Table-Tools">
+                    <div class="col-md-6 text-nowrap" id="Table-Tool1">
+                        <div id="Table-Tool1-Frame" class="dataTables_length" aria-controls="dataTable"><label id="Table-ShowItemNumber">Show&nbsp;<select id="Table-ShowItem-Dropdown" class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
+                    </div>
+                    <div class="col-md-6" id="Table-Tool2">
+                        <div class="text-md-right dataTables_filter" id="Table-Tool2-Frame"><label id="Table-Search" style="width: 350px;padding-right: 0px;margin-right: 12px;"><input type="search" id="Table-SearchBar" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
+                            <button
+                                class="btn" id="Table-SearchButton" type="submit" style="background-color: rgba(78,115,223,0);border-color: transparent;width: auto;padding-bottom: 0px;padding-top: 0px;padding-right: 0px;padding-left: 0px;"><img id="Search-ButtonIMG" src="assets/img/SYSTIMP/Search%20(Icon).png" style="width: 20px;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive table mt-2" id="CustOL-TableFrame" role="grid" aria-describedby="dataTable_info">
+                    <table class="table my-0" id="CustOL-Table">
                         <thead id="Table-Header">
                             <tr class="text-center" id="Table-HeaderRow" style="background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
                                 <th class="text-center" style="width: 40px;"><input type="checkbox" id="Checkbox-Header" disabled=""></th>
                                 <th style="width: 85px;">PO #</th>
                                 <th style="width: 100px;">Date Ordered</th>
-                                <th class="text-center" style="width: 350px;">Supplier Name</th>
-                                <th style="width: 150px;">Mode of Payment</th>
+                                <th class="text-left" style="width: 350px;">Customer Name</th>
                                 <th style="width: 150px;">Status</th>
-                                <th style="width: 150px;">Action</th>
                             </tr>
                         </thead>
                         <tbody id="Table-Body">
-
-                          <?php
-                          $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID";
-                          $result = mysqli_query($DBConnect, $query);
-                          $i = 0;
-
-                          while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                            $i++;
-                            echo "<tr class='text-center' style='font-family: Nunito, sans-serif;color: rgb(0,0,0);'>";
-                            echo "<td><input type='checkbox' name='poid[]' value='{$row['purchaseID']}'></td>";
-                            echo "<td>{$row['purchaseID']}</td>";
-                            echo "<td>{$row['dateOrdered']}</td>";
-                            echo "<td>{$row['supplierName']}</td>";
-                            echo "<td>{$row['paymentMethod']}</td>";
-                            echo "<td>{$row['status']}</td>";
-                          ?>
-                          <td>
-                            <?php if ($row['status'] == 'Pending') { ?>
-                              <form method="POST">
-                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button><br>
-                            <button type='submit' class="btn btn-success" value='<?php echo $row['purchaseID']; ?>' name="receive">RECEIVE</button>
-                            <button type='submit' class="btn btn-danger" value='<?php echo $row['purchaseID']; ?>' name="cancel">CANCEL</button>
-                          </form>
-                          <?php }else{ ?>
-                            <form method="POST">
-                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button><br>
-                          </form>
-                          <?php } ?>
-
-                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
-                              <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                  <div class="modal-body">
-                                      <label for="suppName">Supplier Name</label><br>
-                                      <input type="text" name="suppName"  value="<?php echo $row['supplierName']; ?>" disabled><br><br>
-                                      <label for="suppPO">Supplier Purchase Order Number</label><br>
-                                      <input type="text" name="suppPO"  value="<?php echo $row['purchaseID']; ?>" disabled><br><br>
-
-                                      <label for="suppEmail">Supplier Email</label><br>
-                                      <input type="email" name="suppEmail"  value="<?php echo $row['supplierEmail']; ?>" disabled><br><br>
-                                      <label for="suppMOP">Mode of Payment</label><br>
-                                      <input type="text" name="suppMOP"  value="<?php echo $row['paymentMethod']; ?>" disabled><br><br>
-
-                                      <label for="suppNumber">Supplier Contact Number</label><br>
-                                      <input type="text" name="suppNumber" value="<?php echo $row['supplierNumber']; ?>" disabled><br><br>
-
-                                      <label for="suppAddress">Supplier Address</label><br>
-                                      <input type="text" name="suppAddress" value="<?php echo $row['supplierAddress']; ?>" disabled><br><br>
-                                      <br><br><br>
-
-                                      <table>
-                                        <tr>
-                                          <th>Product Name</th>
-                                          <th>Quantity</th>
-                                          <th>Unit Price</th>
-                                          <th>Amount</th>
-                                        </tr>
-                                        <tbody>
-                                          <?php
-                                          $productcount = 0;
-                                          $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
-                                                      FROM dblazerosa2.purchase_order_items
-                                                      WHERE purchaseID =" .  $row['purchaseID'];
-                                          $productresult = mysqli_query($dbc, $productquery);
-                                          while ($productrow = mysqli_fetch_array($productresult, MYSQLI_ASSOC)) {
-                                            if ($productcount < $productrow['ordercount']) {
-                                              $finalquery = "SELECT p.*, poi.*, i.*
-                                                FROM purchase_orders p
-                                                JOIN purchase_order_items poi
-                                                ON p.purchaseID = poi.purchaseID
-                                                JOIN tblinventory i
-                                                ON poi.itemID = i.pID";
-                                              $finalresult = mysqli_query($dbc, $finalquery);
-                                              while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
-                                                if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
-                                                  $productcount++;
-                                          ?>
-                                                  <tr>
-                                                    <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
-                                                    <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
-                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
-                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
-                                                  </tr>
-                                          <?php
-                                                }
-                                              }
-                                            }
-                                          }
-                                          ?>
-                                        </tbody>
-                                      </table>
-                                      <br><br>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-                          </td>
-                          <?php
-                            echo "</tr>";
-                          }
-                          ?>
+                            <tr class="text-center" id="Table-Row">
+                                <td id="Checkbox-Entry"><input type="checkbox" id="Checkbox-EntryItem"></td>
+                                <td id="PONum-Entry">PO#</td>
+                                <td id="DateOrd-Entry">DateOrdered</td>
+                                <td class="text-left" id="CustName-Entry">CustomerName</td>
+                                <td id="Status-Entry">Status</td>
+                            </tr>
+                            <form method="POST" action="">
+                            <?php
+                            require_once("connect.php");
+                            
+                                $query = mysqli_query($DBConnect, "SELECT * FROM sales_customer s ORDER by s.PONumber");  //getting PO
+                                while($retrieve = mysqli_fetch_array($query)){
+                                    echo "<tr class='text-center' id='Table-Row'>"; 
+                                    echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[PONumber]></td>";
+                                    echo "<td>" . $retrieve["PONumber"].  "</td>";
+                                    echo "<td>". $retrieve["dateOrdered"].  "</td>";
+                                    echo "<td>" . $retrieve["custName"].  "</td>";
+                                    echo "<td>" . $retrieve["status"].  "</td>";
+                                    echo "</tr>";
+                                }
+                            ?>
                         </tbody>
-
                         <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
                             <tr class="text-center" id="Table-FooterRow" style="color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
                                 <td class="text-center"><input type="checkbox" id="Checkbox-Footer" disabled=""></td>
                                 <td><strong>PO #</strong></td>
                                 <td><strong>Date Ordered</strong></td>
-                                <td class="text-left"><strong>Supplier Name</strong></td>
-                                <td style="font-weight: bold;">Mode of Payment</td>
+                                <td class="text-left"><strong>Customer Name</strong></td>
                                 <td><strong>Status</strong></td>
-                                <td><strong>Action</strong></td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
+                <div class="row" id="Table-Details">
+                    <div class="col-md-6 align-self-center" id="Table-PageInd" style="width: 316px;"><span id="Table-PageInd-Range">Showing&nbsp;<span id="Table-PageInd-CurrentFirst">1</span><span>&nbsp;to&nbsp;</span><span id="Table-PageInd-CurrentLast">10</span><span>&nbsp;of&nbsp;</span><span id="Table-PageInd-MaxNum">27</span></span>
+                    </div>
+                    <div class="col-md-6" id="Table-PageNav-Frame">
+                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers" id="Table-PageNavBar">
+                            <ul class="pagination" id="Table-PageNav">
+                                <li class="page-item disabled" id="Table-PageNav-Prev"><a class="page-link" href="#" aria-label="Previous" id="Table-PageNav-Prev-Link"><span aria-hidden="true">«</span></a></li>
+                                <li class="page-item active" id="Table-PageNav-P1"><a class="page-link" href="#" id="Table-PageNav-P1-Link">1</a></li>
+                                <li class="page-item" id="Table-PageNav-P2"><a class="page-link" href="#" id="Table-PageNav-P2-Link">2</a></li>
+                                <li class="page-item" id="Table-PageNav-P3"><a class="page-link" href="#" id="Table-PageNav-P3-Link">3</a></li>
+                                <li class="page-item" id="Table-PageNav-Next"><a class="page-link" href="#" aria-label="Next" id="Table-PageNav-Next-Link"><span aria-hidden="true">»</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row" id="Table-Button-Row">
+                    <div class="col offset-xl-6" id="Delete-Column">
+                        <div id="Delete"><a class="btn btn-danger float-right" role="button" id="DeleteButton" data-toggle="modal" href="#DeletePopup" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">DELETE</a>
+                            <div
+                                class="modal fade" role="dialog" tabindex="-1" id="DeletePopup">
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document" id="Delete-Modal">
+                                    <div class="modal-content" id="Delete-Modal-Content">
+                                        <div class="modal-header" id="Delete-Modal-Header" style="background-color: #e74a3b;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                            <h4 id="Delete-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">Delete Selected Customer Order List Items?</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="Delete-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                        <div class="modal-body"
+                                            id="Delete-ModalBody">
+                                            <div class="table-responsive table mt-2" id="DeleteTableFrame" role="grid" aria-describedby="dataTable_info" style="width: auto;">
+                                                <table class="table my-0" id="DeleteTable">
+                                                    <thead id="DeleteTable-Header">
+                                                        <tr class="text-center" id="DeleteTable-HeaderRow" style="background-color: #FF7A00;font-family: Nunito, sans-serif;color: rgb(0,0,0);">
+                                                            <th>PO #</th>
+                                                            <th style="width: 180px;">Date Ordered</th>
+                                                            <th class="text-left" style="width: 275px;">Customer Name</th>
+                                                            <th style="width: 150px;">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="DeleteTable-Body">
+                                                        <tr class="text-center" id="DeleteTable-Row">
+                                                            <td id="PONum-DeleteEntry">DeletePO#</td>
+                                                            <td id="DateOrdered-DeleteEntry">DeleteDateOrdered</td>
+                                                            <td class="text-left" id="CustName-DeleteEntry">DeleteCustomerName</td>
+                                                            <td id="Status-DeleteEntry">DeleteStatus</td>
+                                                        </tr>
+                                                        <?php
+                                                            // $arr = $_POST["checkboxid"];
+                                                            // echo "array: " .$arr;
+                                                            // foreach($arr as $value){
+                                                            //     $query = mysqli_query($DBConnect, "SELECT ID FROM sales_customer s WHERE ID $value");
+                                                            //     $retrieve = mysqli_fetch_array($query);
+                                                            //     echo "<tr>"; 
+                                                            //     echo "<td>" . $retrieve["ID"].  "</td>";
+                                                            //     echo "<td>". $retrieve["dateOrdered"].  "</td>";
+                                                            //     echo "<td>" . $retrieve["custName"].  "</td>";
+                                                            //     echo "<td>" . $retrieve["status"].  "</td>";
+                                                            //     echo "</tr>";
+                                                            // }
+
+                                                            if(isset($_POST["delete"])){ //delete
+                                                                $all = $_POST["checkboxid"];
+                                                                $extract = implode(',', $all);
+                                                                echo $extract;
+                                                                $query = "DELETE FROM sales_customer WHERE PONumber IN($extract)";
+                                                                $query2 = mysqli_query($DBConnect, $query);
+
+                                                                if($query2){
+                                                                    echo "<script type='text/javascript'> document.location = 'Sales_custOrderList.php'; </script>";
+                                                                }
+                                                            }
+                                                        ?>
+                                                    </tbody>
+                                                    <tfoot id="DeleteTable-Footer" style="background-color: #dcdcdc;">
+                                                        <tr class="text-center" id="DeleteTable-FooterRow">
+                                                            <td><strong>PO #</strong></td>
+                                                            <td><strong>Date Ordered</strong></td>
+                                                            <td class="text-left"><strong class="text-left">Customer Name</strong></td>
+                                                            <td><strong>Status</strong></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" id="Delete-ModalFooter"><button class="btn btn-light text-danger" id="Delete-CancelButton" data-dismiss="modal" type="button" style="font-family: 'Open Sans', sans-serif;">Cancel</button><button class="btn btn-danger" id="Delete-ConfirmButton"
+                                               name="delete" type="submit" style="border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;font-family: 'Open Sans', sans-serif;">CONFIRM DELETION</button></div>
+                                               </form>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col" id="Add-Column">
+                    <form method="POST" action="customerpo.php">
+                    <div id="Add"><button class="btn btn-success float-right" type="submit" role="button" id="AddButton" data-toggle="modal" href="Sales_CustPOForm.php" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;">ADD</button>
+                        </form> 
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
     <div></div>
@@ -356,69 +329,12 @@ if (isset($_POST['cancel'])){
         </div>
     </footer>
     </div><a class="border rounded d-inline scroll-to-top" id="Pagetop-Button" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
-<script>
-  function addProduct() {
-    var tableRef = document.getElementById('itemt');
-    var btnRef = document.getElementById('btnRow');
-    var trRef = document.getElementById('itemr');
-    var clone = trRef.cloneNode(true);
-    clone.deleteCell(4);
-    var minus = clone.insertCell(4);
-    minus.innerHTML = "<button type='button' onclick='deleteProduct(this)'>-</button>";
-    var check = clone.querySelectorAll("input");
 
-    for (i = 0; i < check.length; i++) {
-      check[i].value = "";
-    }
-
-    tableRef.appendChild(clone);
-  }
-
-  function deleteProduct(btn) {
-    var row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-  }
-
-  function multiply(val) {
-    var tableRef = document.getElementById('itemt');
-    var amount = document.getElementById('amt');
-    var row = val.parentNode.parentNode;
-    var qty = row.cells[1].childNodes[0].value;
-    var price = row.cells[2].childNodes[0].value;
-
-    if (isNaN(qty.value) && isNaN(price.value)) {
-      var mult = qty * price;
-      row.deleteCell(3);
-      var change = row.insertCell(3);
-      change.innerHTML = "<input type='text' disabled value='" + mult + "'>";
-    }
-  }
-  function isChecked(){
-    var li = document.getElementById("idlist");
-    var tableRef = document.getElementById("pot");
-    var checked = document.getElementById("checked");
-    var array = [];
-    var checkboxes = tableRef.querySelectorAll('input[type=checkbox]:checked');
-    var msg = document.getElementById('none');
-    if (checkboxes.length == 0){
-      msg.style.display = "block";
-      checked.style.display = "none";
-    }
-    else{
-      checked.style.display = "block";
-      msg.style.display = "none";
-    }
-  }
-</script>
-<script>
-$(document).ready( function () {
-    $('#pot').DataTable();
-} );
-</script>
 </html>

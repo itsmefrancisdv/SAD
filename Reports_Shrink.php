@@ -121,7 +121,7 @@
     </nav>
     <div class="container-fluid" id="Page-Content">
         <div class="d-sm-flex align-items-center mb-4" id="Page-Header" style="width: 100%;">
-            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">REPORTS: Shrinkage Report</h3>
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">Reports: Shrinkage Report</h3>
         </div>
         <hr>
         <div class="row" id="ReportsContent-Row" style="width: auto;">

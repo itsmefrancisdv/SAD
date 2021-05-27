@@ -4,16 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>LazeRosa - Home</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="assets/css/Jost.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
     <link rel="stylesheet" href="assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="assets/css/customtable.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown-1.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown.css">
 </head>
 
@@ -73,267 +78,253 @@
             <div class="nav-item dropdown no-arrow" id="Notification-DD"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" data-bs-hover-animate="swing" id="Notification-Link" href="#"><span id="Notification-Counter" class="badge badge-danger badge-counter">3+</span><img id="Notification-Bell" style="width: 25px;height: 25px;" src="assets/img/SYSTIMP/Notifications%20(Icon).png"></a>
                 <div
                     class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in" role="menu" id="Notification-Menu">
-                    <h6 class="dropdown-header" style="background-color: rgb(78,188,223);font-family: Nunito, sans-serif;font-size: 12px;">NOTIFICATION center</h6>
-                    <a class="d-flex align-items-center dropdown-item" href="#">
-                        <div class="mr-3">
-                            <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
+                    <h6 id="Notification-DDHeader" class="dropdown-header" style="background-color: #ffafaf;font-family: Nunito, sans-serif;font-size: 12px;color: rgb(0,0,0);">NOTIFICATION center</h6>
+                    <a class="d-flex align-items-center dropdown-item" id="Report-Notification-Item" href="#">
+                        <div id="Report-NotifItem-Type" class="mr-3">
+                            <div class="bg-primary icon-circle" id="Report-NotifItem-TypeCircleFrame"><i class="fas fa-file-alt text-white" id="Report-NotifItem-TypeIcon"></i></div>
                         </div>
-                        <div><span class="small text-gray-500">December 12, 2019</span>
-                            <p>A new monthly report is ready to download!</p>
-                        </div>
-                    </a>
-                    <a class="d-flex align-items-center dropdown-item" href="#">
-                        <div class="mr-3">
-                            <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                        </div>
-                        <div><span class="small text-gray-500">December 7, 2019</span>
-                            <p>$290.29 has been deposited into your account!</p>
+                        <div id="Report-NotifItem-Details"><span id="Report-NotifItem-Date" class="small text-gray-500">December 12, 2019</span>
+                            <p id="Report-NotifItem-Description">A new monthly report is ready to download!</p>
                         </div>
                     </a>
-                    <a class="d-flex align-items-center dropdown-item" href="#">
-                        <div class="mr-3">
-                            <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
+                    <a class="d-flex align-items-center dropdown-item" id="Finance-Notification-Item" href="#">
+                        <div id="Finance-NotifItem-Type" class="mr-3">
+                            <div class="bg-success icon-circle" id="Finance-NotifItem-TypeCircleFrame"><i class="fas fa-donate text-white" id="Finance-NotifItem-TypeIcon"></i></div>
                         </div>
-                        <div><span class="small text-gray-500">December 2, 2019</span>
-                            <p>Spending Alert: We've noticed unusually high spending for your account.</p>
+                        <div id="Finance-NotifItem-Details"><span id="Finance-NotifItem-Date" class="small text-gray-500">December 7, 2019</span>
+                            <p id="Finance-NotifItem-Description">$290.29 has been deposited into your account!</p>
                         </div>
-                    </a><a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div>
+                    </a>
+                    <a class="d-flex align-items-center dropdown-item" id="Alert-Notification-Item" href="#">
+                        <div id="Alert-NotifItem-Type" class="mr-3">
+                            <div class="bg-warning icon-circle" id="Alert-NotifItem-TypeCircleFrame"><i class="fas fa-exclamation-triangle text-white" id="Alert-NotifItem-TypeIcon"></i></div>
+                        </div>
+                        <div id="Alert-NotifItem-Details"><span id="Alert-NotifItem-Date" class="small text-gray-500">December 2, 2019</span>
+                            <p id="Alert-NotifItem-Description">Spending Alert: We've noticed unusually high spending for your account.</p>
+                        </div>
+                    </a>
+            </div>
             </div>
         </li>
         <div class="d-none d-sm-block topbar-divider" id="Header-Divider"></div>
         <li class="nav-item dropdown no-arrow" role="presentation" id="User-Profile-Dropdown">
-            <div class="nav-item dropdown no-arrow" id="User-Profile-Frame"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" id="User-Profile-Link" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small" id="User-Message" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">Hello,&nbsp;<span class="d-none d-lg-inline mr-2 text-gray-600 small" id="Username" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">Patrick</span><span class="d-none d-lg-inline mr-2 text-gray-600 small" id="Welcome-ExclPt" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">!</span></span><img class="border rounded-circle img-profile" data-bs-hover-animate="tada" id="User-Avatar" src="assets/img/Avatar.jpeg" style="width: 50px;height: 50px;"></a>
+            <div class="nav-item dropdown no-arrow" id="User-Profile-Frame"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" id="User-Profile-Link" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small" id="User-Message" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">Hello,&nbsp;<span class="d-none d-lg-inline mr-2 text-gray-600 small" id="Username" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">Patrick</span><span class="d-none d-lg-inline mr-2 text-gray-600 small" id="Welcome-ExclPt" style="font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 17px;">!</span></span><img class="border rounded-circle img-profile" data-bs-hover-animate="tada" id="User-Avatar" src="assets/img/SYSTIMP/Avatar.jpeg" style="width: 50px;height: 50px;"></a>
                 <div
-                    class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
+                    class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu" id="UserProfile-DD"><a class="dropdown-item" role="presentation" id="UserProfile-DDItem-Profile" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" id="UserProfile-DDItem-ProfileIcon"></i>&nbsp;Profile</a>
                     <a
-                        class="dropdown-item" role="presentation" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="login.php" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img style="width: 15px;height: 15px;margin-right: 8px;" src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
+                        class="dropdown-item" role="presentation" id="UserProfile-DDItem-Settings" href="#" style="font-family: ABeeZee, sans-serif;"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" id="UserProfile-DDItem-SettingsIcon"></i>&nbsp;Settings</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" id="UserProfile-DDItem-Logout" href="index.html" style="font-family: ABeeZee, sans-serif;color: rgb(255,15,0);"><img id="UserProfile-DDItem-LogoutIcon" style="width: 15px;height: 15px;margin-right: 8px;" src="assets/img/SYSTIMP/Logout%20(Icon).png">&nbsp;Logout</a></div>
             </div>
         </li>
     </ul>
     </div>
     </nav>
-    <div class="container-fluid">
-        <div style="width: auto;">
-            <ol class="breadcrumb border rounded" style="background-color: rgb(239,195,192);font-family: ABeeZee, sans-serif;height: 0px;font-size: 10px;padding-bottom: 15px;margin-bottom: 0px;width: 162px;padding-top: 5px;">
-                <li class="breadcrumb-item"><a href="#"><span>Home</span></a></li>
-                <li class="breadcrumb-item"><a href="#"><span>Library</span></a></li>
-                <li class="breadcrumb-item"><a href="#"><span>Data</span></a></li>
-            </ol>
+    <div class="container-fluid" id="Page-Content">
+        <div class="d-sm-flex align-items-center mb-4" id="Page-Header">
+            <h3 class="text-dark mb-0" id="Page-Header-Title" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;font-size: 2.5vw;">Welcome Home, Patrick !</h3>
         </div>
-        <div class="d-sm-flex align-items-center mb-4">
-            <h3 class="text-dark mb-0" style="color: rgb(0,0,0);font-family: ABeeZee, sans-serif;font-weight: bold;">Welcome Home, Patrick !</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
-        <div class="row">
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-primary py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Earnings (monthly)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+        <div class="row" id="Dashboard-Income-Row">
+            <div class="col-lg-7 col-xl-6" id="MonthlyIncome-Col">
+                <div class="card shadow mb-4" id="MonthlyIncome-Card">
+                    <div class="card-header d-flex justify-content-between align-items-center" id="MonthlyIncome-Card-Header" style="background-color: #3e3e3e;padding-top: 1vw;padding-bottom: 1vw;padding-right: 1vw;padding-left: 1vw;">
+                        <h6 id="MonthlyIncome-Card-HeaderTitle" class="font-weight-bold m-0" style="color: #ffffff;font-size: 2vw;font-family: 'Open Sans', sans-serif;">Monthly Income</h6>
+                        <div class="dropdown no-arrow" id="MonthlyIncome-Actions"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="MonthlyIncome-Actions-Button" type="button"><i class="fas fa-ellipsis-v text-gray-400" id="MonthlyIncome-Actions-ButtonIcon"></i></button>
+                            <div
+                                class="dropdown-menu shadow dropdown-menu-right animated--fade-in" role="menu" id="MonthlyIncome-Actions-Menu">
+                                <p class="text-center dropdown-header" id="MonthlyIncome-Actions-MenuHeader">Action Items :</p><a class="dropdown-item" role="presentation" id="MonthlyIncome-Actions-MenuItem-1" href="#">&nbsp;Print</a></div>
+                    </div>
+                </div>
+                <div class="card-body" id="MonthlyIncome-Card-Body">
+                    <div id="MonthlyIncome-Card-IncomeChart" class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-xl-6" id="OverallIncome-Col">
+            <div class="card shadow mb-4" id="OverallIncome-Card">
+                <div class="card-header py-3" id="OverallIncome-Card-Header" style="background-color: #3e3e3e;/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                    <p class="text-center m-0 font-weight-bold" id="OverallIncome-Card-HeaderTitle" style="font-size: 2vw;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">Overall Income</p>
+                    <div class="row" id="OverallIncome-Card-HeaderDetails">
+                        <div class="col" id="OverallIncome-Card-HeaderDetail-1">
+                            <p class="text-right m-0 font-weight-bold" id="OverallIncome-Card-Header-TodayDate-Label" style="font-size: 1.3vw;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: normal;">As of TODAY:&nbsp;</p>
+                        </div>
+                        <div class="col" id="OverallIncome-Card-HeaderDetail-2">
+                            <p class="text-left m-0 font-weight-bold" id="OverallIncome-Card-Header-TodayDate" style="font-size: 1.3vw;width: 100%;font-family: 'Open Sans', sans-serif;color: #dddddd;font-weight: lighter;">TodayDate<script>
+        var d = new Date();
+        
+        document.getElementById("OverallIncome-Card-Header-TodayDate").innerHTML = d.toDateString();
+</script></p>
                         </div>
                     </div>
                 </div>
+                <div class="card-body d-flex justify-content-center align-items-center" id="OverallIncome-Card-Body" style="margin-top: 2vw;margin-bottom: 2vw;"><span id="OverallIncome-Card-CurrencyLabel" style="font-family: 'Open Sans', sans-serif;font-size: 4vw;color: #3e3e3e;">Php&nbsp;</span><span id="OverallIncome-Card-IncomeValue" style="font-family: 'Open Sans', sans-serif;font-size: 5vw;color: #000000;">XXX,XXX.XX</span></div>
             </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-success py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Earnings (annual)</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>$215,000</span></div>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-info py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Tasks</span></div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>50%</span></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="sr-only">50%</span></div>
-                                        </div>
-                                    </div>
+        </div>
+    </div>
+    <div class="row" id="Dashboard-Top5MostSold-Row">
+        <div class="col" id="Top5MostSold-Col">
+            <div class="row" id="Top5MostSold-Header"><span id="Top5MostSold-Title" style="font-size: 1.5vw;padding-left: 0.5vw;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-weight: bold;">TOP 5 MOST SOLD PRODUCTS :</span></div>
+            <div class="row" id="Top5Most-Products-Row">
+                <div class="col-md-6 col-xl-4 mb-4" id="Top5Most-Product-Col-1">
+                    <div class="card shadow border-left-warning py-2" id="Top5Most-Product-Card-1" style="border-left: .25rem solid #3e3e3e!important;background-color: #1bc100;">
+                        <div class="card-body" id="Top5Most-Product-CardBody-1">
+                            <div class="row align-items-center no-gutters" id="Top5Most-Product-CardContent-Row-1" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Most-Product-CardContent-Col-1" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Most-Product-CardContent-Header-1"><span id="Top5Most-Product-CardContent-HeaderTitle-1" style="color: #ffffff;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#1</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Most-Product-CardContent-Body-1"><span id="Top5Most-Product-CardContent-ProductName-1" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #ffffff;">Top1MostSold</span></div>
                                 </div>
                             </div>
-                            <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-xl-3 mb-4">
-                <div class="card shadow border-left-warning py-2">
-                    <div class="card-body">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending Requests</span></div>
-                                <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Most-Product-Col-2">
+                    <div class="card shadow border-left-warning py-2" id="Top5Most-Product-Card-2" style="border-left: .25rem solid #1bc100!important;">
+                        <div class="card-body" id="Top5Most-Product-CardBody-2">
+                            <div class="row align-items-center no-gutters" id="Top5Most-Product-CardContent-Row-2" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Most-Product-CardContent-Col-2" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Most-Product-CardContent-Header-2"><span id="Top5Most-Product-CardContent-HeaderTitle-2" style="color: #1bc100;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#2</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Most-Product-CardContent-Body-2"><span id="Top5Most-Product-CardContent-ProductName-2" style="font-family: 'Open Sans', sans-serif;font-size: 1.3vw;">Top2MostSold</span></div>
+                                </div>
                             </div>
-                            <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-7 col-xl-8">
-                <div class="card shadow mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary font-weight-bold m-0">Earnings Overview</h6>
-                        <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                            <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
-                                role="menu">
-                                <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" role="presentation" href="#">&nbsp;Action</a><a class="dropdown-item" role="presentation" href="#">&nbsp;Another action</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#">&nbsp;Something else here</a></div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Most-Product-Col-3">
+                    <div class="card shadow border-left-warning py-2" id="Top5Most-Product-Card-3" style="border-left: .25rem solid #1bc100!important;">
+                        <div class="card-body" id="Top5Most-Product-CardBody-3">
+                            <div class="row align-items-center no-gutters" id="Top5Most-Product-CardContent-Row-3" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Most-Product-CardContent-Col-3" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Most-Product-CardContent-Header-3"><span id="Top5Most-Product-CardContent-HeaderTitle-3" style="color: #1bc100;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#3</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Most-Product-CardContent-Body-3"><span id="Top5Most-Product-CardContent-ProductName-3" style="font-family: 'Open Sans', sans-serif;font-size: 1.3vw;">Top3MostSold</span></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-5 col-xl-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary font-weight-bold m-0">Revenue Sources</h6>
-                        <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                            <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
-                                role="menu">
-                                <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" role="presentation" href="#">&nbsp;Action</a><a class="dropdown-item" role="presentation" href="#">&nbsp;Another action</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="#">&nbsp;Something else here</a></div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Most-Product-Col-4">
+                    <div class="card shadow border-left-warning py-2" id="Top5Most-Product-Card-4" style="border-left: .25rem solid #1bc100!important;">
+                        <div class="card-body" id="Top5Most-Product-CardBody-4">
+                            <div class="row align-items-center no-gutters" id="Top5Most-Product-CardContent-Row-4" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Most-Product-CardContent-Col-4" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Most-Product-CardContent-Header-4"><span id="Top5Most-Product-CardContent-HeaderTitle-4" style="color: #1bc100;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#4</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Most-Product-CardContent-Body-4"><span id="Top5Most-Product-CardContent-ProductName-4" style="font-family: 'Open Sans', sans-serif;font-size: 1.3vw;">Top4MostSold</span></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="chart-area"><canvas data-bs-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Direct&quot;,&quot;Social&quot;,&quot;Referral&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{}}}"></canvas></div>
-                        <div
-                            class="text-center small mt-4"><span class="mr-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="mr-2"><i class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
+                </div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Most-Product-Col-5">
+                    <div class="card shadow border-left-warning py-2" id="Top5Most-Product-Card-5" style="border-left: .25rem solid #1bc100!important;">
+                        <div class="card-body" id="Top5Most-Product-CardBody-5">
+                            <div class="row align-items-center no-gutters" id="Top5Most-Product-CardContent-Row-5" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Most-Product-CardContent-Col-5" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Most-Product-CardContent-Header-5"><span id="Top5Most-Product-CardContent-HeaderTitle-5" style="color: #1bc100;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#5</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Most-Product-CardContent-Body-5"><span id="Top5Most-Product-CardContent-ProductName-5" style="font-family: 'Open Sans', sans-serif;font-size: 1.3vw;">Top5MostSold</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="text-primary font-weight-bold m-0">Projects</h6>
-                </div>
-                <div class="card-body">
-                    <h4 class="small font-weight-bold">Server migration<span class="float-right">20%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="sr-only">20%</span></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Sales tracking<span class="float-right">40%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="sr-only">40%</span></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Customer Database<span class="float-right">60%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="sr-only">60%</span></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Payout Details<span class="float-right">80%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="sr-only">80%</span></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Account setup<span class="float-right">Complete!</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="sr-only">100%</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="text-primary font-weight-bold m-0">Todo List</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
-                            <div class="col-auto">
-                                <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+    <div class="row" id="Dashboard-Top5LeastSold-Row">
+        <div class="col" id="Top5LeastSold-Col">
+            <div class="row" id="Top5LeastSold-Header"><span id="Top5LeastSold-Title" style="font-size: 1.5vw;padding-left: 0.5vw;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-weight: bold;">TOP 5 LEAST SOLD PRODUCTS :</span></div>
+            <div class="row" id="Top5Least-Products-Row">
+                <div class="col-md-6 col-xl-4 offset-xl-0 mb-4" id="Top5Least-Product-Col-1">
+                    <div class="card shadow border-left-warning py-2" id="Top5Least-Product-Card-1" style="border-left: .25rem solid #3e3e3e!important;background-color: #e74a3b;">
+                        <div class="card-body" id="Top5Least-Product-CardBody-1">
+                            <div class="row align-items-center no-gutters" id="Top5Least-Product-CardContent-Row-1" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Least-Product-CardContent-Col-1" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Least-Product-CardContent-Header-1"><span id="Top5Least-Product-CardContent-HeaderTitle-1" style="color: #ffffff;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#1</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Least-Product-CardContent-Body-1"><span id="Top5Least-Product-CardContent-ProductName-1" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #ffffff;">Top1LeastSold</span></div>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">11:30 AM</span></div>
-                            <div class="col-auto">
-                                <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-2"><label class="custom-control-label" for="formCheck-2"></label></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Least-Product-Col-2">
+                    <div class="card shadow border-left-warning py-2" id="Top5Least-Product-Card-2" style="border-left: .25rem solid #e74a3b!important;background-color: #ffffff;">
+                        <div class="card-body" id="Top5Least-Product-CardBody-2">
+                            <div class="row align-items-center no-gutters" id="Top5Least-Product-CardContent-Row-2" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Least-Product-CardContent-Col-2" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Least-Product-CardContent-Header-2"><span id="Top5Least-Product-CardContent-HeaderTitle-2" style="color: #e74a3b;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#2</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Least-Product-CardContent-Body-2"><span id="Top5Least-Product-CardContent-ProductName-2" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #5a5c69;"><strong>Top2LeastSold</strong><br></span></div>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row align-items-center no-gutters">
-                            <div class="col mr-2">
-                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">12:30 AM</span></div>
-                            <div class="col-auto">
-                                <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-3"><label class="custom-control-label" for="formCheck-3"></label></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Least-Product-Col-3">
+                    <div class="card shadow border-left-warning py-2" id="Top5Least-Product-Card-3" style="border-left: .25rem solid #e74a3b!important;background-color: #ffffff;">
+                        <div class="card-body" id="Top5Least-Product-CardBody-3">
+                            <div class="row align-items-center no-gutters" id="Top5Least-Product-CardContent-Row-3" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Least-Product-CardContent-Col-3" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Least-Product-CardContent-Header-3"><span id="Top5Least-Product-CardContent-HeaderTitle-3" style="color: #e74a3b;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#3</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Least-Product-CardContent-Body-3"><span id="Top5Least-Product-CardContent-ProductName-3" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #5a5c69;">Top3LeastSold</span></div>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Least-Product-Col-4">
+                    <div class="card shadow border-left-warning py-2" id="Top5Least-Product-Card-4" style="border-left: .25rem solid #e74a3b!important;background-color: #ffffff;">
+                        <div class="card-body" id="Top5Least-Product-CardBody-4">
+                            <div class="row align-items-center no-gutters" id="Top5Least-Product-CardContent-Row-4" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Least-Product-CardContent-Col-4" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Least-Product-CardContent-Header-4"><span id="Top5Least-Product-CardContent-HeaderTitle-4" style="color: #e74a3b;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#4</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Least-Product-CardContent-Body-4"><span id="Top5Least-Product-CardContent-ProductName-4" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #5a5c69;">Top4LeastSold</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-2 mb-4" id="Top5Least-Product-Col-5">
+                    <div class="card shadow border-left-warning py-2" id="Top5Least-Product-Card-5" style="border-left: .25rem solid #e74a3b!important;background-color: #ffffff;">
+                        <div class="card-body" id="Top5Least-Product-CardBody-5">
+                            <div class="row align-items-center no-gutters" id="Top5Least-Product-CardContent-Row-5" style="width: 100%;">
+                                <div class="col-xl-12 mr-2" id="Top5Least-Product-CardContent-Col-5" style="margin: 0px;margin-right: 0px;width: 100%;">
+                                    <div class="text-uppercase text-warning font-weight-bold text-xs mb-1" id="Top5Least-Product-CardContent-Header-5"><span id="Top5Least-Product-CardContent-HeaderTitle-5" style="color: #e74a3b;font-size: 1.3vw;font-family: 'Open Sans', sans-serif;">#5</span></div>
+                                    <div class="text-dark font-weight-bold h5 mb-0" id="Top5Least-Product-CardContent-Body-5"><span id="Top5Least-Product-CardContent-ProductName-5" style="font-family: 'Open Sans', sans-serif;font-size: 1.35vw;color: #5a5c69;">Top5LeastSold</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-primary shadow">
-                        <div class="card-body">
-                            <p class="m-0">Primary</p>
-                            <p class="text-white-50 small m-0">#4e73df</p>
-                        </div>
+    </div>
+    <div class="row" id="Dashboard-LowInv-Row">
+        <div class="col-lg-6 col-xl-10 offset-xl-1 mb-4" id="LowInv-Col">
+            <div class="card shadow mb-4" id="LowInv-Card">
+                <div class="card-header d-flex justify-content-between align-items-center" id="LowInv-Card-Header" style="background-color: #e76f3b;padding-top: 1.3vw;padding-bottom: 1.3vw;padding-right: 1vw;padding-left: 2vw;">
+                    <h6 class="text-center font-weight-bold m-0" id="LowInv-Card-HeaderTitle" style="color: #ffffff;font-size: 3vw;font-family: 'Open Sans', sans-serif;width: 100%;">LOW INVENTORY STOCK</h6>
+                    <div class="dropdown no-arrow" id="LowInv-Actions"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="LowInv-Actions-Button" type="button"><i class="fas fa-ellipsis-v text-gray-400" id="LowInv-Actions-ButtonIcon"></i></button>
+                        <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
+                            role="menu" id="LowInv-Actions-Menu">
+                            <p class="text-center dropdown-header" id="LowInv-Actions-MenuHeader">Action Items :</p><a class="dropdown-item" role="presentation" id="LowInv-Actions-MenuItem-1" href="#">&nbsp;Print</a></div>
                     </div>
                 </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-success shadow">
-                        <div class="card-body">
-                            <p class="m-0">Success</p>
-                            <p class="text-white-50 small m-0">#1cc88a</p>
-                        </div>
+                <div class="card-body" id="LowInv-Card-Body">
+                    <h4 id="LowInv-Card-ProductHeader-1" class="small font-weight-bold" style="font-size: 1.5vw;font-family: 'Open Sans', sans-serif;">LowProduct1<span class="float-right" id="LowInv-Card-ProductHeader-Percentage-1">3%</span></h4>
+                    <div class="progress mb-4" id="LowInv-Card-ProductProgress-1" style="height: 2vh;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" aria-valuenow="3" aria-valuemin="0" aria-valuemax="100" id="LowInv-Card-ProductProgress-Bar" style="width: 3%;">3%</div>
                     </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-info shadow">
-                        <div class="card-body">
-                            <p class="m-0">Info</p>
-                            <p class="text-white-50 small m-0">#36b9cc</p>
-                        </div>
+                    <h4 id="LowInv-Card-ProductHeader-2" class="small font-weight-bold" style="font-size: 1.5vw;font-family: 'Open Sans', sans-serif;">LowProduct2<span class="float-right" id="LowInv-Card-ProductHeader-Percentage-2">5%</span></h4>
+                    <div class="progress mb-4" id="LowInv-Card-ProductProgress-2" style="height: 2vh;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" id="LowInv-Card-ProductProgress-Bar" style="width: 5%;">5%</div>
                     </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-warning shadow">
-                        <div class="card-body">
-                            <p class="m-0">Warning</p>
-                            <p class="text-white-50 small m-0">#f6c23e</p>
-                        </div>
+                    <h4 id="LowInv-Card-ProductHeader-3" class="small font-weight-bold" style="font-size: 1.5vw;font-family: 'Open Sans', sans-serif;">LowProduct3<span class="float-right" id="LowInv-Card-ProductHeader-Percentage-3">7%</span></h4>
+                    <div class="progress mb-4" id="LowInv-Card-ProductProgress-3" style="height: 2vh;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" aria-valuenow="7" aria-valuemin="0" aria-valuemax="100" id="LowInv-Card-ProductProgress-Bar" style="width: 7%;">7%</div>
                     </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-danger shadow">
-                        <div class="card-body">
-                            <p class="m-0">Danger</p>
-                            <p class="text-white-50 small m-0">#e74a3b</p>
-                        </div>
+                    <h4 id="LowInv-Card-ProductHeader-4" class="small font-weight-bold" style="font-size: 1.5vw;font-family: 'Open Sans', sans-serif;">LowProduct4<span class="float-right" id="LowInv-Card-ProductHeader-Percentage-4">10%</span></h4>
+                    <div class="progress mb-4" id="LowInv-Card-ProductProgress-4" style="height: 2vh;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" id="LowInv-Card-ProductProgress-Bar" style="width: 10%;">10%</div>
                     </div>
-                </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card text-white bg-secondary shadow">
-                        <div class="card-body">
-                            <p class="m-0">Secondary</p>
-                            <p class="text-white-50 small m-0">#858796</p>
-                        </div>
+                    <h4 id="LowInv-Card-ProductHeader-5" class="small font-weight-bold" style="font-size: 1.5vw;font-family: 'Open Sans', sans-serif;">LowProduct5<span class="float-right" id="LowInv-Card-ProductHeader-Percentage-5">18%</span></h4>
+                    <div class="progress mb-4" id="LowInv-Card-ProductProgress-5" style="height: 2vh;">
+                        <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" id="LowInv-Card-ProductProgress-Bar" style="width: 18%;">18%</div>
                     </div>
                 </div>
             </div>
@@ -341,30 +332,15 @@
     </div>
     <div></div>
     </div>
-    <!-- <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button">
-        <div class="container">
-            <div><a class="navbar-brand" href="#"><span><img src="logo.png">Creativarian </span> </a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
-            <div
-                class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav nav-right">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.html">home </a></li>
-                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Services </a>
-                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="services.html">Price Packages</a><a class="dropdown-item" role="presentation" href="#">Order Services</a><a class="dropdown-item" role="presentation" href="#">Custom Request</a></div>
-                    </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="about.html">about </a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="faq.html">faq </a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="contact.html">contact </a></li>
-                </ul>
-                <p class="ml-auto navbar-text actions"><a class="login" href="login.html">Log In</a> <a class="btn btn-light action-button" role="button" href="signup.html">Sign Up</a></p>
-        </div>
-        </div>
-    </nav>
     </div>
-    <footer class="bg-white sticky-footer">
+    <footer class="bg-white sticky-footer" id="Footer" style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(148, 148, 148, 0.5));">
         <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+            <div class="text-center my-auto copyright"><span>LazeRosa Systems || by Group 3</span></div>
         </div>
-    </footer> -->
+        <div class="container my-auto">
+            <div class="text-center my-auto copyright"><img src="assets/img/SYSTIMP/LazeBeauty%20Circle.png" style="width: 4vw;margin-top: 1vw;"></div>
+        </div>
+    </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>

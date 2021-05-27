@@ -263,18 +263,6 @@
                         }
                         ?>
 
-						<!--
-                            <tr id="Table-Row">
-                                <td id="Checkbox-Entry"><input type="checkbox" id="Checkbox-EntryItem"></td>
-                                <td id="ProductID-Entry">Product ID</td>
-                                <td id="ProductName-Entry"><img class="rounded-circle mr-2" id="Product-Icon" width="30" height="30" src="assets/img/avatars/avatar1.jpeg">ProductName</td>
-                                <td id="Brand-Entry">ProductBrand</td>
-                                <td id="QTY-Entry">ProductQTY</td>
-                                <td id="RP-Entry">ProductRP</td>
-                                <td class="table-success" id="Avail-Entry">AvailHigh<button class="btn btn-primary btn-sm border-dark shadow float-right" id="Reorder-Button" type="button" style="background-color: #ff7a00;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-weight: bold;font-size: 12px;border-radius: 50px 10px;padding-right: 15px;padding-left: 16px;border-width: 2px;/*border-color: rgb(0,0,0);*/">REORDER</button></td>
-                            </tr>
-                        -->
-
                         </tbody>
                         <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
                         <tr id="Table-FooterRow" style="color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
