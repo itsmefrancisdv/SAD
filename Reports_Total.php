@@ -253,6 +253,7 @@ require_once('connect.php');
                             </thead>
                             <tbody id="Table-Body">
                                 <tr class="text-center" id="Table-Row" style="font-family: 'Open Sans', sans-serif;font-size: 0.8vw;">
+                                    <td>PO #</td>
                                     <td id="Date-Entry">Date</td>
                                     <td class="text-left" id="CustName-Entry">CustomerName</td>
                                     <td>Platform</td>
