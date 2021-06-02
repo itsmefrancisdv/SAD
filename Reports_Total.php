@@ -275,6 +275,8 @@ require_once('connect.php');
                                             JOIN suppliers s ON p.supplierID = s.supplierID JOIN purchase_order_items poi 
                                             ON p.purchaseID = poi.purchaseID WHERE status = 'Received' GROUP BY s.supplierName ORDER BY s.supplierName DESC";
 
+                                            // "SELECT *, (SELECT poi.amount FROM purchase_order_items poi WHERE )"
+
                                         
                                         $result = mysqli_query($DBConnect, $query);
 
@@ -308,7 +310,12 @@ require_once('connect.php');
                 <div class="row" id="GeneratedReport-Footer-Card" style="margin-top: 2vw;margin-bottom: 2vw;">
                     <div class="col" id="GeneratedReport-Footer-Details">
                         <div class="row" id="GeneratedReport-Footer-SignagesRow">
-                            <div class="col d-xl-flex justify-content-xl-center" id="GeneratedReport-Footer-Col1"><span id="GeneratedReport-Footer-PreparedBy" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-left: 1vw;">Prepared by: <br><br><br><span style="text-decoration: underline;">________________________________________</span></span>
+                            <div class="col" id="GeneratedReport-Footer-Col1">
+                                <div class="row" id="GeneratedReport-Prepared-LabelRow" style="margin-bottom: 6vh;"><span id="GeneratedReport-Prepared-Label" style="font-size: 1.1vw;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;margin-left: 5vw;">Prepared by:</span></div>
+                                <div class="row justify-content-center" id="GeneratedReport-Prepared-InputRow"><span id="GeneratedReport-Prepared-InputLine1" style="color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.1vw;font-weight: bold;"><strong><span style="text-decoration: underline;">_____________</span></strong><br></span>
+                                    <span
+                                        id="GeneratedReport-Prepared-InputUserName" style="color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.1vw;font-weight: bold;"><strong><span style="text-decoration: underline;">Lea Esguerra</span></strong><br></span><span id="GeneratedReport-Prepared-InputLine2" style="color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.1vw;font-weight: bold;"><span style="text-decoration: underline;">_____________</span><br></span>
+                                </div>
                             </div>
                             <div class="col d-xl-flex justify-content-xl-center" id="GeneratedReport-Footer-Col2"><span id="GeneratedReport-Footer-NotedBy" style="font-weight: normal;color: rgb(0,0,0);font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-left: 1vw;">Noted by: <br><br><br><span style="text-decoration: underline;">________________________________________</span><br></span>
                             </div>
