@@ -1,31 +1,7 @@
 <?php
 require_once('connect.php');
-// if(isset($_POST['submit'])){
-//     // $_POST['ReportType'] == 'Expenses'
 
-//     $rangeFrom = date('Y-m-d', strtotime($_POST['StartRange']));
-//     $rangeTill = date('Y-m-d', strtotime($_POST['EndRange']));
-
-//     echo "<br /> outside!! <br />";
-//     $totalSales = 0;
-
-//     // $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Received'";
-
-
-//     // $query = mysqli_query($DBConnect, "SELECT * FROM sales_list s WHERE s.dateOrdered BETWEEN '$rangeFrom' AND '$rangeTill' 
-//     // ORDER BY s.dateOrdered ASC");  //remove order by if by PO#,  this can be useful 'ORDER BY ordered_at DESC, shipped_at ASC;'
-//     // while($retrieve = mysqli_fetch_array($query)){
-//     //     echo "cusNum: " . $retrieve["custID"]. "<br />";
-//     //     echo "productID: " . $retrieve["pID"]. "<br />";
-//     //     echo "dateOrdered: ". $retrieve["dateOrdered"].  "<br />";
-//     //     echo "quantity: " . $retrieve["quantity"].  "<br />";
-//     //     echo "unitPrice: " . $retrieve["unitPrice"]. "<br />";
-//     //     echo "total: " . $retrieve["amount"].  "<br />";
-//     //     $totalSales += $retrieve["amount"];
-//     // };
-//     // echo "TOTAL SALES: ".$totalSales."<br />";
-// }
-// ?>
+?>
 <!DOCTYPE html>
 <html>
 
@@ -174,7 +150,7 @@ require_once('connect.php');
                         </div>
                         <hr>
                         <hr><button class="btn btn-success" id="GenerateReport-Button" type="submit" name="submit" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">GENERATE REPORT</button>
-                        <hr><button class="btn btn-secondary" id="PrintReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;">PRINT GENERATED REPORT</button></div>
+                        <hr><button class="btn btn-secondary" id="PrintReport-Button" type="button" style="font-family: 'Open Sans', sans-serif;font-weight: normal;border-radius: 50px 10px;padding-right: 25px;padding-left: 25px;border-width: 2px;width: 100%;font-size: 1.3vw;" onclick="printDiv()">PRINT GENERATED REPORT</button></div>
                 </div>
             </div>
         </form>
@@ -213,12 +189,12 @@ require_once('connect.php');
                         <div class="row" id="GeneratedReport-StartRange-Row" style="margin-top: 20px;">
                             <div class="col-xl-5" id="GeneratedReport-StartRange-FromCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-StartRange-FromLabel" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">FROM:</span></div>
                             <div class="col" id="GeneratedReport-StartRange-DateCol"
-                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-StartRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeFrom = date('Y-m-d', strtotime($_POST['StartRange']));  echo $rangeFrom;}?></span></div>
+                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-StartRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeFrom = date('d/m/Y', strtotime($_POST['StartRange']));  echo $rangeFrom;}?></span></div>
                         </div>
                         <div class="row" id="GeneratedReport-EndRange-Row">
                             <div class="col-xl-5" id="GeneratedReport-EndRange-ToCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-EndRange-ToLabel" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">TO:</span></div>
                             <div class="col" id="GeneratedReport-EndRange-DateCol"
-                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-EndRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeTill = date('Y-m-d', strtotime($_POST['EndRange'])); echo $rangeTill; }?></span></div>
+                                style="padding-right: 1vw;"><span class="float-right" id="GeneratedReport-EndRange-Date" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: normal;"><?php if(isset($_POST['submit'])){$rangeTill = date('d/m/Y', strtotime($_POST['EndRange'])); echo $rangeTill; }?></span></div>
                         </div>
                         <div class="row" id="GeneratedReport-Generated-Row">
                             <div class="col-xl-5" id="GeneratedReport-Generated-LabelCol" style="margin-left: 8vw;"><span class="float-right" id="GeneratedReport-Generated-Label" style="font-family: 'Open Sans', sans-serif;color: rgb(0,0,0);font-size: 1.3vw;font-weight: bold;">GENERATED ON:</span></div>
@@ -230,7 +206,7 @@ require_once('connect.php');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
 
-        today = mm + '/' + dd + '/' + yyyy;
+        today = dd + '/' + mm + '/' + yyyy;
         
         document.getElementById("GeneratedReport-Generated-Date").innerHTML = today;
 </script></span>
@@ -287,7 +263,7 @@ require_once('connect.php');
                                             echo "<td class='text-left' id='CustName-Entry'>{$retrieve['supplierName']}</td>";
                                             echo "<td></td>";
                                             echo "<td></td>";
-                                            echo "<td id='Amount-Entry'>{$retrieve['amount']}</td>";
+                                            echo "<td id='Amount-Entry'>₱{$retrieve['amount']}</td>";
                                             echo "</tr>";
                                             $amt = $amt + $retrieve["amount"];
                                         }
@@ -301,7 +277,7 @@ require_once('connect.php');
                                     <td></td>
                                     <td></td>
                                     <td id="GeneratedReport-Table-TotalSalesLabelCell"><strong class="float-right" id="GeneratedReport-Table-TotalSalesLabel" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;">TOTAL AMOUNT :</strong></td>
-                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">P</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;"><?php echo $amt;?></strong></td>
+                                    <td id="GeneratedReport-Table-TotalSalesCell"><strong id="GeneratedReport-Table-TotalSalesCurrency" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;margin-right: 0.5vw;">₱</strong><strong id="GeneratedReport-Table-TotalSalesValue" style="font-family: 'Open Sans', sans-serif;font-size: 1.1vw;"><?php echo $amt;?></strong></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -360,5 +336,32 @@ require_once('connect.php');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
 </body>
+<script>
+function printDiv() {
+    var printContents = document.getElementById('Reports-GeneratedReport-CardBody').innerHTML;
+     var originalContents = document.body.innerHTML;
 
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+
+    // var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    // mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    // mywindow.document.write('</head><body >');
+    // mywindow.document.write('<h1>' + document.title  + '</h1>');
+    // mywindow.document.write(document.getElementById('Reports-GeneratedReport-CardBody').innerHTML);
+    // mywindow.document.write('</body></html>');
+
+    // mywindow.document.close(); // necessary for IE >= 10
+    // mywindow.focus(); // necessary for IE >= 10*/
+
+    // mywindow.print();
+    // mywindow.close();
+
+    // return true;
+}
+</script>
 </html>

@@ -191,18 +191,18 @@
                                 echo "<td><input type='checkbox' name='checkboxid[]' value=$retrieve[pID]></td>";
                                 echo "<td class='id'>".$retrieve["pID"]. "</td>";
                                 echo "<td class='name'>".$retrieve["pName"]. "</td>";
-                                echo "<td class='srp'>".$retrieve["pSRP"]. "</td>";
-                                echo "<td class='buyprice'>".$retrieve["pBuyingPrice"]. "</td>";
-                                echo "<td class='discrate'>".$retrieve["pDiscountRate"]. "</td>";
+                                echo "<td class='srp'> ₱".$retrieve["pSRP"]. "</td>";
+                                echo "<td class='buyprice'> ₱".$retrieve["pBuyingPrice"]. "</td>";
+                                echo "<td class='discrate'>".$retrieve["pDiscountRate"]. "%</td>";
                                 $discountprice = $retrieve["pBuyingPrice"] *(1 - ($retrieve["pDiscountRate"] / 100));
-                                echo "<td>".$discountprice. "</td>";
+                                echo "<td>₱".$discountprice. "</td>";
 
-                                echo "<td class='shopeerate'>".$retrieve["pShopeeRate"]. "</td>";
+                                echo "<td class='shopeerate'>".$retrieve["pShopeeRate"]. "%</td>";
                                 $shopeeprice = $retrieve["pBuyingPrice"] *(1-($retrieve["pShopeeRate"] / 100));
-                                echo "<td>".$shopeeprice. "</td>";
+                                echo "<td>₱".$shopeeprice. "</td>";
 
                                 $amount = $discountprice * (1-($retrieve["pShopeeRate"] / 100));
-                                echo "<td>".$amount. "</td>";
+                                echo "<td>₱".$amount. "</td>";
 
                                 echo "</tr>";
                                 

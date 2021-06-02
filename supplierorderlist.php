@@ -275,8 +275,8 @@ if (isset($_POST['confirm'])) {
                                                   <tr>
                                                     <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                                     <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
-                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
-                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
+                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="₱<?php echo $finalrow['unitPrice']; ?>" disabled></td>
+                                                    <td><input type="text" value="₱<?php echo $finalrow['amount']; ?>" disabled></td>
                                                   </tr>
                                           <?php
                                                 }

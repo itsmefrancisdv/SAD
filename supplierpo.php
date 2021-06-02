@@ -262,7 +262,7 @@ if (isNaN(qty.value) && isNaN(price.value)) {
       continue;
     }
   }
-  totalc.innerHTML = "<td class='text-right' style='font-weight: bold;font-size: 20px;' id='totalcost'>TOTAL COST: " + amt + "</td>";
+  totalc.innerHTML = "<td class='text-right' style='font-weight: bold;font-size: 20px;' id='totalcost'>TOTAL COST: ₱" + amt + "</td>";
 }
 }
 
