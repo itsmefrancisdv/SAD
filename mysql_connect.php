@@ -1,9 +1,9 @@
 <?php
 session_start();
-$dbc=mysqli_connect('localhost','root','','dblazerosa2');
+$dbc=mysqli_connect('localhost','root','admin','lazerosa');
 
 if (!$dbc) {
- die('Could not connect: '.mysql_error());
+ die('Could not connect: ');
 }
 
 ?>

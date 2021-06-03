@@ -174,7 +174,8 @@
                         <tbody id="Table-Body">
                         <?php
                             require("connect.php");
-                            $page = $_GET["page"];
+                            $page = $_GET["page"] ?? "1";
+
                             if($page=="" || $page == "1"){
                                 $page1 = 0;
                             }
@@ -258,7 +259,7 @@
 
 								<?php
 
-								$page = $_GET["page"];
+								$page = $_GET["page"] ?? "1";
 
 								$query2 = mysqli_query($DBConnect, "SELECT * FROM tblinventory ORDER BY pID");
 								$count = mysqli_num_rows($query2);
@@ -497,7 +498,11 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+<<<<<<< Updated upstream
     <script src="assets/js/custom2.js"></script>
+=======
+    <script src='assets/js/custom2.js'></script>
+>>>>>>> Stashed changes
 </body>
 
 </html>
