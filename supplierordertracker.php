@@ -34,6 +34,30 @@ if (isset($_POST['confirm'])) {
     mysqli_query($dbc, $query);
   }
 }
+
+if (isset($_POST['receive'])){
+  $query = "UPDATE purchase_orders SET status='Received' WHERE purchaseID='{$_POST['receive']}'";
+  mysqli_query($dbc,$query);
+
+  $iquery = "SELECT * FROM purchase_order_items WHERE purchaseID='{$_POST['receive']}'";
+  $result = mysqli_query($dbc,$iquery);
+
+  while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+    $invq = "SELECT * FROM tblInventory WHERE pID='{$row['itemID']}'";
+    $invr = mysqli_query($dbc,$invq);
+    $inventory = mysqli_fetch_array($invr,MYSQLI_ASSOC);
+
+    $sum = $row['quantity'] + $inventory['pQuantity'];
+
+    $query2 = "UPDATE tblInventory SET pQuantity='{$sum}' WHERE pID='{$row['itemID']}'";
+    mysqli_query($dbc,$query2);
+  }
+}
+
+if (isset($_POST['cancel'])){
+  $query = "UPDATE purchase_orders SET status='Cancelled' WHERE purchaseID='{$_POST['cancel']}'";
+  mysqli_query($dbc,$query);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,49 +82,52 @@ if (isset($_POST['confirm'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown-1.css">
     <link rel="stylesheet" href="assets/css/sticky-dark-top-nav-with-dropdown.css">
+    <link rel="stylesheet" type="text/css" href="assets/datatables.min.css"/>
+    <script src="assets/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="assets/datatables.min.js"></script>
 </head>
 
 <body id="Page-Body">
-<div id="Page-Wrapper">
-        <div class="d-flex flex-column" id="Body-Wrapper">
-            <div id="Body">
-                <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
-                    <div class="container-fluid" id="Navbar-Container">
-                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;">
-                            <div id="Navbar-ButtonGroup" class="input-group" style="width: 100%;min-width: 1000px;"><img id="Site-Logo" src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 100pxpx;height: 90px;">
-                                <div class="collapse navbar-collapse" id="Header-Menu">
-                                    <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
-                                        <li class="nav-item d-block" role="presentation" id="Home-Select" style="padding: 0px;padding-top: 0px;width: 85px;height: 100%;margin-right: 25px;">
-                                            <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="dashboard.php" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
-                                        </li>
-                                        <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Inventory-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Inventory-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Inventory-Icon" src="assets/img/SYSTIMP/Inventory%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Inventory</span></a>
-                                            <div class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;">
-                                            <a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="viewinventory.php" style="height: 50px;margin-top: 5px;"><span id="ViewInv-Text">View Inventory</span></a>
-                                            <a class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="pricelist.php" style="height: 50px;margin-top: 5px;"><span id="Pricelist-Text">Pricelist</span></a></div>
+    <div id="Page-Wrapper">
+            <div class="d-flex flex-column" id="Body-Wrapper">
+                <div id="Body">
+                    <nav class="navbar navbar-light navbar-expand sticky-top bg-white shadow mb-4 topbar static-top" id="Navigation-Bar" style="height: 90px;padding-left: 0px;margin-bottom: 0px;padding-bottom: 8px;">
+                        <div class="container-fluid" id="Navbar-Container">
+                            <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" id="Navbar-MenuSection" style="width: 100%;">
+                                <div id="Navbar-ButtonGroup" class="input-group" style="width: 100%;min-width: 1000px;"><img id="Site-Logo" src="assets/img/SYSTIMP/LazeRosa%20Logo.png" style="width: 100pxpx;height: 90px;">
+                                    <div class="collapse navbar-collapse" id="Header-Menu">
+                                        <ul class="nav navbar-nav nav-right" id="Header-Menu-Frame" style="margin-left: 18px;height: 100%;">
+                                            <li class="nav-item d-block" role="presentation" id="Home-Select" style="padding: 0px;padding-top: 0px;width: 85px;height: 100%;margin-right: 25px;">
+                                                <div data-bs-hover-animate="pulse" id="Home-Button" style="padding: 0px;padding-top: 0px;width: 100%;height: 100%;padding-bottom: 0px;"><a class="active text-center d-block" id="Home-Link" href="dashboard.php" style="color: rgb(0,0,0);height: 100%;font-size: 15px;padding-top: 0px;font-family: ABeeZee, sans-serif;width: 100%;"><img class="d-block" id="Home-Icon" src="assets/img/SYSTIMP/Home%20(Icon).png" style="width: 25px;margin-left: auto;margin-right: auto;padding-bottom: 10px;padding-top: 15px;margin-top: 0px;"><span>Home</span></a></div>
+                                            </li>
+                                            <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Inventory-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Inventory-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Inventory-Icon" src="assets/img/SYSTIMP/Inventory%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Inventory</span></a>
+                                                <div class="dropdown-menu border rounded shadow" role="menu" id="Inventory-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: auto;">
+                                                <a class="dropdown-item d-block" role="presentation" id="ViewInv-Link" href="viewinventory.php" style="height: 50px;margin-top: 5px;"><span id="ViewInv-Text">View Inventory</span></a>
+                                                <a class="dropdown-item d-block" role="presentation" id="Pricelist-Link" href="pricelist.php" style="height: 50px;margin-top: 5px;"><span id="Pricelist-Text">Pricelist</span></a></div>
+                                    </li>
+                                    <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Sales-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Sales-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Sales-Icon" src="assets/img/SYSTIMP/Sales%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Sales</span></a>
+                                        <div
+                                            class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;">
+                                            <a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="customerpo.php" style="height: 50px;margin-top: 5px;"><span id="CustPO-Text">Customer PO</span></a>
+                                            <a class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="customerorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="CustOrderList-Text">Customer Order List</span></a>
+                                            <a class="dropdown-item d-block" role="presentation" id="CustTracker-Link" href="customerordertracker.php" style="height: 50px;margin-top: 5px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
                                 </li>
-                                <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Sales-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Sales-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Sales-Icon" src="assets/img/SYSTIMP/Sales%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Sales</span></a>
+                                <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reorder-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reorder-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reorder-Icon" src="assets/img/SYSTIMP/Reorder%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reorder</span></a>
                                     <div
-                                        class="dropdown-menu border rounded shadow" role="menu" id="Sales-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 205px;">
-                                        <a class="dropdown-item d-block" role="presentation" id="CustPO-Link" href="customerpo.php" style="height: 50px;margin-top: 5px;"><span id="CustPO-Text">Customer PO</span></a>
-                                        <a class="dropdown-item d-block" role="presentation" id="CustOrderList-Link" href="customerorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="CustOrderList-Text">Customer Order List</span></a>
-                                        <a class="dropdown-item d-block" role="presentation" id="CustTracker-Link" href="customerordertracker.php" style="height: 50px;margin-top: 5px;"><span id="CustTracker-Text">Customer Order Tracker</span></a></div>
-                            </li>
-                            <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reorder-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reorder-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reorder-Icon" src="assets/img/SYSTIMP/Reorder%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reorder</span></a>
-                                <div
-                                    class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
-                                    <a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="supplierpo.php" style="height: 50px;margin-top: 5px;"><span id="SuppPO-Text">Supplier PO</span></a>
-                                    <a class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="supplierorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="SuppOrderList-Text">Supplier Order List</span></a>
-                                    <a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link" href="supplierordertracker.php" style="height: 50px;margin-top: 5px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
-                    </li>
-                    <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
-                        <div
-                            class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
-                            <a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.php" style="height: 50px;margin-top: 5px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
-                            <a class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_Shrink.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="DamRet-Text">Shrinkages</span></a></div>
-            </li>
-            </ul>
+                                        class="dropdown-menu border rounded shadow" role="menu" id="Reorder-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                                        <a class="dropdown-item d-block" role="presentation" id="SuppPO-Link" href="supplierpo.php" style="height: 50px;margin-top: 5px;"><span id="SuppPO-Text">Supplier PO</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="SuppOrderList-Link" href="supplierorderlist.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="SuppOrderList-Text">Supplier Order List</span></a>
+                                        <a class="dropdown-item d-block" role="presentation" id="SuppTracker-Link" href="supplierordertracker.php" style="height: 50px;margin-top: 5px;"><span id="SuppTracker-Text">Supplier Order Tracker</span></a></div>
+                        </li>
+                        <li class="nav-item dropdown d-block" data-bs-hover-animate="pulse" id="Reports-Select-DD" style="width: auto;margin-right: 25px;margin-left: 0px;padding-left: 5px;"><a class="dropdown-toggle nav-link d-block" data-toggle="dropdown" aria-expanded="false" id="Reports-Link" href="#" style="height: 100%;font-family: ABeeZee, sans-serif;color: rgb(0,0,0);font-size: 15px;padding-right: 0;padding-left: 0;"><img class="d-block d-xl-flex" id="Reports-Icon" src="assets/img/SYSTIMP/Reports%20(Icon).png" style="width: 25px;padding-right: 0px;padding-left: 0px;margin-right: auto;margin-left: auto;padding-top: 15px;padding-bottom: 10px;"><span>Reports</span></a>
+                            <div
+                                class="dropdown-menu border rounded shadow" role="menu" id="Reports-Dropdown-Submenu" style="color: rgb(0,0,0);background-color: rgb(255,255,255);font-family: ABeeZee, sans-serif;font-size: 14px;width: 195px;">
+                                <a class="dropdown-item d-block" role="presentation" id="TotSalesEx-Link" href="Reports_Total.php" style="height: 50px;margin-top: 5px;"><span id="TotSalesEx-Text">Total Sales &amp; Expenses</span></a>
+                                <a class="dropdown-item d-block" role="presentation" id="DamRet-Link" href="Reports_Shrink.php" style="height: 50px;margin-top: 5px;width: auto;"><span id="DamRet-Text">Shrinkages</span></a></div>
+                </li>
+                </ul>
+            </div>
         </div>
-    </div>
     </form>
     <ul class="nav navbar-nav flex-nowrap ml-auto" id="Header-Personal">
         <li class="nav-item dropdown d-sm-none no-arrow" id="Personal-Section"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
@@ -179,17 +206,7 @@ if (isset($_POST['confirm'])) {
                 </div>
             </div>
             <div class="card-body" id="Table-Body">
-                <div class="row" id="Table-Tools">
-                    <div class="col-md-6 text-nowrap" id="Table-Tool1">
-                        <div id="Table-Tool1-Frame" class="dataTables_length" aria-controls="dataTable"><label id="Table-ShowItemNumber">Show&nbsp;<select id="Table-ShowItem-Dropdown" class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
-                    </div>
-                    <div class="col-md-6" id="Table-Tool2">
-                        <div class="text-md-right dataTables_filter" id="Table-Tool2-Frame"><label id="Table-Search" style="width: 350px;padding-right: 0px;margin-right: 12px;"><input type="search" id="Table-SearchBar" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
-                            <button
-                                class="btn" id="Table-SearchButton" type="submit" style="background-color: rgba(78,115,223,0);border-color: transparent;width: auto;padding-bottom: 0px;padding-top: 0px;padding-right: 0px;padding-left: 0px;"><img id="Search-ButtonIMG" src="assets/img/SYSTIMP/Search%20(Icon).png" style="width: 20px;"></button>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="table-responsive table mt-2" id="SuppOL-TableFrame" role="grid" aria-describedby="dataTable_info">
                     <table class="table my-0" id="pot">
                         <thead id="Table-Header">
@@ -204,9 +221,9 @@ if (isset($_POST['confirm'])) {
                             </tr>
                         </thead>
                         <tbody id="Table-Body">
-                          <form method="POST">
+
                           <?php
-                          $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID WHERE status = 'Pending' or status = 'Deleted'";
+                          $query = "SELECT p.*, s.* FROM purchase_orders p JOIN suppliers s ON p.supplierID = s.supplierID";
                           $result = mysqli_query($dbc, $query);
                           $i = 0;
 
@@ -221,13 +238,42 @@ if (isset($_POST['confirm'])) {
                             echo "<td>{$row['status']}</td>";
                           ?>
                           <td>
-                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button>
+                            <?php if ($row['status'] == 'Pending') { ?>
+                              <form method="POST">
+                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button><br>
+                            <button type='submit' class="btn btn-success" value='<?php echo $row['purchaseID']; ?>' name="receive">RECEIVE</button>
+                            <button type='submit' class="btn btn-danger" value='<?php echo $row['purchaseID']; ?>' name="cancel">CANCEL</button>
+                          </form>
+                          <?php }else{ ?>
+                            <form method="POST">
+                            <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button><br>
+                          </form>
+                          <?php } ?>
 
                             <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
                               <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                  <div class="modal-body">
-                                      <label for="suppName">Supplier Name</label><br>
+                                 <div class="modal-content" id="View-Modal-Content">
+                                        <div class="modal-header" id="View-Modal-Header" style="background-color: #1485ee;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                            <h4 id="View-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">View Supplier Purchase Order</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="View-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                        
+                                  <div class="modal-body" id="View-ModalBody">
+                                            <div class="row" id="ModalTable-PODetails">
+                                                <div class="col-auto col-md-6 col-xl-6 text-nowrap" id="ModalTable-PODetailCol1" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
+                                                    <div id="ModalTable-PODetail1" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 25vw;"><label id="ModalTable-PONumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier PO #:&nbsp;<span id="ModalTable-PONum-Value" style="margin-left: 1vw;"><input type="text" name="suppPO"  value="<?php echo $row['purchaseID']; ?>" disabled></span></label></div>
+                                                    <div
+                                                        id="ModalTable-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppNameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Name:&nbsp;<span id="ModalTable-SuppName-Value" style="margin-left: 1vw;"><input type="text" name="suppName"  value="<?php echo $row['supplierName']; ?>" disabled></span></label></div>
+                                                <div
+                                                    id="ModalTable-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppEmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Email:&nbsp;<span id="ModalTable-SuppEmail-Value" style="margin-left: 1vw;"><input type="email" name="suppEmail"  value="<?php echo $row['supplierEmail']; ?>" disabled></span></label></div>
+                                        </div>
+                                        <div class="col-auto col-md-6 col-xl-6 offset-xl-0 text-nowrap" id="ModalTable-PODetailCol2" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
+                                            <div id="ModalTable-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppAddrLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Address:&nbsp;<span id="ModalTable-SuppAddr-Value" style="margin-left: 1vw;"><input type="text" name="suppNumber" value="<?php echo $row['supplierNumber']; ?>" disabled></span></label></div>
+                                            <div
+                                                id="ModalTable-PODetail5" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppContactLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Contact Number:&nbsp;<span id="ModalTable-SuppContact-Value" style="margin-left: 1vw;"><input type="text" name="suppNumber" value="<?php echo $row['supplierNumber']; ?>" disabled></span></label></div>
+                                        <div
+                                            id="ModalTable-PODetail6" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-MoPLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Mode of Payment:&nbsp;<span id="ModalTable-MoP-Value" style="margin-left: 1vw;"><input type="text" name="suppMOP"  value="<?php echo $row['paymentMethod']; ?>" disabled></span></label></div>
+                                </div>
+                        </div>
+                                     <!-- <label for="suppName">Supplier Name</label><br>
                                       <input type="text" name="suppName"  value="<?php echo $row['supplierName']; ?>" disabled><br><br>
                                       <label for="suppPO">Supplier Purchase Order Number</label><br>
                                       <input type="text" name="suppPO"  value="<?php echo $row['purchaseID']; ?>" disabled><br><br>
@@ -242,17 +288,35 @@ if (isset($_POST['confirm'])) {
 
                                       <label for="suppAddress">Supplier Address</label><br>
                                       <input type="text" name="suppAddress" value="<?php echo $row['supplierAddress']; ?>" disabled><br><br>
-                                      <br><br><br>
-
-                                      <table>
-                                        <tr>
-                                          <th>Product Name</th>
-                                          <th>Quantity</th>
-                                          <th>Unit Price</th>
-                                          <th>Amount</th>
-                                        </tr>
+                                      <br><br><br>-->
+									
+									<div class="table-responsive table mt-2" id="SuppPO-ModalTableFrame" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="SuppPO-ModalTable">
+                                <thead id="ModalTable-Header">
+                                    <tr class="text-center" id="ModalTable-HeaderRow" style="background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);/*background: linear-gradient(0deg, rgba(27,142,144,1) 0%, rgba(18,38,38,1) 5%, rgba(0,0,0,1) 100%);*//*background: #6a11cb;*//*background: linear-gradient(to right, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5));*//*background: #de6161;*//*background: -webkit-linear-gradient(to right, #2657eb, #de6161);*//*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                                        <th class="text-left" style="width: 500px;">Product Name</th>
+                                        <th>QTY</th>
+                                        <th>Unit Price</th>
+                                        <th>Amount Cost</th>
+                                    </tr>
+                                </thead>
+								<tbody id="ModalTable-Body">
+								
+                                    
+                                </tbody>
+								
+                                <tfoot id="ModalTable-Footer" style="background-color: #dcdcdc;">
+                                    <tr class="text-center" id="ModalTable-FooterRow" style="font-weight: bold;color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
+                                        <td class="text-left" style="font-weight: normal;"><strong></strong></td>
+                                        <td></td>
+                                        <td class="text-right" id="SuppPO-TotalCostLabel" style="font-weight: bold;font-size: 20px;">TOTAL COST:</td>
+                                        <td id="SuppPO-TotalCost" style="font-size: 20px;"></td>
+                                    </tr>
+                                </tfoot>
+									
+                                      
                                         <tbody>
-                                          <?php
+                                         <!-- <?php
                                           $productcount = 0;
                                           $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
                                                       FROM dblazerosa2.purchase_order_items
@@ -270,12 +334,12 @@ if (isset($_POST['confirm'])) {
                                               while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
                                                 if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                                   $productcount++;
-                                          ?>
+                                          ?>-->
                                                   <tr>
                                                     <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                                     <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
-                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="₱<?php echo $finalrow['unitPrice']; ?>" disabled></td>
-                                                    <td><input type="text" value="₱<?php echo $finalrow['amount']; ?>" disabled></td>
+                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
+                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
                                                   </tr>
                                           <?php
                                                 }
@@ -300,6 +364,7 @@ if (isset($_POST['confirm'])) {
                           }
                           ?>
                         </tbody>
+
                         <tfoot id="Table-Footer" style="background-color: #dcdcdc;">
                             <tr class="text-center" id="Table-FooterRow" style="color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
                                 <td class="text-center"><input type="checkbox" id="Checkbox-Footer" disabled=""></td>
@@ -313,7 +378,6 @@ if (isset($_POST['confirm'])) {
                         </tfoot>
                     </table>
                 </div>
-
     </div>
     </div>
     <div></div>
@@ -326,7 +390,7 @@ if (isset($_POST['confirm'])) {
         </div>
     </footer>
     </div><a class="border rounded d-inline scroll-to-top" id="Pagetop-Button" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
-    <script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/chart.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
@@ -386,5 +450,10 @@ if (isset($_POST['confirm'])) {
       msg.style.display = "none";
     }
   }
+</script>
+<script>
+$(document).ready( function () {
+    $('#pot').DataTable();
+} );
 </script>
 </html>

@@ -224,11 +224,30 @@ if (isset($_POST['confirm'])) {
                           <td>
                             <button type='button' class="btn btn-info float-center" data-toggle='modal' data-target='#viewModal<?php echo $i; ?>'>VIEW</button>
 
-                            <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog" >
+                             <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
                               <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                  <div class="modal-body">
-                                      <label for="suppName">Supplier Name</label><br>
+                                 <div class="modal-content" id="View-Modal-Content">
+                                        <div class="modal-header" id="View-Modal-Header" style="background-color: #1485ee;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
+                                            <h4 id="View-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">View Supplier Purchase Order</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="View-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                        
+                                  <div class="modal-body" id="View-ModalBody">
+                                            <div class="row" id="ModalTable-PODetails">
+                                                <div class="col-auto col-md-6 col-xl-6 text-nowrap" id="ModalTable-PODetailCol1" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
+                                                    <div id="ModalTable-PODetail1" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 25vw;"><label id="ModalTable-PONumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier PO #:&nbsp;<span id="ModalTable-PONum-Value" style="margin-left: 1vw;"><input type="text" name="suppPO"  value="<?php echo $row['purchaseID']; ?>" disabled></span></label></div>
+                                                    <div
+                                                        id="ModalTable-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppNameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Name:&nbsp;<span id="ModalTable-SuppName-Value" style="margin-left: 1vw;"><input type="text" name="suppName"  value="<?php echo $row['supplierName']; ?>" disabled></span></label></div>
+                                                <div
+                                                    id="ModalTable-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppEmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Email:&nbsp;<span id="ModalTable-SuppEmail-Value" style="margin-left: 1vw;"><input type="email" name="suppEmail"  value="<?php echo $row['supplierEmail']; ?>" disabled></span></label></div>
+                                        </div>
+                                        <div class="col-auto col-md-6 col-xl-6 offset-xl-0 text-nowrap" id="ModalTable-PODetailCol2" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
+                                            <div id="ModalTable-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppAddrLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Address:&nbsp;<span id="ModalTable-SuppAddr-Value" style="margin-left: 1vw;"><input type="text" name="suppNumber" value="<?php echo $row['supplierNumber']; ?>" disabled></span></label></div>
+                                            <div
+                                                id="ModalTable-PODetail5" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-SuppContactLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Supplier Contact Number:&nbsp;<span id="ModalTable-SuppContact-Value" style="margin-left: 1vw;"><input type="text" name="suppNumber" value="<?php echo $row['supplierNumber']; ?>" disabled></span></label></div>
+                                        <div
+                                            id="ModalTable-PODetail6" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;"><label id="ModalTable-MoPLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;font-size: 1.1vw;">Mode of Payment:&nbsp;<span id="ModalTable-MoP-Value" style="margin-left: 1vw;"><input type="text" name="suppMOP"  value="<?php echo $row['paymentMethod']; ?>" disabled></span></label></div>
+                                </div>
+                        </div>
+                                      <!--<label for="suppName">Supplier Name</label><br>
                                       <input type="text" name="suppName"  value="<?php echo $row['supplierName']; ?>" disabled><br><br>
                                       <label for="suppPO">Supplier Purchase Order Number</label><br>
                                       <input type="text" name="suppPO"  value="<?php echo $row['purchaseID']; ?>" disabled><br><br>
@@ -243,17 +262,34 @@ if (isset($_POST['confirm'])) {
 
                                       <label for="suppAddress">Supplier Address</label><br>
                                       <input type="text" name="suppAddress" value="<?php echo $row['supplierAddress']; ?>" disabled><br><br>
-                                      <br><br><br>
+                                      <br><br><br>-->
 
-                                      <table>
-                                        <tr>
-                                          <th>Product Name</th>
-                                          <th>Quantity</th>
-                                          <th>Unit Price</th>
-                                          <th>Amount</th>
-                                        </tr>
+                                      <div class="table-responsive table mt-2" id="SuppPO-ModalTableFrame" role="grid" aria-describedby="dataTable_info">
+                            <table class="table my-0" id="SuppPO-ModalTable">
+                                <thead id="ModalTable-Header">
+                                    <tr class="text-center" id="ModalTable-HeaderRow" style="background-color: #3e3e3e;font-family: Nunito, sans-serif;color: rgb(255,255,255);/*background: linear-gradient(0deg, rgba(27,142,144,1) 0%, rgba(18,38,38,1) 5%, rgba(0,0,0,1) 100%);*//*background: #6a11cb;*//*background: linear-gradient(to right, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5));*//*background: #de6161;*//*background: -webkit-linear-gradient(to right, #2657eb, #de6161);*//*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                                        <th class="text-left" style="width: 500px;">Product Name</th>
+                                        <th>QTY</th>
+                                        <th>Unit Price</th>
+                                        <th>Amount Cost</th>
+                                    </tr>
+                                </thead>
+								<tbody id="ModalTable-Body">
+								
+                                    
+                                </tbody>
+								
+                                <tfoot id="ModalTable-Footer" style="background-color: #dcdcdc;">
+                                    <tr class="text-center" id="ModalTable-FooterRow" style="font-weight: bold;color: rgb(0,0,0);/*background: linear-gradient(to right, rgba(38,87,235,0.49), rgba(222,97,97,0.5));*/background-color: #969696;">
+                                        <td class="text-left" style="font-weight: normal;"><strong></strong></td>
+                                        <td></td>
+                                        <td class="text-right" id="SuppPO-TotalCostLabel" style="font-weight: bold;font-size: 20px;">TOTAL COST:</td>
+                                        <td id="SuppPO-TotalCost" style="font-size: 20px;"></td>
+                                    </tr>
+                                </tfoot>
+									
                                         <tbody>
-                                          <?php
+                                          <!--<?php
                                           $productcount = 0;
                                           $productquery = "SELECT purchaseID, COUNT(*) AS ordercount
                                                       FROM dblazerosa2.purchase_order_items
@@ -271,12 +307,12 @@ if (isset($_POST['confirm'])) {
                                                  while ($finalrow = mysqli_fetch_array($finalresult, MYSQLI_ASSOC)) {
                                                 if ($productcount < $productrow['ordercount'] && $row['purchaseID'] == $finalrow['purchaseID']) {
                                                   $productcount++;
-                                          ?>
+                                          ?>-->
                                                   <tr>
                                                     <td><input type="text" name="product[]" value="<?php echo $finalrow['pBrand'],' ', $finalrow['pName']; ?>" disabled></td>
                                                     <td><input type="number" min="1"  name="qty[]" value="<?php echo $finalrow['quantity']; ?>" disabled></td>
-                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="₱<?php echo $finalrow['unitPrice']; ?>" disabled></td>
-                                                    <td><input type="text" value="₱<?php echo $finalrow['amount']; ?>" disabled></td>
+                                                    <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
+                                                    <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
                                                   </tr>
                                           <?php
                                                 }
