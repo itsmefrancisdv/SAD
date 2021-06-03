@@ -201,36 +201,31 @@
                             <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
                               <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
+                                <div class="modal-header" id="View-Modal-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                                            <h4 id="View-Title" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">View Customer Purchase Order</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="View-CloseButton"><span aria-hidden="true">×</span></button></div>
                                   <div class="modal-body">
-                                  <label for="custName">Customer Name</label><br>
-                                      <input type="text" name="custName"  value="<?php echo $retrieve['custName']; ?>" disabled><br><br>
-                                      
-                                      <label for="custPO">Customer Purchase Order Number</label><br>
-                                      <input type="text" name="custPO"  value="<?php echo $retrieve['custPO']; ?>" disabled><br><br>
-
-                                      <label for="custEmail">Customer Email</label><br>
-                                      <input type="email" name="custEmail"  value="<?php echo $retrieve['custEmail']; ?>" disabled><br><br>
-                                      
-                                      <label for="custNumber">Customer Contact Number</label><br>
-                                      <input type="text" name="custNumber" value="<?php echo $retrieve['custNumber']; ?>" disabled><br><br>
-                                      
-                                      <label for="custAddress">Customer Address</label><br>
-                                      <input type="text" name="custAddress" value="<?php echo $retrieve['custAddress']; ?>" disabled><br><br>
-                                      
-                                      <label for="custMOP">Mode of Payment</label><br>
-                                      <input type="text" name="custMOP"  value="<?php echo $retrieve['custMOP']; ?>" disabled><br><br>
-
-                                      <label for="custDateOrder">Date Ordered</label><br>
-                                      <input type="text" name="custDateOrder"  value="<?php echo $retrieve['custDateOrdered']; ?>" disabled><br><br>
-
-                                      <label for="custPickupDate">Pickup Date</label><br>
-                                      <input type="text" name="custPickupDate"  value="<?php echo $retrieve['custDatePickup']; ?>" disabled><br><br>
-
-                                      <label for="custPlatform">Platform</label><br>
-                                      <input type="text" name="custPlatform"  value="<?php echo $retrieve['custPlatform']; ?>" disabled><br><br>
-
-                                      <label for="custCourier">Courier</label><br>
-                                      <input type="text" name="custCourier"  value="<?php echo $retrieve['custCourier']; ?>" disabled><br><br>
+                                  <div class="row" id="Table-PODetails">
+                                    <div class="col-auto col-md-6 col-xl-4 text-nowrap" id="Table-PODetailCol1" style="padding-top: 12px;padding-bottom: 12px;width: 370px;">
+                                        <div id="Table-PODetail1" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-PONumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer PO #:&nbsp;<input class="border rounded border-dark float-right" type="text" id="Table-PONumInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustPONum" value="<?php echo $retrieve['custPO']; ?>" disabled></label></div>
+                                        <div id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Order ID:&nbsp;<input class="border rounded border-dark float-right" type="text" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustOrderID" value="<?php echo $retrieve['custOrderID']; ?>" disabled></label></div>
+                                        <div id="Table-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Name:&nbsp;<input class="border rounded border-dark float-right" type="text" id="Table-NameInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustName" value="<?php echo $retrieve['custName']; ?>" disabled></label></div>
+                                        <div id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Email:&nbsp;<input class="border rounded border-dark float-right" type="email" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustEmail" value="<?php echo $retrieve['custEmail']; ?>" disabled></label></div>
+                                    </div>
+                                    <div class="col-auto col-md-6 col-xl-4 text-nowrap" id="Table-PODetailCol2" style="padding-top: 12px;padding-bottom: 12px;">
+                                        <div id="Table-PODetail4" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NumLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Number:&nbsp;<input class="border rounded border-dark float-right" type="tel" id="Table-NumInput" style="border-radius: 20px;width: 185px;" autocomplete="on" name="CustNum" value="<?php echo $retrieve['custNumber']; ?>" disabled></label></div>
+                                        <div id="Table-PODetail5" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-AddrLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Address:&nbsp;<input class="border rounded border-dark float-right" type="text" id="Table-AddrInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustAddr" value="<?php echo $retrieve['custAddress']; ?>" disabled></label></div>
+                                        <div id="Table-PODetail6" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-MOPLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Mode of Payment:&nbsp;<input class="border rounded border-dark float-right" id="Table-MOPInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustMOP" value="<?php echo $retrieve['custMOP']; ?>" disabled></input></label></div>
+                                    </div>
+                                    <div class="col-auto col-md-6 col-xl-4 text-nowrap" id="Table-PODetailCol3" style="padding-top: 0px;padding-bottom: 12px;">
+                                        <div id="Table-PODetail7-8" class="dataTables_length" aria-controls="dataTable" style="padding-top: 0px;padding-bottom: 0px;width: 100%;max-width: 360px;">
+                                            <div class="row" id="Table-Detail7-8">
+                                                <div class="col" id="Table-PODetail7"><label class="col-form-label text-center" id="Table-DateOrdLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Date Ordered:&nbsp;<input class="border rounded border-dark float-left" id="Table-DateOrdInput" type="date" style="width: 165px;margin-right: auto;margin-left: auto;border-radius: 20px;" name="CustDateOrd" value="<?php echo $retrieve['custDateOrdered']; ?>" disabled></label></div>
+                                                <div class="col" id="Table-PODetail8"><label class="col-form-label text-center" id="Table-DatePickLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Pickup Date:&nbsp;<input class="border rounded border-dark float-left" id="Table-DatePickInput" type="date" style="width: 165px;margin-right: auto;margin-left: auto;border-radius: 20px;" name="CustDatePick" value="<?php echo $retrieve['custDatePickup']; ?>" disabled></label></div>
+                                            </div>
+                                        </div>
+                                        <div id="Table-PODetail9" class="dataTables_length" aria-controls="dataTable" style="padding-top: 5px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-PlatformLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Platform:&nbsp;<input class="border rounded border-dark float-right" id="Table-PlatformInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustPlatform" value="<?php echo $retrieve['custPlatform']; ?>" disabled></input></label></div>
+                                        <div id="Table-PODetail10" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-CourierLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Courier:&nbsp;<input class="border rounded border-dark float-right" id="Table-CourierInput" style="width: 185px;border-radius: 20px;height: 28px;" name="CustCourier" value="<?php echo $retrieve['custCourier']; ?>" disabled></input></label></div>
+                                    </div>
                                       <br><br><br>
 
                                       <table>
@@ -266,7 +261,7 @@
                                         //             <td><input type="decimal"  name="unitp[]" step=".01" value="<?php echo $finalrow['unitPrice']; ?>" disabled></td>
                                         //             <td><input type="text" value="<?php echo $finalrow['amount']; ?>" disabled></td>
                                         //           </tr> -->
-                                        //   <?php
+                                           <?php
                                         //         }
                                         //       }
                                         //     }

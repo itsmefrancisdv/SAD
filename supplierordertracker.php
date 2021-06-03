@@ -253,8 +253,8 @@ if (isset($_POST['cancel'])){
                             <div id="viewModal<?php echo $i; ?>" class="modal fade" role="dialog">
                               <div class="modal-dialog modal-xl">
                                  <div class="modal-content" id="View-Modal-Content">
-                                        <div class="modal-header" id="View-Modal-Header" style="background-color: #1485ee;color: rgb(255,255,255);font-family: 'Open Sans', sans-serif;">
-                                            <h4 id="View-Title" style="font-size: 30px;font-weight: normal;margin-top: 8px;">View Supplier Purchase Order</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="View-CloseButton"><span aria-hidden="true">×</span></button></div>
+                                 <div class="modal-header" id="View-Modal-Header" style="background-color: rgb(101,118,122);/*background: linear-gradient(to right, #2657eb, #de6161);*/">
+                                            <h4 id="View-Title" style="font-size: 30px;font-weight: bold;font-family: 'Open Sans', sans-serif;color: #ffffff;">View Supplier Purchase Order</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close" id="View-CloseButton"><span aria-hidden="true">×</span></button></div>
                                         
                                   <div class="modal-body" id="View-ModalBody">
                                             <div class="row" id="ModalTable-PODetails">
