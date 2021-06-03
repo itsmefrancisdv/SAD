@@ -18,6 +18,7 @@
         
         $custPO = $_POST["CustPONum"];
         $custID = $_POST["custID"];
+        $custOrderID = $_POST["CustOrderID"];
         $custName = $_POST["CustName"];
         $custMOP = $_POST["CustMOP"];
         $custdateOrder = $_POST["CustDateOrd"];
@@ -25,8 +26,8 @@
         $custPlatform = $_POST["CustPlatform"];
         $custCourier = $_POST["CustCourier"];
         $custTotal = $_POST["custtotal"];
-        $add = "INSERT INTO customer_orders (custPO, custID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus, custTotal) 
-            VALUES ('$custPO', '$squery', '$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending', '$custTotal')";
+        $add = "INSERT INTO customer_orders (custPO, custID, custOrderID, custName, custMOP, custDateOrdered, custDatePickup, custPlatform ,custCourier, custStatus, custTotal) 
+            VALUES ('$custPO', '$squery', '$custOrderID','$custName', '$custMOP', '$custdateOrder', '$custdatePickup', '$custPlatform', '$custCourier', 'Pending', '$custTotal')";
         mysqli_query($DBConnect, $add) or die (mysqli_error($DBConnect));
     }
     // $squery = "SELECT * FROM customers WHERE custID='{$_GET['CustNum']}'";

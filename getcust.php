@@ -2,7 +2,7 @@
 require_once('connect.php');
 
 function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
@@ -97,7 +97,7 @@ $result3 = mysqli_query($DBConnect, $sql2);
                         echo "<div id='Table-PODetail1' class='dataTables_length' aria-controls='dataTable' style='padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;'><label id='Table-PONumLabel' style='margin-top: 0px;margin-bottom: 0px;width: 100%;'>Customer PO #:&nbsp;<input class='border rounded border-dark float-right' id='Table-PONumInput' style='border-radius: 20px;margin-left: 0px;width: 185px;' name='CustPONum' type='text' value='" . $id . "' size='30' disabled><br/></label></div>";
 
                     ?>
-                        <div id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Order ID:&nbsp; <input class="border rounded border-dark float-right" type="text" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustEmail" value="<?php echo generateRandomString(14); ?>" disabled></label></div>
+                        <div id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Order ID:&nbsp; <input class="border rounded border-dark float-right" type="text" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustOrderID" value="<?php echo generateRandomString(14); ?>" disabled></label></div>
 
                         <div id="Table-PODetail2" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-NameLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Name:&nbsp; <input class="border rounded border-dark float-right" type="text" id="Table-NameInput" style="border-radius: 20px;margin-left: 0px;width: 185px;" name="CustName" value="<?php echo $supp['custName']; ?>" disabled></label></div>
                         <div id="Table-PODetail3" class="dataTables_length" aria-controls="dataTable" style="padding-top: 10px;padding-bottom: 10px;width: 100%;max-width: 360px;"><label id="Table-EmailLabel" style="margin-top: 0px;margin-bottom: 0px;width: 100%;">Customer Email:&nbsp; <input class="border rounded border-dark float-right" type="email" id="Table-EmailInput" style="width: 185px;border-radius: 20px;margin-left: 0px;" autocomplete="on" name="CustEmail" value="<?php echo $supp['custEmail']; ?>" disabled></label></div>
